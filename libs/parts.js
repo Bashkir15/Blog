@@ -58,6 +58,20 @@ exports.lintJSX = function (include) {
 	};
 }
 
+exports.setupCSS = function (paths) {
+	return {
+		module: {
+			loaders: [
+				{
+					test: /\.css$/,
+					loaders: ['style', 'css'],
+					include: paths
+				}
+			]
+		}
+	};
+}
+
 exports.enableReactPerformanceTools = function() {
 	return {
 		module: {
