@@ -78,6 +78,9 @@ exports.devServer = function (options) {
 			hot: true,
 			inline: true,
 			stats: 'errors-only',
+			proxy: {
+				"**": "http://localhost:3000"
+			},
 			host: options.host,
 			port: options.port
 		},
