@@ -11,20 +11,30 @@
 		width: 90%
 		margin: 0 auto
 
+		> a
+			width: 29%
+			max-width: 29%
+			border: 1px solid rgba(0,0,0,0.12)
+			transition: all .4s ease
+			margin-bottom: 80px
+
+			&:hover
+				transform: scale(1.1,1.1)
+
+			&:last-of-type
+				max-width: 45%
+				width: 45%
+
 .topic-card
 	display: flex
 	flex-direction: column
 	align-items: center
 	padding: 25px 0
-	max-width: 29%
-	width: 29%
-	margin-bottom: 80px
-	border: 1px solid rgba(0,0,0,0.12)
-	transition: all .4s ease
 	cursor: pointer
 
 	h2
 		font-size: 28px
+		color: rgba(0,0,0,0.8)
 
 	p
 		padding: 20px 10px
@@ -33,12 +43,6 @@
 		line-height: 24px
 		color: rgba(0,0,0,0.6)
 
-	&:hover
-		transform: scale(1.1,1.1)
-
-	&:nth-child(7)
-		max-width: 45%
-		width: 45%
 
 
 .topic-icon

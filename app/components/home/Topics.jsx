@@ -59,7 +59,9 @@ export default class Topics extends React.Component {
 			<div className="topics-container">
 				<div className="topics-list-container">
 					<div>{this.state.topics.map(topic =>
-						<Topic topic={topic} key={topic.title}/>
+						<Link to={'/' + topic.title} key={topic.title}>
+							<Topic topic={topic} />
+						</Link>
 					)}</div>
 				</div>
 			</div>
