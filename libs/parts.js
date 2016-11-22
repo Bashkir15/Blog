@@ -2,6 +2,19 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+exports.indexTemplate = function (options) {
+	return {
+		plugins: [
+			new HtmlWebpackPlugin({
+				template: __dirname + '/../app/index.html',
+				filename: 'index.html',
+				inject: 'body'
+			})
+		]
+	};
+}
 
 exports.loadJSX = function (include) {
 	return {
@@ -27,8 +40,8 @@ exports.loadIspata = function (include) {
 					include: include
 				}
 			]
-		};
-	}
+		}
+	};
 }
 
 exports.lintJSX = function (include) {
@@ -39,6 +52,19 @@ exports.lintJSX = function (include) {
 					test: /\.(js|jsx)$/,
 					loaders: ['eslint'],
 					include: include
+				}
+			]
+		}
+	};
+}
+
+exports.enableReactPerformanceTools = function() {
+	return {
+		module: {
+			loaders: [
+				{
+					test: require.resolve('react'),
+					loader: 'expose?React'
 				}
 			]
 		}

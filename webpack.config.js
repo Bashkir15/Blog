@@ -1,7 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const validate = require('webpack-validator');
-const parts = require('./lib/parts');
+const parts = require('./libs/parts');
 
 const TARGET = process.env.npm_lifecycle_event;
 const ENABLE_POLLING = process.env.ENABLE_POLLING;
@@ -20,7 +20,7 @@ const common = merge(
 		},
 
 		output: {
-			paths: PATHS.build,
+			path: PATHS.build,
 			filename: '[name].js'
 		},
 
@@ -29,6 +29,7 @@ const common = merge(
 		}
 	},
 
+	parts.indexTemplate({}),
 	parts.loadJSX(PATHS.app),
 	parts.lintJSX(PATHS.app)
 );
@@ -50,7 +51,7 @@ switch(TARGET) {
 	default:
 		config = merge(
 			common, {
-				devtool: 'eval-soure-map',
+				devtool: 'eval-source-map',
 			},
 
 			parts.devServer({
