@@ -1,23 +1,56 @@
 import React from 'react'
 import {Link} from 'react-router'
 
-var Sidebar =  React.createClass({
+import SidebarBody from './SidebarBody'
 
+export default class Sidebar extends React.Component {
+	constructor() {
+		super();
 
-	render: () => {
+		this.state = {
+			options: [
+				{	
+					href: '/latest',
+					name: 'Latest'
+				},
+
+				{
+					href: '/popular',
+					name: 'Popular'
+				},
+
+				{
+					href: '/categories',
+					name: 'Categories'
+				},
+
+				{
+					href: '/about',
+					name: 'About'
+				},
+
+				{
+					href: '/contact',
+					name: 'Contact'
+				}
+			]
+		}
+	}
+
+	render() {
 		return (
 			<div className="app-side-bar">
 				<div className="app-side-bar-header">
 					<div></div>
-					<p>This is the sidebar</p>
-					<p>Stuff</p>
+					<p>Name</p>
+					<p>Username</p>
 				</div>
 
 				<div className="app-side-bar-body">
+					<SidebarBody options={this.state.options} />
 				</div>
 			</div>
 		);
-	}
-});
+	}	
+}
 
-export default Sidebar

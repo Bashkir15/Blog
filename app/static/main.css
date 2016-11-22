@@ -1,5 +1,5 @@
 /* http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126 License: none (public domain) */
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
@@ -32,18 +32,52 @@ img { max-width: 100%; height: auto; border: 0; }
 
 .app-body { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: stretch; -ms-flex-align: stretch; align-items: stretch; position: relative; width: 100%; height: 100vh; }
 
-.app-body-left { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-align: center; -ms-flex-align: center; align-items: center; height: 100%; }
+.app-body-left { display: -webkit-box; display: -ms-flexbox; display: flex; width: 300px; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-align: center; -ms-flex-align: center; align-items: center; height: 100%; }
 
 .app-body-right { width: 100%; }
 
-.nav { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: stretch; -ms-flex-align: stretch; align-items: stretch; position: relative; padding: 0 15px; height: 55px; border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+.nav { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: stretch; -ms-flex-align: stretch; align-items: stretch; position: relative; height: 55px; border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
 
-.nav-left { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: start; -ms-flex-pack: start; justify-content: flex-start; padding-right: 45px; }
+.nav-left { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: start; -ms-flex-pack: start; justify-content: flex-start; padding-right: 415px; background: rgba(0, 0, 0, 0.12); }
 
-.nav-rest { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: stretch; -ms-flex-align: stretch; align-items: stretch; position: relative; padding: 0 15px; }
+.nav-rest { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: stretch; -ms-flex-align: stretch; align-items: stretch; position: relative; width: 100%; }
 
 .nav-rest-left { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; -ms-flex-preferred-size: 0; flex-basis: 0; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: start; -ms-flex-pack: start; justify-content: flex-start; }
 
 .nav-rest-right { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; -ms-flex-preferred-size: 0; flex-basis: 0; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: end; -ms-flex-pack: end; justify-content: flex-end; }
 
 .nav-item { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; padding: 10px; }
+
+.nav-item button { height: 55px; }
+
+.nav-item button span { font-size: 17px; color: #767676; }
+
+.nav-search { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; -webkit-box-align: center; -ms-flex-align: center; align-items: center; padding-left: 20px; height: 55px; }
+
+.nav-search > div:nth-of-type(1) { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; height: 55px; }
+
+.nav-search > div:nth-of-type(1) span { color: #a9a9a9; font-size: 19px; }
+
+.nav-search > div:nth-of-type(2) { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-flex: 1; -ms-flex: 1; flex: 1; -webkit-box-align: center; -ms-flex-align: center; align-items: center; position: relative; height: 55px; }
+
+.nav-search > div:nth-of-type(2) label { position: absolute; top: 19px; left: 6px; font-size: 19px; color: #878787; }
+
+.nav-search > div:nth-of-type(2) input { position: relative; height: 55px; background: none; border: none; }
+
+.app-side-bar { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; height: 100%; width: 100%; border-right: 1px solid rgba(0, 0, 0, 0.12); }
+
+.app-side-bar-header { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-align: center; -ms-flex-align: center; align-items: center; padding-top: 43px; padding-bottom: 23px; border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+
+.app-side-bar-header > div { height: 60px; width: 60px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.12); margin-bottom: 18px; }
+
+.app-side-bar-header p { font-size: 19px; padding-bottom: 12px; }
+
+.app-side-bar-body { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; padding-top: 20px; }
+
+.app-side-bar-list { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-align: center; -ms-flex-align: center; align-items: center; height: 55px; width: 100%; }
+
+.app-side-bar-list > li { height: 55px; }
+
+.app-side-bar-list > li button { width: 100%; height: 55px; }
+
+.app-side-bar-list > li button span { font-size: 17px; }

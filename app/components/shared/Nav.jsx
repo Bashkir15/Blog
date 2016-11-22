@@ -23,7 +23,10 @@ export default class Nav extends React.Component {
 							<div>
 								<span>Icon</span>
 							</div>
-							<input type='text' name='search' />
+							<div>
+								<label>Search</label>
+								<input type='text' name='search'/>
+							</div>
 						</div>
 					</div>
 
