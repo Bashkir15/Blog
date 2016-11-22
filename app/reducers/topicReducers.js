@@ -1,7 +1,12 @@
+const {mergeObj} = require('../lib/utils');
+
 export default (state = [], action) => {
 	switch (action.type) {
 		case 'CREATE_TOPIC':
-			state.push(action.topic);
+			return [
+				...state,
+				Object.assign({}, action.book)
+			];
 		default:
 			return state;
 	}
