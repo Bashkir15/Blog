@@ -81,3 +81,27 @@ img { max-width: 100%; height: auto; border: 0; }
 .app-side-bar-list > li button { width: 100%; height: 55px; }
 
 .app-side-bar-list > li button span { font-size: 17px; }
+
+.home-header { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; padding-top: 65px; }
+
+.home-header > div { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+
+.home-header > div header { padding-bottom: 55px; text-align: center; width: 60%; margin: 0 auto; }
+
+.home-header > div header h1 { font-size: 36px; }
+
+.home-header > div p { font-size: 20px; text-align: center; }
+
+.home-header-latest { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: end; -ms-flex-pack: end; justify-content: flex-end; width: 65%; padding-top: 35px; padding-bottom: 30px; margin: 0 auto; }
+
+.home-header-latest button { height: 40px; width: 145px; border-radius: 22px; border: 1px solid rgba(0, 0, 0, 0.12); }
+
+.home-header-section { padding-top: 40px; padding-bottom: 60px; border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+
+.home-header-text-section { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: stretch; -ms-flex-align: stretch; align-items: stretch; -ms-flex-pack: distribute; justify-content: space-around; width: 90%; margin: 0 auto; }
+
+.home-header-text-section > div { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-align: center; -ms-flex-align: center; align-items: center; max-width: 30%; }
+
+.home-header-text-section > div h3 { font-size: 20px; padding-bottom: 20px; }
+
+.home-header-text-section > div p { font-size: 14px; line-height: 32px; color: #767676; }
