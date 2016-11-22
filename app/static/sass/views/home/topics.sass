@@ -1,0 +1,49 @@
+.home-topics-container
+	padding-top: 45px
+
+.topics-list-container
+
+	> div
+		display: flex
+		flex-wrap: wrap
+		align-items: stretch
+		justify-content: space-around
+		width: 90%
+		margin: 0 auto
+
+.topic-card
+	display: flex
+	flex-direction: column
+	align-items: center
+	padding: 25px 0
+	max-width: 29%
+	width: 29%
+	margin-bottom: 80px
+	border: 1px solid rgba(0,0,0,0.12)
+	transition: all .4s ease
+	cursor: pointer
+
+	h2
+		font-size: 28px
+
+	p
+		padding: 20px 10px
+		font-size: 16px
+		text-align: center
+		line-height: 24px
+		color: rgba(0,0,0,0.6)
+
+	&:hover
+		transform: scale(1.1,1.1)
+
+	&:nth-child(7)
+		max-width: 45%
+		width: 45%
+
+
+.topic-icon
+	height: 90px
+	width: 90px
+	border-radius: 50%
+	border: 1px solid rgba(0,0,0,0.12)
+	margin-bottom: 22px
