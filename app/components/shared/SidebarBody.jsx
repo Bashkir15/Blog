@@ -15,6 +15,9 @@ var SidebarBody = React.createClass({
 						<button>
 							<span>{option.name}</span>
 						</button>
+						<div>
+							<span className={option.icon}></span>
+						</div>
 					</li>
 				)
 			}</ul>

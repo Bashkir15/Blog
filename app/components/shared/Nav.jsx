@@ -21,7 +21,7 @@ export default class Nav extends React.Component {
 					<div className="nav-rest-left">
 						<div className="nav-search">
 							<div>
-								<span>Icon</span>
+								<span className='icon-search'></span>
 							</div>
 							<div>
 								<label>Search</label>

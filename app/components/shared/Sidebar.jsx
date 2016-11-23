@@ -11,27 +11,32 @@ export default class Sidebar extends React.Component {
 			options: [
 				{	
 					href: '/latest',
-					name: 'Latest'
+					name: 'Latest',
+					icon: 'icon-stop-watch'
 				},
 
 				{
 					href: '/popular',
-					name: 'Popular'
+					name: 'Popular',
+					icon:'icon-award'
 				},
 
 				{
 					href: '/categories',
-					name: 'Categories'
+					name: 'Categories',
+					icon: 'icon-content_paste'
 				},
 
 				{
 					href: '/about',
-					name: 'About'
+					name: 'About',
+					icon: 'icon-home'
 				},
 
 				{
 					href: '/contact',
-					name: 'Contact'
+					name: 'Contact',
+					icon: 'icon-mode_edit'
 				}
 			]
 		}

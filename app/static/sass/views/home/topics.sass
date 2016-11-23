@@ -1,5 +1,6 @@
 .home-topics-container
 	padding-top: 45px
+	background: #f6f9fa
 
 .topics-list-container
 
@@ -17,9 +18,18 @@
 			border: 1px solid rgba(0,0,0,0.12)
 			transition: all .4s ease
 			margin-bottom: 80px
+			background: #fff
 
 			&:hover
 				transform: scale(1.1,1.1)
+				background: #41a3ff
+
+				.topic-card
+					h2
+						color: #fff
+
+					p
+						color: rgba(255,255,255,0.6)
 
 			&:last-of-type
 				max-width: 45%
@@ -35,6 +45,7 @@
 	h2
 		font-size: 28px
 		color: rgba(0,0,0,0.8)
+		transition: all .4s ease
 
 	p
 		padding: 20px 10px
@@ -42,6 +53,7 @@
 		text-align: center
 		line-height: 24px
 		color: rgba(0,0,0,0.6)
+		transition: all .4s ease
 
 
 
