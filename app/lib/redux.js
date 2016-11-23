@@ -23,13 +23,13 @@ function promiseMiddleware({dispatch}) {
 		action = mergeObj(t.filter(action, x => x[0] !== fields.PROMISE),
 			{[fields.SEQ_ID]: id});
 
-		dispatch(mergeObj(action, {status: "start"}));
+		dispatch(mergeObj(action, {status: 'start'}));
 
 		return new Promise(function (resolve, reject) {
 			promiseInst.then(value => {
 				setTimeout(() => {
 					dispatch(mergeObj(action), {
-						status: "done",
+						status: 'done',
 						value: value
 					});
 
@@ -38,7 +38,7 @@ function promiseMiddleware({dispatch}) {
 			}).catch(error => {
 				setTimeout(() => {
 					dispatch(mergeObj(action, {
-						status: "error",
+						status: 'error',
 						value: error
 					}));
 
