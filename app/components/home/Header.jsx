@@ -19,7 +19,9 @@ export default class HomeHeader extends React.Component {
 
 					<div className='home-header-latest'>
 						<button>
-							<span>See Latest</span>
+							<Link to="topic/create">
+								<span>See Latest</span>
+							</Link>
 						</button>
 					</div>
 				</div>

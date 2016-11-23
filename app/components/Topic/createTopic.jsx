@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {browserHistory} from 'react-router'
 import * as courseActions from '../../actions/topics'
 
 import TopicForm from './TopicForm'
@@ -19,7 +20,6 @@ class CreateTopic extends React.Component {
 			posting: false
 		};
 
-		this.redirect = this.redirect.bind(this);
 		this.saveTopic = this.saveTopic.bind(this);
 		this.updateTopicState = this.updateTopicState.bind(this);
 
@@ -54,10 +54,20 @@ CreateTopic.propTypes = {
 	actions: React.PropTypes.object
 };
 
+function mapStateToProps(state, ownProps) {
+	return {
+		topic: {
+			title: '',
+			icon: '',
+			description: ''
+		}
+	};
+}
+
 function mapDispatchToProps (dispatch) {
 	return {
 		actions: bindActionCreators(courseActions, dispatch)
 	};
 }
 
-export default connect(mapDispatchToProps)(CreateTopic);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTopic);

@@ -1,4 +1,4 @@
-const REPLACE_STATE = "@@dispatch/replace-state";
+const REPLACE_STATE = '@@dispatch/replace-state';
 
 function replaceable(reducer) {
 	return (state, action) => {

@@ -16,7 +16,7 @@ class TopicForm extends React.Component {
 						onChange={this.props.onChange} />
 
 					<label>Description</label>
-					<textarea type='text' name='Description'
+					<textarea type='text' name='description'
 						value={this.props.topic.description}
 						onChange={this.props.onChange}>
 					</textarea>
