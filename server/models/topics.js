@@ -25,7 +25,13 @@ var TopicsSchema = new mongoose.Schema({
 	description: {
 		type: String,
 		required: true
-	}
+	},
+
+	sections: [{
+		type: mongoose.Schema.ObjectId,
+		ref: 'Section',
+		required: false
+	}]
 });
 
 mongoose.model('Topic', TopicsSchema);

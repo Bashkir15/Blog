@@ -31,8 +31,7 @@ const common = merge(
 
 	parts.indexTemplate({}),
 	parts.setupCSS(PATHS.app),
-	parts.loadJSX(PATHS.app),
-	parts.lintJSX(PATHS.app)
+	parts.loadJSX(PATHS.app)
 );
 
 var config;

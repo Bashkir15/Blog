@@ -1,35 +1,26 @@
-import React from 'react';
-import {render} from 'react-dom';
-import {Router, browserHistory} from 'react-router'
-import routes from './routes'
-import {Provider} from 'react-redux'
-import {replaceable} from './lib/replaceable-state'
-import {createStore, compose, applyMiddleware, combineReducers} from 'redux'
-import reduxThunk from 'redux-thunk'
-import {routeReducer} from 'redux-simple-router'
-import blogApp from './reducers'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { Router, Route, IndexRoute, hashHistory} from 'react-router'
 
-const reducers = Object.assign({}, blogApp, {
-	routing: routeReducer
-});
+import store from './store'
 
-const create = compose(
-	applyMiddleware(
-		reduxThunk,
-		() => next => action => {
-			return next(action);
-		}
-	)
-)(createStore);
-
-let store = create(replaceable(combineReducers(reducers)));
-
+import App from './components/App'
+import Home from './components/shared/Home'
+import Register from './components/auth/Register'
 
 require('./static/main.css');
 
-render(
+
+
+
+ReactDOM.render((
 	<Provider store={store}>
-		<Router routes={routes} history={browserHistory} />
-	</Provider>,
-	document.getElementById('app')
-);
+		<Router history={hashHistory}>
+			<Route path="/" component={App}>
+				<IndexRoute component={Home} />
+				<Route path='/register' component={Register} />
+			</Route>
+		</Router>
+	</Provider>
+), document.getElementById('main'));

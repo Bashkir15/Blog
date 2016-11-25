@@ -5,8 +5,12 @@ import http from 'http'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import Topics from './server/models/topics'
+import Sections from './server/models/sections'
+import Users from './server/models/users'
 
+const usersController = require('./server/controllers/users.server.controller')();
 const topicsController = require('./server/controllers/topics.server.controller')();
+const sectionsController = require('./server/controllers/sections.server.controller')();
 
 const config = require('./server/env/' + (process.env.NODE_ENV || 'development'));
 
@@ -32,7 +36,11 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, 'app/index.html'));
 });
 
+app.post('/users', usersController.create);
 app.post('/topics', topicsController.create);
+app.post('/sections', sectionsController.create);
+
+global.config = config;
 
 
 server.listen(3000, () => {
