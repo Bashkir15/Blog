@@ -20,9 +20,10 @@ export function editor() {
 		data.topicTitle = document.getElementById('post-topic-title').value;
 		data.section = document.getElementById('post-section').value;
 		data.content = markdownSection.innerHTML.toString();
-		axios.post('http://localhost/:3000/posts',  {
+		axios.post('http://localhost:3000/posts',  {
 			title: data.title,
 			section: data.section,
+			sectionTitle: data.sectionTitle,
 			content: data.content,
 			headers: {
 				'Content-Type': 'application/json'

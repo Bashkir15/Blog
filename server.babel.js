@@ -3,6 +3,7 @@ import http from 'http'
 import mongoose from 'mongoose'
 import Topics from './server/models/topics'
 import Sections from './server/models/sections'
+import Posts from './server/models/posts'
 
 import express from './server/config/express'
 

@@ -43,10 +43,12 @@
 										</div>
 
 										<div class='single-section-posts'>
-											<div>
-												<div></div>
-												<button>title</button>
-											</div>
+											<% section.posts.map((post) => { %>
+												<div>
+													<div></div>
+													<button><%= post.title %></button>
+												</div>
+											<% }); %>
 										</div>
 									</div>
 								<%	}); %>
