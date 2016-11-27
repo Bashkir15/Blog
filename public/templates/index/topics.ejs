@@ -1,0 +1,64 @@
+<div class='topics-container'>
+	<% topics.map((topic) => {
+		%>
+		<div>
+			<a href='/<%= topic.title %>'>
+				<div class='topic-card'>
+					<img class='topic-icon' src='<%= topic.icon %>'>
+					<h2><%= topic.title %></h2>
+					<p><%= topic.description %></p>
+				</div>
+			</a>
+		</div>
+	<% }); %>
+	<!-- <div>
+		<a href='/Javascript'>
+			<div class='topic-card'>
+				<img class='topic-icon' src='./static/javascript.png'>
+				<h2>Javascript</h2>
+				<p>Javascript shit and stuff and ever more shit and stuff, yo!</p>
+			</div>
+		</a>
+	</div>
+
+	<div>
+		<a href='/Angular'>
+			<div class='topic-card'>
+				<img class='topic-icon' src='./static/angularjs.png'>
+				<h2>Angular</h2>
+				<p>Just getting start or looking to port your 1.5.x app to Angular 2?</p>
+			</div>
+		</a>
+	</div>
+
+	<div>
+		<a href='/React'>
+			<div class='topic-card'>
+				<img class='topic-icon' src='./static/reactjs.png'>
+				<h2>React</h2>
+				<p>Learn to build modular component based applications</p>
+			</div>
+		</a>
+	</div>
+
+	<div>
+		<a href='/Node'>
+			<div class='topic-card'>
+				<img class='topic-icon' src='./static/nodejs.png'>
+				<h2>Node</h2>
+				<p>At some point you are going to need a backend</p>
+			</div>
+		</a>
+	</div>
+
+	<div>
+		<a href='/Automation'>
+			<div class='topic-card'>
+				<img class='topic-icon' src='./static/webpack.png'>
+				<h2>Automation</h2>
+				<p>Make yourlife easier by automating your builds</p>
+			</div>
+		</a>
+	</div>
+</div> -->
+

@@ -1,0 +1,106 @@
+
+.index-header
+	display: flex
+	flex-direction: column
+
+	> div
+		display: flex
+		flex-direction: column
+		border-bottom: 1px solid rgba(0,0,0,0.12)
+		padding-top: 65px
+		padding-left: 35px
+		background: #41a3ff
+
+	header
+		padding-bottom: 30px
+		text-align: left
+		width: 100%
+
+		h1
+			@include lato()
+			font-weight: 300
+			letter-spacing: 3px
+			font-size: 46px
+			color: #fefefe
+
+	.index-header-about
+		display: flex
+		flex-direction: column
+		width: 100%
+		padding-top: 40px
+		padding-bottom: 60px
+		border-bottom: 1px solid rgba(0,0,0,0.12)
+		background: #fff
+
+	p
+		@include noto()
+		font-weight: 400
+		letter-spacing: 1px
+		font-size: 20px
+		text-align: left
+		padding-left: 3px
+		color: rgba(255,255,255,0.6)
+
+
+
+
+.index-header-latest
+	display: flex
+	align-items: center
+	justify-content: flex-end
+	width: 88%
+	padding-top: 55px
+	padding-bottom: 35px
+	margin: 0 auto
+
+	button
+		height: 40px
+		width: 155px
+		border-radius: 22px
+		border: 6px solid #f6f9fa
+		background: #fff
+
+		span
+			@include lato()
+			font-weight: 300
+			color: rgba(0,0,0,0.5)
+			font-size: 17px
+
+.index-header-about
+
+	> div
+		display: flex
+		flex-direction: column
+		width: 85% 
+		margin: 0 auto 85px auto
+
+		h3
+			@include lato()
+			font-weight: 300
+			font-size: 30px
+			letter-spacing: 3px
+			text-align: center
+			padding-bottom: 45px
+
+		p
+			@include lato()
+			font-weight: 300
+			letter-spacing: 2px
+			color: rgba(0,0,0,0.5)
+			text-align: center
+			line-height: 30px
+
+		&:nth-of-type(2)
+			margin-bottom: 40px
+
+.index-header-icon
+	display: flex
+	align-items: center
+	justify-content: center
+	padding-top: 25px
+
+	span
+		font-size: 27px
+
+
+

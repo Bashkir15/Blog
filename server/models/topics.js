@@ -1,12 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-var TopicsSchema = new mongoose.Schema({
+var TopicSchema = new mongoose.Schema({
 	created: {
-		type: Date,
-		default: Date.now
-	},
-
-	lastUpdated: {
 		type: Date,
 		default: Date.now
 	},
@@ -17,12 +12,13 @@ var TopicsSchema = new mongoose.Schema({
 		unique: true
 	},
 
-	icon: {
+	description: {
 		type: String,
-		required: true
+		required: true,
+		unique: true
 	},
 
-	description: {
+	icon: {
 		type: String,
 		required: true
 	},
@@ -30,8 +26,9 @@ var TopicsSchema = new mongoose.Schema({
 	sections: [{
 		type: mongoose.Schema.ObjectId,
 		ref: 'Section',
-		required: false
+		required: true,
+		unique: true
 	}]
 });
 
-mongoose.model('Topic', TopicsSchema);
+mongoose.model('Topic', TopicSchema);

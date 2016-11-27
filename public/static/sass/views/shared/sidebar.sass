@@ -1,0 +1,128 @@
+.side-nav-container
+	position: fixed
+	left: 0
+	top: 0
+	display: flex
+	flex-direction: column
+	flex: 1
+	width: 100%
+	height: 100vh
+	pointer-events: none
+	z-index: 90
+
+.side-nav-container--open
+	.side-nav
+		transition: all .4s ease-out
+		transform: none
+
+	&.side-nav-container--animatable
+		.side-nav
+			transition: all .4s ease-out
+
+.sidenav-container--animatable
+	.side-nav
+		transition: all .4s ease-out
+
+.side-nav
+	display: flex
+	flex-direction: column
+	position: relative
+	max-width: 300px
+	height: 100%
+	width: 90%
+	z-index: 100
+	pointer-events: auto
+	transition: all .4s ease
+	background: #fff
+	overflow-y: scroll
+	transform: translateX(-103%)
+	box-shadow: 0 2px 6px rgba(0,0,0,0.5)
+	border-right: 1px solid rgba(0,0,0,0.5)
+
+
+.side-nav-close
+	display: flex
+	align-items: center
+	justify-content: flex-end
+	width: 100%
+	padding-top: 20px
+	padding-right: 16px
+
+	span
+		display: inline-block
+		color: rgba(0,0,0,0.4)
+		font-size: 26px
+		transition: transform .4s ease-out
+
+		&:hover
+			transform: scale(1.2,1.2)
+
+
+.side-nav-header
+	display: flex
+	flex-direction: column
+	align-items: center
+	padding-top: 10px
+	padding-bottom: 23px
+	border-bottom: 1px solid rgba(0,0,0,0.12)
+
+	> div
+		height: 60px
+		width: 60px
+		border-radius: 50%
+		border: 1px solid rgba(0,0,0,0.12)
+		margin-bottom: 18px
+
+	p
+		@include lato()
+		font-weight: 300
+		letter-spacing: 2px
+		font-size: 19px
+		padding-bottom: 12px
+
+.side-nav-body
+	display: flex
+	flex: 1
+	flex-direction: column
+	padding-top: 50px
+
+.side-nav-body-list
+	display: flex
+	flex: 1
+	flex-direction: column
+	align-items: center
+	padding: 20px
+	width: 100%
+
+	> li
+		display: flex
+		align-items: center
+		min-height: 70px
+		padding: 10px 0 
+		width: 100%
+
+		> div
+			display: flex
+			flex-direction: column
+			justify-content: center
+			align-items: center
+			height: 70px
+			width: 60px
+			padding-left: 10px
+
+			span
+				font-size: 27px
+
+		> button
+			display: flex
+			flex: 1
+			align-items: center
+			height: 70px
+			padding-left: 10px
+
+			span
+				@include noto()
+				font-weight: 400
+				letter-spacing: 3px
+				color: rgba(0,0,0,0.4)
+				font-size: 17px

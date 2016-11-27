@@ -1,27 +1,60 @@
 import mongoose from 'mongoose';
-import json from '../helpers/json'
 
 
 module.exports = () => {
 	var Topic = mongoose.model('Topic');
-
-	var obj = {};
+	
+	let obj = {};
 
 	obj.create = (req, res) => {
 		var topic = new Topic(req.body);
-		topic.title = req.body.topic.title;
-		topic.icon = req.body.topic.icon;
-		topic.description = req.body.topic.description;
+		console.log(req.body);
 
-		console.log(topic);
 		topic.save((err) => {
 			if (err) {
-				return json.bad(err, res);
+				res.json(err);
+			}
+		});
+	};
+
+	obj.list = (req, res) => {
+		Topic.find({})
+		.exec((err, topics) => {
+			if (err) {
+				res.json(err);
 			}
 
-			json.good({
-				record: topic
-			}, res);
+			console.log(topics);
+
+			res.render('index', {
+				topics: topics
+			});
+		});
+	};
+
+	obj.single = (req, res) => {
+		Topic.findOne({title: req.params.title})
+		.exec((err, topic) => {
+			if (err) {
+				res.json(err);
+			}
+
+			res.render('./templates/topics/single/single', {
+				topic: topic
+			});
+		});
+	};
+
+	obj.createSection = (req, res) => {
+		Topic.findOne({title: req.params.title})
+		.exec((err, topic) => {
+			if (err) {
+				res.json(err);
+			}
+
+			res.render('./templates/sections/create/create', {
+				topic: topic
+			});
 		});
 	};
 

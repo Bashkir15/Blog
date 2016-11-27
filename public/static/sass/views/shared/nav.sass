@@ -1,0 +1,119 @@
+.nav
+	display: flex
+	align-items: stretch
+	position: relative
+	height: 55px
+	width: 100%
+	border-bottom: 1px solid rgba(0,0,0,0.12)
+	overflow: hidden
+
+.nav-left
+	display: flex
+	align-items: center
+	justify-content: flex-start
+
+	.nav-item
+		&:nth-of-type(1)	
+			display: none
+
+
+
+.nav-rest
+	align-items: stretch
+	position: relative
+	width: 100%
+	padding-right: 20px
+
+.nav-rest-left
+	display: flex
+	flex: 1
+	flex-basis: 0
+	align-items: center
+	justify-content: flex-end
+
+.nav-rest-right
+	display: none
+	flex: 1
+	flex-basis: 0
+	align-items: center
+	justify-content: flex-end
+
+.nav-item
+	display: flex
+	align-items: center
+	justify-content: center
+	padding: 10px
+
+	button
+		height: 55px
+
+		span
+			@include lato()
+			font-weight: 300
+			letter-spacing: 3px
+			font-size: 19px
+			color: #767676
+
+.nav-search
+	display: flex
+	flex: 1
+	align-items: center
+	padding-left: 20px
+	height: 55px
+	width: 85%
+	margin-left: 15%
+
+	> div
+		&:nth-of-type(1)
+			display: flex
+			align-items: center
+			justify-content: center
+			height: 35px
+			padding-left: 10px
+			border-top-left-radius: 22px
+			border-bottom-left-radius: 22px
+			background: #f6f9fa
+
+			span
+				color: #a9a9a9
+				font-size: 23px
+		&:nth-of-type(2)
+			display: flex
+			flex: 1
+			align-items: center
+
+			position: relative
+			height: 55px
+
+			label
+				position: absolute
+				top: 20px
+				left: 10px
+				@include lato()
+				font-weight: 300
+				font-size: 19px
+				color: #878787
+				z-index: 40
+				opacity: 1
+				transition: all .4s ease
+
+			input
+				position: relative
+				height: 35px
+				width: 100%
+				border-top-right-radius: 22px
+				border-bottom-right-radius: 22px
+				background: #f6f9fa
+				padding-left: 10px
+				@include lato()
+				font-weight: 300
+				font-size: 19px
+
+				border: none
+				outline: none
+
+				&:focus
+					& + label
+						opacity: 0
+						left: -30px
+

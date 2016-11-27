@@ -13,18 +13,25 @@ var SectionSchema = new mongoose.Schema({
 
 	title: {
 		type: String,
-		required: true
+		required: true,
+		unique: true
 	},
 
 	description: {
+		type: String,
+		required: true,
+		unique: true
+	},
+
+	topicTitle: {
 		type: String,
 		required: true
 	},
 
 	topic: {
 		type: mongoose.Schema.ObjectId,
-		required: true,
-		ref: 'Topic'
+		ref: 'Topic',
+		required: true
 	}
 });
 

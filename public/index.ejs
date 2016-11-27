@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name='viewport' content="width=device-width, initial-scale=1">
+		<link rel='stylesheet' href='./static/icons/ico/style.css'>
+		<link rel='stylesheet' href='./styles/main.min.css'>
+
+		<link href="https://fonts.googleapis.com/css?family=Lato:300,400i|Noto+Sans:400,700" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="index-page-container">
+				<% include ./templates/shared/index-page-left %>
+			<div class='index-page-right'>
+				<% include ./templates/shared/nav %>
+
+				<div class='index-page-view-content'>
+					<div class='index-header'>
+						<% include ./templates/index/header %>
+					</div>
+
+					<div class='index-topics'>
+						<% include ./templates/index/topics %>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src='./scripts/main.min.js'></script>		
+	</body>
+</html>

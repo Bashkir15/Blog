@@ -1,70 +1,27 @@
-const path = require('path');
-const merge = require('webpack-merge');
-const validate = require('webpack-validator');
-const parts = require('./libs/parts');
+const path = require("path");
+const webpack = require('webpack');
 
-const TARGET = process.env.npm_lifecycle_event;
-const ENABLE_POLLING = process.env.ENABLE_POLLING;
-const PATHS = {
-	app: path.join(__dirname, 'app'),
-	build: path.join(__dirname, 'build'),
-	test: path.join(__dirname, 'tests')
-};
-
-process.env.BABEL_ENV = TARGET;
-
-const common = merge(
-	{
-		entry: {
-			app: PATHS.app
-		},
-
-		output: {
-			path: PATHS.build,
-			filename: '[name].js'
-		},
-
-		resolve: {
-			extensions: ['', '.js', '.jsx']
-		}
+module.exports = {
+	entry: {
+		main: './public/main.js'
 	},
 
-	parts.indexTemplate({}),
-	parts.setupCSS(PATHS.app),
-	parts.loadJSX(PATHS.app)
-);
+	output: {
+		path: path.resolve(__dirname, './dist/'),
+		publicPath: '/',
+		filename: '[name].js'
+	},
 
-var config;
-
-switch(TARGET) {
-	case "test":
-	case "test:tdd":
-		config = merge(
-			common, {
-				devtool: 'inline-source-map'
-			},
-
-			parts.loadIsparta(PATHS.app),
-			parts.loadJSX(PATHS.test)
-		);
-		break;
-	default:
-		config = merge(
-			common, {
-				devtool: 'eval-source-map',
-			},
-
-			parts.devServer({
-				host: process.env.HOST,	
-				port: process.env.PORT,
-				poll: ENABLE_POLLING
-			}),
-
-			parts.enableReactPerformanceTools(),
-			parts.npmInstall()
-		);
+	module: {
+		loaders: [
+			{
+				test: /\.js$/,
+				loader: 'babel',
+				exclude: /node_modules/,
+				query: {
+					presets: ['es2015']
+				}
+			}
+		]
+	}
 }
-
-module.exports = validate(config, {
-	quiet: true
-});

@@ -1,38 +1,47 @@
-import mongoose from 'mongoose'
-import json from '../helpers/json'
+import mongoose from 'mongoose';
+
+var Section = mongoose.model('Section');
+var Topic = mongoose.model('Topic');
 
 module.exports = () => {
-	var Topic = mongoose.model('Topic');
-	var Section = mongoose.model('Section');
+	let obj = {};
 
-	var obj = {};
+	obj.getCreate = (req, res) => {
+		Topic.findOne({title: req.params.title})
+		.exec((err, topic) => {
+			if (err) {
+				res.json(err);
+			}
+
+			res.render('./templates/sections/create/create', {
+				topic: topic
+			});
+		});
+	};
 
 	obj.create = (req, res) => {
-		console.log(req.body);
-		var section = new Section(req.body);
-		section.title = req.body.title;
-		section.description = req.body.description;
+		let section = new Section(req.body);
 		section.topic = req.body.topic;
+
+		console.log(req.body);
+		
 		section.save((err) => {
-			Topic.findOne({title: req.body.topic})
-			.exec((err, topic) => {
+			Topic.findOne({_id: req.body.topic}, (err, topic) => {
 				if (err) {
-					return json.bad(err, res);
+					res.json(err);
 				}
 
 				topic.sections.push(section);
 				topic.save((err) => {
 					if (err) {
-						return json.bad(err, res);
+						res.json(err);
 					}
 				});
 			});
 
-			json.good({
-				record: section
-			}, res);
+			res.json(section);
 		});
 	};
-
-	return obj; 
+	
+	return obj;
 };
