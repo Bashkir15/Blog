@@ -27,6 +27,7 @@ export function create() {
 			submitButton.classList.add('loading-finished');
 		})
 		.then(() => {
+			submitButton.removeEventListener('click', submit);
 			window.location.href = '/';
 		});
 	}

@@ -24,7 +24,7 @@ module.exports = () => {
 		section.topic = req.body.topic;
 
 		console.log(req.body);
-		
+
 		section.save((err) => {
 			Topic.findOne({_id: req.body.topic}, (err, topic) => {
 				if (err) {
@@ -40,6 +40,20 @@ module.exports = () => {
 			});
 
 			res.json(section);
+		});
+	};
+
+	obj.createPost = (req, res) => {
+		Section.findOne({title: req.params.title})
+		.populate('topic')
+		.exec((err, section) => {
+			if (err) {
+				res.json(err);
+			}
+
+			res.render('./templates/posts/editor/editor', {
+				section: section
+			});
 		});
 	};
 	

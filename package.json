@@ -30,6 +30,7 @@
     "imagemin-pngquant": "^5.0.0"
   },
   "dependencies": {
+    "async": "^2.1.4",
     "axios": "^0.15.2",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
@@ -40,6 +41,7 @@
     "morgan": "^1.7.0",
     "nodemailer": "^2.6.4",
     "path": "^0.12.7",
+    "showdown": "^1.5.0",
     "webpack": "^1.13.3"
   }
 }

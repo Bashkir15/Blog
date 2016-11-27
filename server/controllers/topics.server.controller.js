@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 
 
 module.exports = () => {
-	var Topic = mongoose.model('Topic');
+	let Topic = mongoose.model('Topic');
+	let Section = mongoose.model('Section')
 	
 	let obj = {};
 
@@ -14,6 +15,8 @@ module.exports = () => {
 			if (err) {
 				res.json(err);
 			}
+
+			res.json(topic);
 		});
 	};
 
@@ -33,14 +36,21 @@ module.exports = () => {
 	};
 
 	obj.single = (req, res) => {
-		Topic.findOne({title: req.params.title})
-		.exec((err, topic) => {
+		Topic.findOne({title: req.params.title}, (err, topic) => {
 			if (err) {
 				res.json(err);
 			}
 
-			res.render('./templates/topics/single/single', {
-				topic: topic
+			Section.find({topicTitle: topic.title})
+			.exec((err, sections) => {
+				if (err) {
+					res.json(err);
+				}
+
+				res.render('./templates/topics/single/single', {
+					topic: topic,
+					sections: sections
+				});
 			});
 		});
 	};

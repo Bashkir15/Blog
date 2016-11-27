@@ -32,7 +32,13 @@ var SectionSchema = new mongoose.Schema({
 		type: mongoose.Schema.ObjectId,
 		ref: 'Topic',
 		required: true
-	}
+	},
+
+	posts: [{
+		type: mongoose.Schema.ObjectId,
+		ref: 'Post',
+		required: true
+	}]
 });
 
 mongoose.model('Section', SectionSchema);

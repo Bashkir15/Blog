@@ -25,8 +25,8 @@ export function create() {
 			submitButton.classList.remove('show-loading');
 			submitButton.classList.add('loading-finished');
 		}).then(() => {
-			submitButton.removeEventListener('click');
-			window.location.href(`/${data.topicTitle}`);
+			submitButton.removeEventListener('click', submit);
+			window.location.href= `/${data.topicTitle}`;
 		});
 	}
 

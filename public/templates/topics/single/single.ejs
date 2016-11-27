@@ -30,6 +30,28 @@
 								</a>
 							</div>
 						</header>
+
+						<div class='single-topic-sections'>
+							<div>
+								<% sections.map((section) => { %>
+									<div class='single-section'>
+										<div class='single-section-header'>
+											<a href='/<%= section.title %>/create-post'>
+												<h3><%= section.title %></h3>
+												<p><%= section.description %></p>
+											</a>
+										</div>
+
+										<div class='single-section-posts'>
+											<div>
+												<div></div>
+												<button>title</button>
+											</div>
+										</div>
+									</div>
+								<%	}); %>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
