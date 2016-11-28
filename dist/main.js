@@ -2018,7 +2018,7 @@
 			data.sectionTitle = document.getElementById('post-section-title').value;
 			data.topicTitle = document.getElementById('post-topic-title').value;
 			data.section = document.getElementById('post-section').value;
-			data.content = markdownSection.innerHTML.toString();
+			data.content = markdownSection.innerHTML;
 			_axios2.default.post('http://localhost:3000/posts', {
 				title: data.title,
 				section: data.section,

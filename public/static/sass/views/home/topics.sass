@@ -93,10 +93,13 @@
 	padding: 35px
 
 	h2
+		@include lato()
+		font-weight: 300
 		font-size: 38px
 		padding-top: 20px
 
 	p
+		@include noto()
 		padding-top: 25px
 		padding-bottom 15px
 		font-size: 18px
@@ -124,9 +127,12 @@
 	border-bottom: 1px solid rgba(0,0,0,0.12)
 
 	h3
+		@include lato()
+		font-weight: 300
 		font-size: 26px
 
 	p
+		@include noto()
 		font-size: 15px
 		padding-top: 12px
 
@@ -147,3 +153,8 @@
 		button
 			display: flex
 			flex: 1
+
+			span
+				font-size: 18px
+				color: rgba(0,0,0,0.5)
+				@include noto()

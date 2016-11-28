@@ -36,17 +36,17 @@
 								<% sections.map((section) => { %>
 									<div class='single-section'>
 										<div class='single-section-header'>
-											<a href='/<%= section.title %>/create-post'>
-												<h3><%= section.title %></h3>
-												<p><%= section.description %></p>
-											</a>
+											<h3><%= section.title %></h3>
+											<p><%= section.description %></p>
 										</div>
 
 										<div class='single-section-posts'>
 											<% section.posts.map((post) => { %>
 												<div>
-													<div></div>
-													<button><%= post.title %></button>
+													<a href='/<%= section.topicTitle %>/<%= post.sectionTitle %>/<%= post.title %>'>
+														<div></div>
+														<button><span><%= post.title %></span></button>
+													</a>
 												</div>
 											<% }); %>
 										</div>

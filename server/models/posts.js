@@ -1,4 +1,9 @@
 import mongoose from 'mongoose'
+import escape from 'lodash.escape'
+
+var escapeProperty = (value) => {
+	escape(value);
+};
 
 var PostsSchema = new mongoose.Schema({
 	created: {
@@ -13,12 +18,12 @@ var PostsSchema = new mongoose.Schema({
 
 	title: {
 		type: String,
-		required: true
+		required: true,
 	},
 
 	content: {
 		type: String,
-		required: true
+		required: true,
 	},
 
 	sectionTitle: {
