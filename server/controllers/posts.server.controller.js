@@ -35,9 +35,12 @@ module.exports = () => {
 				res.json(err);
 			}
 
-			res.render('./templates/posts/single/post', {
-				post: post
-			});
+			if (post) {
+
+				res.render('./templates/posts/single/post', {
+					post: post
+				});
+			}
 		});
 	};
 

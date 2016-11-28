@@ -102,5 +102,36 @@
 	span
 		font-size: 27px
 
+@media screen and (min-width: 1300px)
+	.index-header
+		.index-header-about
+			flex-direction: row
+			flex-wrap: wrap
+			align-items: center
+			justify-content: space-around
+			padding-bottom: 0
+
+			> div
+				margin: 0
+				height: 300px
+				width: 450px
+				padding-top: 15px
+
+				h3
+					padding-bottom: 25px
+
+				p
+					font-size: 15px
+
+				&:nth-of-type(2)
+					p
+						padding-bottom: 33px
+
+@media screen and (min-width: 1550px)
+	.index-header
+		.index-header-about
+			> div
+				height: 250px
+				width: 600px
 
 

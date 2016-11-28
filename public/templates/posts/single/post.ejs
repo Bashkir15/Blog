@@ -6,7 +6,9 @@
 		<link rel='stylesheet' href='../../static/icons/ico/style.css'>
 		<link rel='stylesheet' href='../../styles/main.min.css'>
 
-		<link href="https://fonts.googleapis.com/css?family=Lato:300,400i|Noto+Sans:400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/
+		css?family=Lato:300,400i|Noto+Sans:400,700" rel="stylesheet">
+		<link href='../../prismjs/themes/prism-okaidia.css' rel='stylesheet'>
 	</head>
 
 	<body>
@@ -24,13 +26,14 @@
 						</div>
 
 						<div class='single-post-body'>
-							<p id='post-content'><%= post.content %></p>
+							<div id='post-content'><%= post.content %></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<script src='../../prismjs/prism.js'></script>
 		<script src='../../scripts/pages/posts/single.js'></script>
 		<script src='../../scripts/main.min.js'></script>
 	</body>
