@@ -41,7 +41,7 @@ module.exports = () => {
 				res.json(err);
 			}
 
-			Section.find({topicTitle: topic.title})
+			Section.find({topic: topic})
 			.populate('posts')
 			.exec((err, sections) => {
 				if (err) {

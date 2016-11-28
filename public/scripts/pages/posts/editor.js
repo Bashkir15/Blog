@@ -35,5 +35,14 @@ export function editor() {
 	}
 
 	pad.addEventListener('input', convertTextToMarkdown);
+	pad.addEventListener('keydown', (e) => {
+
+		if (e.which == 9) {
+			e.preventDefault();
+			let s = pad.selectionStart;
+			pad.value = pad.value.substring(0, pad.selectionStart) + "\t" + pad.value.substring(pad.selectionEnd);
+			pad.selectionEnd = s + 1
+		}
+	});
 	submitButton.addEventListener('click', submit);
 }

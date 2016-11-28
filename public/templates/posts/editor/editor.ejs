@@ -22,21 +22,26 @@
 						<input disabled value='<%= section.title %>' id='post-section-title'>
 						<input disabled id='post-topic-title' value='<%= section.topic.title %>'>
 
-						<div class='input-wrapper'>
+						<div class='editor-submit'>
+							<button type='button' id='submit-post'>
+								<span>Submit</span>
+							</button>
+						</div>
+
+						<div class='edit-wrapper'>
 							<label>Title</label>
 							<input type='text' name='title' id='post-title'>
 						</div>
 
 
-						<div class='editor-inputs'>
-							<textarea name='pad' id='pad'></textarea>
-							<div id='markdown-section'></div>
-						</div>
+						<div class='edit-editor'>
+							<div class='editor-inputs'>
+								<textarea name='pad' id='pad'></textarea>
+							</div>
 
-						<div class='editor-submit'>
-							<button type='button' id='submit-post'>
-								<span>Submit</span>
-							</button>
+							<div class='editor-output'>
+								<div id='markdown-section'></div>
+							</div>
 						</div>
 					</div>
 				</div>

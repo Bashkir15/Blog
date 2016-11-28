@@ -1,5 +1,7 @@
 export function single() {
-	let accordianSections = document.querySelectorAll('.single-section-posts');
+	let accordian = document.querySelectorAll('.single-section-posts');
+	let accordianSections = Array.prototype.slice.call(accordian, 0);
+
 
 	function makeAccordian() {
 		accordianSections.forEach((section) => {

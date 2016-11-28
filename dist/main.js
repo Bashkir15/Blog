@@ -56,7 +56,7 @@
 
 	var _sections = __webpack_require__(30);
 
-	var _posts = __webpack_require__(32);
+	var _posts = __webpack_require__(33);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1905,7 +1905,7 @@
 
 	var _create = __webpack_require__(31);
 
-	var _single = __webpack_require__(35);
+	var _single = __webpack_require__(32);
 
 	function sections() {
 		if (window.location.href.indexOf('create-section') != -1) {
@@ -1966,21 +1966,35 @@
 
 /***/ },
 /* 32 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.posts = posts;
+	exports.single = single;
+	function single() {
+		var accordian = document.querySelectorAll('.single-section-posts');
+		var accordianSections = Array.prototype.slice.call(accordian, 0);
 
-	var _editor = __webpack_require__(33);
+		function makeAccordian() {
+			accordianSections.forEach(function (section) {
+				var toggleButton = document.querySelector('.close-section-button');
 
-	function posts() {
-		if (window.location.href.indexOf('create-post') != -1) {
-			(0, _editor.editor)();
+				toggleButton.addEventListener('click', function () {
+					if (section.classList.contains('section-closed')) {
+						toggleButton.classList.remove('section-closed');
+						section.classList.remove('section-closed');
+					} else {
+						section.classList.add('section-closed');
+						toggleButton.classList.add('section-closed');
+					}
+				});
+			});
 		}
+
+		makeAccordian();
 	}
 
 /***/ },
@@ -1992,9 +2006,28 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.posts = posts;
+
+	var _editor = __webpack_require__(34);
+
+	function posts() {
+		if (window.location.href.indexOf('create-post') != -1) {
+			(0, _editor.editor)();
+		}
+	}
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	exports.editor = editor;
 
-	var _showdown = __webpack_require__(34);
+	var _showdown = __webpack_require__(35);
 
 	var _showdown2 = _interopRequireDefault(_showdown);
 
@@ -2037,11 +2070,20 @@
 		}
 
 		pad.addEventListener('input', convertTextToMarkdown);
+		pad.addEventListener('keydown', function (e) {
+
+			if (e.which == 9) {
+				e.preventDefault();
+				var s = pad.selectionStart;
+				pad.value = pad.value.substring(0, pad.selectionStart) + "\t" + pad.value.substring(pad.selectionEnd);
+				pad.selectionEnd = s + 1;
+			}
+		});
 		submitButton.addEventListener('click', submit);
 	}
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;;/*! showdown 11-11-2016 */
@@ -4496,38 +4538,6 @@
 
 	//# sourceMappingURL=showdown.js.map
 
-
-/***/ },
-/* 35 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.single = single;
-	function single() {
-		var accordianSections = document.querySelectorAll('.single-section-posts');
-
-		function makeAccordian() {
-			accordianSections.forEach(function (section) {
-				var toggleButton = document.querySelector('.close-section-button');
-
-				toggleButton.addEventListener('click', function () {
-					if (section.classList.contains('section-closed')) {
-						toggleButton.classList.remove('section-closed');
-						section.classList.remove('section-closed');
-					} else {
-						section.classList.add('section-closed');
-						toggleButton.classList.add('section-closed');
-					}
-				});
-			});
-		}
-
-		makeAccordian();
-	}
 
 /***/ }
 /******/ ]);
