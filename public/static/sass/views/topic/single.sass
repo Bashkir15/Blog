@@ -1,0 +1,181 @@
+.single-topic-container
+	display: flex
+	flex-direction: column
+	align-items: center
+	width: 100%
+	background: #f6f9fa
+
+.single-topic-header
+	display: flex
+	flex-direction: column
+	align-items: center
+	border-bottom: 1px solid rgba(0,0,0,0.12)
+	padding: 35px
+	background: #44bba9
+
+	h2
+		@include lato()
+		font-weight: 300
+		font-size: 70px
+		color: #dfe1df
+		letter-spacing: 5px
+		padding-top: 20px
+
+	p
+		@include noto()
+		padding-top: 55px
+		padding-bottom: 35px
+		letter-spacing: 2px
+		color: darken(#dfe1df, 5%)
+		text-align: center
+		line-height: 26px
+		font-size: 20px
+
+.single-topic-sections
+	width: 90%
+	margin: 0 auto
+	background: #f6f9fa
+
+	> div
+		display: flex
+		flex-direction: column
+		align-items: center
+		padding-top: 100px
+
+.single-section
+	display: flex
+	flex-direction: column
+	align-items: center
+	width: 100%
+	margin-bottom: 75px
+	border: 1px solid rgba(0,0,0,0.12)
+	background: #fff
+
+.single-section-header
+	position: relative
+	height: 200px
+	padding: 30px 20px
+	border-bottom: 1px solid rgba(0,0,0,0.12)
+
+	h3
+		@include lato()
+		font-weight: 300
+		font-size: 38px
+		letter-spacing: 3px
+		line-height: 46px
+		color: rgba(0,0,0,0.7)
+
+	p
+		@include noto()
+		font-weight: 400
+		font-size: 17px
+		line-height: 24px
+		letter-spacing: 2px
+		color: rgba(0,0,0,0.4)
+		padding-top: 18px
+
+.close-section-button
+	position: absolute
+	top: 35px
+	right: 20px
+	height: 20px
+	width: 20px
+
+	span
+		position: relative
+		display: inline-block
+		font-size: 24px
+		color: rgba(0,0,0,0.5)
+		transition: all .4s ease-out
+
+	&.section-closed
+		span
+			transform: rotate(-180deg)
+
+.single-section-posts
+	width: 100%
+	max-height: 100%
+	visibility: visible
+	transition: all .4s ease
+
+	a
+		display: flex
+		paading: 15px 0
+		width: 100%
+		height: 70px
+		border-bottom: 1px solid rgba(0,0,0,0.12)
+		opacity: 1
+		transition: all .4s ease
+
+		> div
+			height: 100%
+			width: 24px
+			background: rgb(105, 201, 186)
+			transition: all .4s ease
+
+		button
+			display: flex
+			flex: 1
+			padding-left: 20px
+			transition: all .4s ease
+
+			span
+				display: inline-block
+				font-size: 20px
+				color: rgba(0,0,0,0.5)
+				@include lato()
+				font-weight: 300
+				letter-spacing: 2px
+				transition: all .4s ease
+
+		&:hover
+			> div
+				background: darken(rgb(105, 201, 186), 15%)
+				padding-right: 30px
+
+			button
+				background: rgb(105, 201, 186)
+
+				span
+					color: #fff
+
+	&.section-closed
+		max-height: 0
+		visibility: hidden
+		transition: all .4s ease
+
+		a
+			opacity: 0
+			transition: all .4s ease
+
+.single-section-no-posts
+	height: 0
+
+@media screen and (min-width: 750px)
+	.single-topic-sections
+		width: 80%
+
+@media screen and (min-width: 1000px)
+	.single-topic-sections
+		width: 70%
+
+@media screen and (min-width: 1600px)
+	.single-topic-sections
+		width: 90%
+		margin: 0 auto
+		
+		> div
+			display: flex
+			flex-direction: row
+			align-items: stretch
+			flex-wrap: flex
+			justify-content: space-around
+
+			> div
+				width: 600px
+
+@media screen and (min-width: 1550px)
+	.single-topic-sections
+		> div
+			> div
+				width: 600px

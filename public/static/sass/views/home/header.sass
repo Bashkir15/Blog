@@ -9,7 +9,10 @@
 		border-bottom: 1px solid rgba(0,0,0,0.12)
 		padding-top: 65px
 		padding-left: 35px
-		background: #41a3ff
+		//background: #41a3ff
+		//background: #59b6fe
+		//background: #52d4c4
+		background: rgb(105, 201, 186)
 
 	header
 		padding-bottom: 30px
@@ -57,13 +60,14 @@
 		height: 40px
 		width: 155px
 		border-radius: 22px
-		border: 6px solid #f6f9fa
-		background: #fff
+		border: 3px solid #69c9ba
+		//background: #44bba9
+		background: #283139
 
 		span
 			@include lato()
 			font-weight: 300
-			color: rgba(0,0,0,0.5)
+			color: #dfe1df
 			font-size: 17px
 
 .index-header-about
@@ -104,6 +108,13 @@
 
 @media screen and (min-width: 1300px)
 	.index-header
+
+		header
+			text-align: center
+
+		p
+			text-align: center
+
 		.index-header-about
 			flex-direction: row
 			flex-wrap: wrap
@@ -129,9 +140,29 @@
 
 @media screen and (min-width: 1550px)
 	.index-header
+
+		> div
+			&:nth-of-type(1)
+				padding-bottom: 45px
+
 		.index-header-about
 			> div
 				height: 250px
 				width: 600px
 
+		.index-header-latest
+			width: 100%
+			display: none
+			align-items: center
+			justify-content: center
+			padding-bottom: 0
+
+			button
+				height: 55px
+				width: 220px
+				border-radius: 0
+				border-left: 2px solid #56c2b1
+				border-top: 2px solid #56c2b1
+				border-right: 2px solid #56c2b1
+				border-bottom: none
 

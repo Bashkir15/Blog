@@ -21,14 +21,6 @@
 						<header class='single-topic-header'>
 							<h2><%= topic.title %></h2>
 							<p><%= topic.description %></p>
-
-							<div class='single-topic-create-section'>
-								<a href='/<%= topic.title %>/create-section'>
-									<button>
-										<span>Create Section</span>
-									</button>
-								</a>
-							</div>
 						</header>
 
 						<div class='single-topic-sections'>
@@ -36,20 +28,29 @@
 								<% sections.map((section) => { %>
 									<div class='single-section'>
 										<div class='single-section-header'>
+											<button id='close-section-button' class='close-section-button'>
+												<span class='icon-expand_less' id='close-section-icon'></span>
+											</button>
 											<h3><%= section.title %></h3>
 											<p><%= section.description %></p>
 										</div>
 
-										<div class='single-section-posts'>
-											<% section.posts.map((post) => { %>
-												<div>
-													<a href='/<%= section.topicTitle %>/<%= post.sectionTitle %>/<%= post.title %>'>
-														<div></div>
-														<button><span><%= post.title %></span></button>
-													</a>
-												</div>
-											<% }); %>
-										</div>
+										<% if (section.posts.length) { %>
+											<div class='single-section-posts'>
+												<% section.posts.map((post) => { %>
+													<div>
+														<a href='/<%= section.topicTitle %>/<%= post.sectionTitle %>/<%= post.title %>'>
+															<div></div>
+															<button><span><%= post.title %></span></button>
+														</a>
+													</div>
+												<% }); %>
+											</div>
+										<% } else { %>
+											<div class='single-section-no-posts'>
+												<p>There are no posts for this section yet</p>
+											</div>
+										<% } %>
 									</div>
 								<%	}); %>
 							</div>

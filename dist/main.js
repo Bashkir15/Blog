@@ -1905,9 +1905,13 @@
 
 	var _create = __webpack_require__(31);
 
+	var _single = __webpack_require__(35);
+
 	function sections() {
 		if (window.location.href.indexOf('create-section') != -1) {
 			(0, _create.create)();
+		} else {
+			(0, _single.single)();
 		}
 	}
 
@@ -4492,6 +4496,38 @@
 
 	//# sourceMappingURL=showdown.js.map
 
+
+/***/ },
+/* 35 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.single = single;
+	function single() {
+		var accordianSections = document.querySelectorAll('.single-section-posts');
+
+		function makeAccordian() {
+			accordianSections.forEach(function (section) {
+				var toggleButton = document.querySelector('.close-section-button');
+
+				toggleButton.addEventListener('click', function () {
+					if (section.classList.contains('section-closed')) {
+						toggleButton.classList.remove('section-closed');
+						section.classList.remove('section-closed');
+					} else {
+						section.classList.add('section-closed');
+						toggleButton.classList.add('section-closed');
+					}
+				});
+			});
+		}
+
+		makeAccordian();
+	}
 
 /***/ }
 /******/ ]);
