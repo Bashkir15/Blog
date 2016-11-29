@@ -2010,9 +2010,13 @@
 
 	var _editor = __webpack_require__(34);
 
+	var _single = __webpack_require__(36);
+
 	function posts() {
 		if (window.location.href.indexOf('create-post') != -1) {
 			(0, _editor.editor)();
+		} else {
+			(0, _single.single)();
 		}
 	}
 
@@ -2044,7 +2048,7 @@
 		var submitButton = document.getElementById('submit-post');
 
 		function convertTextToMarkdown() {
-			var markdownText = pad.value;
+			var markdownText = pad.value.split("\t").join("#").split('\n').join("~");
 			var html = converter.makeHtml(markdownText);
 			markdownSection.innerHTML = html;
 		}
@@ -4538,6 +4542,72 @@
 
 	//# sourceMappingURL=showdown.js.map
 
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.single = single;
+
+	var _jsParser = __webpack_require__(37);
+
+	function single() {
+		var postContent = document.getElementById('post-content');
+
+		function renderPost() {
+			document.body.addClass = 'is-loading';
+
+			var newPostContent = postContent.innerText;
+			postContent.innerHTML = newPostContent;
+
+			var codeContent = document.querySelectorAll('.markup-js');
+
+			Array.prototype.forEach.call(codeContent, function (content) {
+				content.innerHTML = (0, _jsParser.renderJs)(content);
+			});
+		}
+
+		renderPost();
+	}
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.renderJs = renderJs;
+	var strReg1 = /"(.*?)"/g;
+	var strReg2 = /'(.*?)'/g;
+	var specialReg = /\b(new|var|if|do|function|while|switch|for|foreach|in|continue|break|let|map|const)(?=[^\w])/g;
+	var specialJsGlobReg = /\b(document|window|Array|\$)(?=[^w])/g;
+	var specialJsReg = /\b(getElementsBy(TagName|ClassName|Name)|getElementById|typeof|instanceof)(?=[^\w])/g;
+	var specialMathReg = /\b(indexOf|match|replace|toString|length)(?=[^\w])/g;
+	var specialCommentReg = /(\/\*.*\*\/)/g;
+	var inlineCommentReg = /(\/\/.*)/g;
+	var htmlTagReg = /($lt;[^\&]*&gt;)/g;
+
+	function renderJs(item) {
+		var string = item.innerHTML;
+		var parsed = string.replace(strReg1, '<span class="string">"$1"</span>');
+		parsed = parsed.replace(strReg2, "<span class\"string\">'$1'</span>");
+		parsed = parsed.replace(specialReg, '<span class="special">$1</span>');
+		parsed = parsed.replace(specialJsGlobReg, '<span class="special-js-glob">$1</span>');
+		parsed = parsed.replace(specialJsReg, '<span class="special-js">$1</span>');
+		parsed = parsed.replace(specialMathReg, '<span class="special-js-math">$1</span>');
+		parsed = parsed.split("~").join("<br />");
+		parsed = parsed.split("#").join("<span class='indent'></span>");
+
+		return item.innerHTML = parsed;
+	}
 
 /***/ }
 /******/ ]);

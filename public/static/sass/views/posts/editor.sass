@@ -80,6 +80,7 @@
 		@include noto()
 		font-weight: 400
 		font-size: 20px
+		white-space: pre-wrap
 
 .editor-output
 	display: flex
@@ -87,5 +88,9 @@
 	border-top: 1px solid rgba(0,0,0,0.7)
 	padding-top: 25px
 	padding-left: 13px
+	white-space: pre-wrap
 
+	> pre
+		> code
+			white-space: normal
 

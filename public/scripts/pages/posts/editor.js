@@ -8,7 +8,7 @@ export function editor() {
 	let submitButton = document.getElementById('submit-post');
 
 	function convertTextToMarkdown() {
-		let markdownText = pad.value;
+		let markdownText = pad.value.split("\t").join("#").split('\n').join("~");
 		let html = converter.makeHtml(markdownText);
 		markdownSection.innerHTML = html;
 	}

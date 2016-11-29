@@ -9,6 +9,8 @@ module.exports = () => {
 		var post = new Post(req.body);
 		post.section = req.body.section;
 
+		console.log(req.body);
+		
 		post.save((err) => {
 			Section.findOne({_id: post.section}, (err, section) => {
 				if (err) {
