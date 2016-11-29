@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import Topics from './server/models/topics'
 import Sections from './server/models/sections'
 import Posts from './server/models/posts'
+import Users from './server/models/users'
 
 import express from './server/config/express'
 
