@@ -35,6 +35,7 @@
 	flex-direction: column
 	width: 100%
 	padding-top: 45px
+	padding-bottom: 40px
 
 	> div
 		> p 
@@ -54,22 +55,23 @@
 	padding-bottom: 15px
 
 	h1
-		@include lato()
-		font-weight: 300
-		letter-spacing: 2px
-		color: rgba(0,0,0,0.6)
-		font-size: 28px
-		text-align: left
-
-.post-section-text
-	padding-bottom: 50px
-
-	p
 		@include noto()
 		font-weight: 400
 		letter-spacing: 2px
-		font-size: 18px
-		color: rgba(0,0,0,0.4)
+		color: rgba(0,0,0,0.6)
+		font-size: 27px
+		text-align: left
+
+.post-section-text
+	padding-bottom: 10px
+
+	p
+		@include lato()
+		font-weight: 300
+		letter-spacing: 2px
+		font-size: 22px
+		line-height: 29px
+		color: rgba(0,0,0,0.5)
 		text-align: left
 
 .post-image
@@ -90,7 +92,7 @@
 		@include noto()
 		font-weight: 400
 		letter-spacing: 2px
-		font-size: 19px
+		font-size: 20px
 		color: rgba(0,0,0,0.6)
 		padding-bottom: 20px
 

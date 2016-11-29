@@ -55,6 +55,7 @@
 	position: relative
 	height: 200px
 	padding: 30px 20px
+	width: 100%
 	border-bottom: 1px solid rgba(0,0,0,0.12)
 
 	h3
@@ -73,6 +74,16 @@
 		letter-spacing: 2px
 		color: rgba(0,0,0,0.4)
 		padding-top: 18px
+
+	&.closed
+		& + .single-section-posts
+			max-height: 0
+			visibility: hidden
+			transition: all .4s ease
+
+			a
+				opacity: 0
+				transition: all .4s ease
 
 .section-create-post
 	position: relative
@@ -155,14 +166,6 @@
 				span
 					color: #fff
 
-	&.section-closed
-		max-height: 0
-		visibility: hidden
-		transition: all .4s ease
-
-		a
-			opacity: 0
-			transition: all .4s ease
 
 .single-section-no-posts
 	height: 0

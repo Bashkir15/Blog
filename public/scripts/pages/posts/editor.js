@@ -1,5 +1,6 @@
 import showdown from 'showdown'
 import axios from 'axios'
+import { renderJs } from '../../libs/js-parser'
 
 export function editor() {
 	let converter = new showdown.Converter();
@@ -9,8 +10,16 @@ export function editor() {
 
 	function convertTextToMarkdown() {
 		let markdownText = pad.value.split("\t").join("#").split('\n').join("~");
-		let html = converter.makeHtml(markdownText);
-		markdownSection.innerHTML = html;
+		markdownSection.innerHTML = markdownText;
+		
+		let codeElement = document.querySelectorAll('.js-markup');
+
+		Array.prototype.forEach.call(codeElement, (element) => {
+			element.innerHTML = renderJs(element);
+		});
+
+		markdownSection.innerHTML = markdownSection.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>")
+
 	}
 
 	function submit() {
@@ -19,7 +28,7 @@ export function editor() {
 		data.sectionTitle = document.getElementById('post-section-title').value;
 		data.topicTitle = document.getElementById('post-topic-title').value;
 		data.section = document.getElementById('post-section').value;
-		data.content = markdownSection.innerHTML;
+		data.content = pad.value.split("\t").join("#").split('\n').join("~");
 		axios.post('http://localhost:3000/posts',  {
 			title: data.title,
 			section: data.section,

@@ -1,12 +1,20 @@
 .nav
 	display: flex
 	align-items: stretch
-	position: relative
+	position: fixed
 	height: 65px
+	top: 0
+	left: 0
 	width: 100%
 	border-bottom: 1px solid rgba(0,0,0,0.12)
 	overflow: hidden
 	background: #fdfeff
+	transition: all .38s ease-out
+
+	&.nav-unpinned
+		transform: translateY(-80px)
+	&.nav-pinned
+		transform: translateY(0)
 
 .nav-left
 	display: flex
@@ -151,6 +159,11 @@
 				flex: 1
 
 @media screen and (min-width: 1300px)
+	.nav
+		position: fixed
+		top: 0
+		left: 300px
+
 	.nav-left
 		.nav-item
 			&:nth-of-type(1)

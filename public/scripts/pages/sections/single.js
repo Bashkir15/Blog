@@ -1,22 +1,63 @@
 export function single() {
-	let accordian = document.querySelectorAll('.single-section-posts');
-	let accordianSections = Array.prototype.slice.call(accordian, 0);
 
+	function makeAccordian(accordian) {
+		accordian = accordian || document.querySelectorAll('.single-section-posts');
+		let toggleButton = document.querySelectorAll('.close-section-button');
+		let currentTarget;
 
-	function makeAccordian() {
-		accordianSections.forEach((section) => {
-			let toggleButton = document.querySelector('.close-section-button');
+		for (var i = 0; i < toggleButton.length; i++) {
+			let target = toggleButton[i];
 
-			toggleButton.addEventListener('click', () => {
-				if (section.classList.contains('section-closed')) {
-					toggleButton.classList.remove('section-closed');
-					section.classList.remove('section-closed');
+			target.addEventListener('click', function() {
+				currentTarget = this.parentNode;
+
+				if (currentTarget.classList.contains('closed')) {
+					target.classList.remove('section-closed');
+					currentTarget.classList.remove('closed');
 				} else {
-					section.classList.add('section-closed');
-					toggleButton.classList.add('section-closed');
+					target.classList.add('section-closed');
+					currentTarget.classList.add('closed');
 				}
+			}, false);
+		}
+
+		for (var i = 0; i < accordian.length; i++) {
+			makeAccordian(accordian[i]);
+		}
+
+		/*for (var i = 0; i < accordianSections.length; i++) {
+			let section = accordianSections[i];
+
+			for (var j = 0; j < toggleButtons.length; j++) {
+				let button = toggleButtons[j];
+
+				button.addEventListener('click', () => {
+					if (section.classList.contains('section-closed')) {
+						button.classList.remove('section-closed');
+						section.classList.remove('section-closed');
+					} else {
+						section.classList.add('section-closed');
+						button.classList.add('section-closed');
+					}
+				});
+			}
+		} */
+		/*accordianSections.forEach((section) => {
+			let toggleButton = document.querySelectorAll('.close-section-button');
+			let toggleButtons = Array.prototype.slice.call(toggleButton, 0);
+
+			toggleButton.forEach((button) => {
+				button.addEventListener('click', () => {
+					if (section.classList.contains('section-closed')) {
+						toggleButton.classList.remove('section-closed');
+						section.classList.remove('section-closed');
+					} else {
+						section.classList.add('section-closed');
+						toggleButton.classList.add('section-closed');
+					}
+				});
 			});
-		});
+		}); */
 	}
 
 	makeAccordian();
