@@ -74,10 +74,26 @@
 		color: rgba(0,0,0,0.4)
 		padding-top: 18px
 
+.section-create-post
+	position: relative
+	display: flex
+	align-items: center
+	justify-content: flex-end
+	width: 100%
+	height: 50px
+
+
+	a
+		button
+			height: 45px
+			width: 43px
+			border: 1px solid rgba(0,0,0,0.23)
+			border-radius: 50%
+
 .close-section-button
 	position: absolute
 	top: 35px
-	right: 20px
+	right: 39px
 	height: 20px
 	width: 20px
 
@@ -155,6 +171,9 @@
 	.single-topic-sections
 		width: 80%
 
+	.section-create-post
+		padding-top: 15px
+
 @media screen and (min-width: 1000px)
 	.single-topic-sections
 		width: 70%
@@ -173,6 +192,9 @@
 
 			> div
 				width: 600px
+
+	.section-create-post
+		padding-top: 5px
 
 @media screen and (min-width: 1550px)
 	.single-topic-sections

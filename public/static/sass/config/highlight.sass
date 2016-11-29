@@ -1,0 +1,44 @@
+pre
+	display: block
+	font-family: monoscape
+	white-space: pre-line
+
+	> code
+		display: block
+		white-space: pre-line
+		background: #272822
+		color: #dfe1df
+		padding-top: 25px
+		padding-left: 25px
+		@include lato()
+		font-weight: 300
+		font-size: 18px
+		letter-spacing: 1px
+		line-height: 26px
+
+
+		span
+
+			&.indent
+				padding-left: 15px
+
+			&.method
+				color: #66d9ef
+
+			&.string
+				color: #e6db74
+
+			&.condition
+				color: #f92672;
+
+			&.setter
+				color: #ae81ff
+
+			&.number
+				color: #ae81ff
+
+			&.static
+				color: #a6e22e
+
+			&.other
+				color: #fd971f

@@ -9,11 +9,13 @@ export function single() {
 		let newPostContent = postContent.innerText;
 		postContent.innerHTML = newPostContent;
 
-		let codeContent = document.querySelectorAll('.markup-js');
+		let codeContent = document.querySelectorAll('.js-markup');
 
 		Array.prototype.forEach.call(codeContent, function(content) {
 		 	content.innerHTML = renderJs(content);
 		}); 
+
+		postContent.innerHTML = postContent.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>");
 	}
 
 	renderPost();

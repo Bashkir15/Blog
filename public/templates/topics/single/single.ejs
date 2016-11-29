@@ -21,6 +21,14 @@
 						<header class='single-topic-header'>
 							<h2><%= topic.title %></h2>
 							<p><%= topic.description %></p>
+
+							<div class='section-create-button'>
+								<a href='/<%= topic.title %>/create-section'>
+									<button>
+										<span class='icon-add'></span>
+									</button>
+								</a>
+							</div>
 						</header>
 
 						<div class='single-topic-sections'>
@@ -33,6 +41,13 @@
 											</button>
 											<h3><%= section.title %></h3>
 											<p><%= section.description %></p>
+											<div class='section-create-post'>
+												<a href='/<%= section.title %>/create-post'>
+													<button>
+														<span class='icon-add'></span>
+													</button>
+												</a>
+											</div>
 										</div>
 
 										<% if (section.posts.length) { %>

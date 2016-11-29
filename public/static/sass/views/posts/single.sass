@@ -19,6 +19,7 @@
 		letter-spacing: 2px
 		color: rgba(0,0,0,0.5)
 		padding-bottom: 25px
+		text-align: center
 
 	p
 		@include lato()
@@ -32,9 +33,21 @@
 .single-post-body
 	display: flex
 	flex-direction: column
-	width: 80%
+	width: 100%
 	padding-top: 45px
-	margin: 0 auto
+
+	> div
+		> p 
+			@include noto()
+			font-weight: 400
+			letter-spacing: 2px
+			font-size: 21px
+			line-height: 30px
+			color: rgba(0,0,0,0.6)
+
+			a
+				color: #ae70ac
+				cursor: pointer
 
 
 .post-section-header
@@ -58,4 +71,58 @@
 		font-size: 18px
 		color: rgba(0,0,0,0.4)
 		text-align: left
+
+.post-image
+	display: flex
+	align-items: center
+	justify-content: center
+	width: 100%
+
+	img
+		max-width: 100%
+
+.post-last-section
+	display: flex
+	flex-direction: column
+	align-items: center
+
+	p
+		@include noto()
+		font-weight: 400
+		letter-spacing: 2px
+		font-size: 19px
+		color: rgba(0,0,0,0.6)
+		padding-bottom: 20px
+
+	button
+		height: 55px
+		width: 180px
+		border: 1px solid rgba(0,0,0,0.5)
+
+		span
+			@include lato()
+			font-weight: 300
+			letter-spacing: 1px
+			font-size: 18px
+			color: rgba(0,0,0,0.4)
+
+.post-text-section
+	@include noto()
+	font-weight: 400
+	font-size: 21px
+	color: rgba(0,0,0,0.6)
+	line-height: 30px
+
+
+@media screen and (min-width: 700px)
+	.single-post-body
+		width: 80%
+		margin: 0 auto
 	
+@media screen and (min-width: 1000px)
+	.single-post-body
+		width: 70%
+
+@media screen and (min-width: 1650px)
+	.single-post-body
+		width: 60%

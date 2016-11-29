@@ -4565,11 +4565,13 @@
 			var newPostContent = postContent.innerText;
 			postContent.innerHTML = newPostContent;
 
-			var codeContent = document.querySelectorAll('.markup-js');
+			var codeContent = document.querySelectorAll('.js-markup');
 
 			Array.prototype.forEach.call(codeContent, function (content) {
 				content.innerHTML = (0, _jsParser.renderJs)(content);
 			});
+
+			postContent.innerHTML = postContent.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>");
 		}
 
 		renderPost();
@@ -4587,10 +4589,15 @@
 	exports.renderJs = renderJs;
 	var strReg1 = /"(.*?)"/g;
 	var strReg2 = /'(.*?)'/g;
-	var specialReg = /\b(new|var|if|do|function|while|switch|for|foreach|in|continue|break|let|map|const)(?=[^\w])/g;
-	var specialJsGlobReg = /\b(document|window|Array|\$)(?=[^w])/g;
-	var specialJsReg = /\b(getElementsBy(TagName|ClassName|Name)|getElementById|typeof|instanceof)(?=[^\w])/g;
-	var specialMathReg = /\b(indexOf|match|replace|toString|length)(?=[^\w])/g;
+	var strReg3 = /`(.*?)`/g;
+
+	var insideParen = /(.*?)/g;
+	var methodReg = /\b(new|var|function|forEach|let|map|const|map|pop|push|split|join|replace|slice|filter|async|add|await|extends|document|window|Array|Object|String|Boolean|angular|React|indexOf|concat|match|toString|length|toObject|hasOwnProperty|includes|getElementsBy(TagName|ClassName|Name)|getElementById|typeof|instanceof|querySelector|querySelectorAll|\$)(?=[^\w])/g;
+	var setReg = /\b(null|with|undefined)(?=[^\w])/g;
+	var numberReg = /\b-?(0x[\dA-Fa-f]+|0b[01]+|0o[0-7]+|\d*\.?\d+([Ee][+-]?\d+)?|NaN|Infinity)\b/;
+	var conditionReg = /\b(if|do|while|switch|for|in|break|case|return|export|default|import|from|delete|Throw|Error|try|yield|catch|as|implements|public)(?=[^\w])/g;
+	var staticReg = /\b(get|continue|static|set|finally)(?=[^\w])/g;
+	var otherReg = /\b(this|then)(?=[^\w])/g;
 	var specialCommentReg = /(\/\*.*\*\/)/g;
 	var inlineCommentReg = /(\/\/.*)/g;
 	var htmlTagReg = /($lt;[^\&]*&gt;)/g;
@@ -4598,16 +4605,21 @@
 	function renderJs(item) {
 		var string = item.innerHTML;
 		var parsed = string.replace(strReg1, '<span class="string">"$1"</span>');
-		parsed = parsed.replace(strReg2, "<span class\"string\">'$1'</span>");
-		parsed = parsed.replace(specialReg, '<span class="special">$1</span>');
-		parsed = parsed.replace(specialJsGlobReg, '<span class="special-js-glob">$1</span>');
-		parsed = parsed.replace(specialJsReg, '<span class="special-js">$1</span>');
-		parsed = parsed.replace(specialMathReg, '<span class="special-js-math">$1</span>');
-		parsed = parsed.split("~").join("<br />");
-		parsed = parsed.split("#").join("<span class='indent'></span>");
+		parsed = parsed.replace(strReg2, "<span class=\"string\">'$1'</span>");
+		parsed = parsed.replace(strReg3, '<span class="string">`$1`</span>');
+		parsed = parsed.replace(methodReg, '<span class="method">$1</span>');
+		parsed = parsed.replace(setReg, '<span class="setter">$1</span>');
+		parsed = parsed.replace(numberReg, '<span class="number">$1</span>');
+		parsed = parsed.replace(conditionReg, '<span class="condition">$1</span>');
+		parsed = parsed.replace(staticReg, '<span class="static">$1</span>');
+		parsed = parsed.replace(otherReg, '<span class="other">$1</span>');
 
 		return item.innerHTML = parsed;
 	}
+
+	// enum
+	// number /\b-?(0x[\dA-Fa-f]+|0b[01]+|0o[0-7]+|\d*\.?\d+([Ee][+-]?\d+)?|NaN|Infinity)\b/,
+	//regex /(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\\\r\n])+\/[gimyu]{0,5}(?=\s*($|[\r\n,.;})]))/
 
 /***/ }
 /******/ ]);

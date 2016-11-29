@@ -46,5 +46,19 @@ module.exports = () => {
 		});
 	};
 
+	obj.latest = (req, res) => {
+		Post.find({}, null, {sort: {created: 1}})
+		.populate('section')
+		.exec((err, posts) => {
+			if (err) {
+				res.json(err);
+			}
+
+			res.render('./templates/posts/latest/latest', {
+				posts: posts
+			});
+		});
+	};
+
 	return obj;
 };
