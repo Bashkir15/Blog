@@ -4769,6 +4769,9 @@
 		value: true
 	});
 	exports.mergeObj = mergeObj;
+	exports.cacheQuery = cacheQuery;
+	exports.cacheId = cacheId;
+	exports.cacheSingle = cacheSingle;
 	function mergeObj() {
 		var obj = {};
 
@@ -4783,6 +4786,36 @@
 		});
 
 		return obj;
+	}
+
+	function cacheQuery(query) {
+		this.cache = this.cache || {};
+
+		if (!this.cache[query]) {
+			this.cache[query] = document.querySelectorAll(query);
+		}
+
+		return this.cache[query];
+	}
+
+	function cacheId(query) {
+		this.cache = this.cache || {};
+
+		if (!this.cache[query]) {
+			this.cache[query] = document.getElementById(query);
+		}
+
+		return this.cache[query];
+	}
+
+	function cacheSingle(query) {
+		this.cache = this.cache || {};
+
+		if (!this.cache[query]) {
+			this.cache[query] = document.querySelect(query);
+		}
+
+		return this.cache[query];
 	}
 
 /***/ }

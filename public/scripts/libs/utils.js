@@ -9,3 +9,33 @@ export function mergeObj(...args) {
 
 	return obj;
 }
+
+export function cacheQuery(query) {
+	this.cache = this.cache || {};
+
+	if (!this.cache[query]) {
+		this.cache[query] = document.querySelectorAll(query);
+	}
+
+	return this.cache[query];
+}
+
+export function cacheId(query) {
+	this.cache = this.cache || {};
+
+	if (!this.cache[query]) {
+		this.cache[query] = document.getElementById(query);
+	}
+
+	return this.cache[query];
+}
+
+export function cacheSingle(query) {
+	this.cache = this.cache || {};
+
+	if (!this.cache[query]) {
+		this.cache[query] = document.querySelect(query);
+	}
+
+	return this.cache[query];
+}
