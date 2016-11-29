@@ -15,7 +15,7 @@ module.exports = {
 		if (obj.res.errors) {
 			obj.res.messages = [];
 
-			for (var i obj.res.errors) {
+			for (var i in obj.res.errors) {
 				obj.res.messages.push(obj.res.errors[i].message);
 			}
 

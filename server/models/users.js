@@ -37,10 +37,10 @@ var userSchema = new mongoose.Schema({
 		get: escapeProperty
 	},
 
-	roles: [
+	roles: {
 		type: Array,
 		default: ['authenticated']
-	],
+	},
 
 	provider: {
 		type: String,

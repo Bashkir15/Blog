@@ -9,6 +9,7 @@ import indexRoutes from '../routes/index.server.routes'
 import topicsRoutes from '../routes/topics.server.routes'
 import sectionsRoutes from '../routes/sections.server.routes'
 import PostsRoutes from '../routes/posts.server.routes'
+import UsersRoutes from '../routes/users.server.routes'
 
 module.exports = (db) => {
 	let app = express();
@@ -35,6 +36,7 @@ module.exports = (db) => {
 	app.use('/topics', topicsRoutes);
 	app.use('/sections', sectionsRoutes);
 	app.use('/posts', PostsRoutes);
+	app.use('/users', UsersRoutes);
 
 	return app;
 }
