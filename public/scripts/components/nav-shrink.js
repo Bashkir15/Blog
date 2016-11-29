@@ -1,11 +1,12 @@
-import { throttle } from '../libs/utils'
-import { timeoutThrottle } from '../libs/utils'
+import { cacheSingle } from '../libs/utils'
 
 function navShrink() {
-	var lastKnownScrollY = 0;
-	var nav = document.querySelector('.nav');
-	var scrollContainer = document.querySelector('.index-page-view-content');
-	var scrollTimeout;
+	var cache = {};
+
+	let lastKnownScrollY = 0;
+	let nav = cacheSingle(cache, '.nav');
+	let scrollContainer = cacheSingle(cache, '.index-page-view-content');
+	let scrollTimeout;
 
 	init();
 
@@ -28,7 +29,6 @@ function navShrink() {
 
 	function checkPin() {
 		var currentScrollY = getScrollY();
-		console.log(currentScrollY);
 
 		if (currentScrollY < lastKnownScrollY) {
 			pin();

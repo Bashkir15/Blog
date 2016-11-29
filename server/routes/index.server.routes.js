@@ -12,6 +12,16 @@ router.get('/', topics.list);
 router.get('/create-topic', (req, res) => {
 	res.render('./templates/topics/create/create');
 });
+
+router.get('/signup', (req, res) => {
+	res.render('./templates/auth/signup');
+});
+
+router.get('/login', (req, res) => {
+	res.render('./templates/auth/login');
+});
+
+
 router.get('/:title', topics.single);
 router.get('/:title/create-section', topics.createSection);
 router.get('/:title/create-post', sections.createPost);

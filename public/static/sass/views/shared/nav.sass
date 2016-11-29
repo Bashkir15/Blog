@@ -171,3 +171,28 @@
 
 			&:nth-of-type(2)
 				display: none
+
+	.nav-rest-left
+		flex: 1
+
+
+	.nav-rest-right
+		flex: 1
+		justify-content: flex-start
+
+@media screen and (min-width: 1500px)
+	.nav-rest
+		padding-right: 0
+
+	.nav-rest-right
+		padding-left: 100px
+
+@media screen and (min-width: 1600px)
+	.nav-rest-right
+		margin-right: -100px
+		padding-left: 140px
+
+@media screen and (min-width: 1800px)
+	.nav-rest-right
+		margin-right: -225px
+		padding-left: 290px

@@ -1,7 +1,11 @@
 import { renderJs } from '../../libs/js-parser'
+import { cacheId, cacheQuery } from '../../libs/utils'
 
 export function single() {
-	let postContent = document.getElementById('post-content');
+
+	var cache = {};
+
+	let postContent = cacheId(cache, 'post-content');
 
 	function renderPost() {
 		document.body.addClass = 'is-loading';
@@ -9,7 +13,7 @@ export function single() {
 		let newPostContent = postContent.innerText;
 		postContent.innerHTML = newPostContent;
 
-		let codeContent = document.querySelectorAll('.js-markup');
+		let codeContent = cacheQuery(cache, '.js-markup');
 
 		Array.prototype.forEach.call(codeContent, function(content) {
 		 	content.innerHTML = renderJs(content);

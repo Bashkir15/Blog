@@ -10,32 +10,32 @@ export function mergeObj(...args) {
 	return obj;
 }
 
-export function cacheQuery(query) {
-	this.cache = this.cache || {};
+export function cacheQuery(cache, query) {
+	cache = cache || {};
 
-	if (!this.cache[query]) {
-		this.cache[query] = document.querySelectorAll(query);
+	if (!cache[query]) {
+		cache[query] = document.querySelectorAll(query);
 	}
 
-	return this.cache[query];
+	return cache[query];
 }
 
-export function cacheId(query) {
-	this.cache = this.cache || {};
+export function cacheId(cache, query) {
+	cache = cache || {};
 
-	if (!this.cache[query]) {
-		this.cache[query] = document.getElementById(query);
+	if (!cache[query]) {
+		cache[query] = document.getElementById(query);
 	}
 
-	return this.cache[query];
+	return cache[query];
 }
 
-export function cacheSingle(query) {
-	this.cache = this.cache || {};
+export function cacheSingle(cache, query) {
+	cache = cache || {};
 
-	if (!this.cache[query]) {
-		this.cache[query] = document.querySelect(query);
+	if (!cache[query]) {
+		cache[query] = document.querySelector(query);
 	}
 
-	return this.cache[query];
+	return cache[query];
 }

@@ -1,22 +1,25 @@
 import axios from 'axios'
+import { cacheId } from '../../libs/utils'
 
 export function create() {
-	let submitButton = document.getElementById('section-submit');
+	var cache = {};
+
+	let submitButton = cacheId(cache, 'section-submit');
 
 	function submit() {
 		let data = {};
-		data.topic = document.getElementById('section-topic-id').value;
-		data.topicTitle = document.getElementById('section-topic').value;
-		data.title = document.getElementById('section-title').value;
-		data.description = document.getElementById('section-description').value;
+		data.topic = cacheId(cache, 'section-topic-id')
+		data.topicTitle = cacheId(cache, 'section-topic')
+		data.title = cacheId(cache, 'section-title')
+		data.description = cacheId(cache, 'section-description');
 
 		submitButton.classList.add('show-loading');
 
 		axios.post('http://localhost:3000/sections', {
-			topic: data.topic,
-			topicTitle: data.topicTitle,
-			title: data.title,
-			description: data.description,
+			topic: data.topic.value,
+			topicTitle: data.topicTitle.value,
+			title: data.title.value,
+			description: data.description.value,
 			headers: {
 				'Content-Type': 'application/json'
 			}

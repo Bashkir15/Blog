@@ -4,8 +4,10 @@ import navShrink from './scripts/components/nav-shrink'
 import topics from './scripts/pages/topics/topics'
 import { sections } from './scripts/pages/sections/sections'
 import { posts } from './scripts/pages/posts/posts'
+import { auth } from './scripts/pages/auth/auth'
 
 navShrink();
+auth();
 topics();
 sections();
 posts();

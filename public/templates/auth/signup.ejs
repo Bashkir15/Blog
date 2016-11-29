@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name='viewport' content="width=device-width, initial-scale=1">
+		<link rel='stylesheet' href='./static/icons/ico/style.css'>
+		<link rel='stylesheet' href='./styles/main.min.css'>
+
+		<link href="https://fonts.googleapis.com/css?family=Lato:300,400i|Noto+Sans:400,700" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="index-page-container">
+			<% include ../shared/index-page-left %>
+
+			<div class='index-page-right'>
+				<% include ../shared/nav %>
+
+				<div class='index-page-view-content'>	<div class='auth-page-container'>
+						<div class='auth-page-header'>
+							<header>
+								<h1>Sign up</h1>
+							</header>
+
+							<p>By signing up you get access to having favorite posts and commenting</p>
+						</div>
+
+						<div class='auth-form'>
+							<form name='signup-form'>
+								<div class='auth-wrapper'>
+									<input type='text' name='name' required id='signup-name'>
+									<label>Name</label>
+								</div>
+
+								<div class='auth-wrapper'>
+									<input type='text' name='username' required id='signup-username'>
+									<label>Username</label>
+								</div>
+
+								<div class='auth-wrapper'>
+									<input type='email' name='email' required id='signup-email'>
+									<label>Email</label>
+								</div>
+
+								<div class='auth-wrapper'>
+									<input type='password' name='password' id='signup-password'>
+									<label>Password</label>
+								</div>
+
+								<div class='auth-wrapper'>
+									<input type='password' name='confirm' id='signup-confirm'>
+									<label>Confirm Password</label>
+								</div>
+
+								<div class='auth-form-submit'>
+									<button type='button' id='signup-submit'>
+										<span>Signup</span>
+									</button>
+								</div>
+							</form>
+						</div>
+
+						<div class='auth-footer'>
+							<p>Already have an account?<a href='/login'>Login here</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src='./scripts/main.min.js'></script>
+	</body>
+</html>

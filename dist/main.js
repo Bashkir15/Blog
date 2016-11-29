@@ -62,9 +62,12 @@
 
 	var _posts = __webpack_require__(33);
 
+	var _auth = __webpack_require__(40);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	(0, _navShrink2.default)();
+	(0, _auth.auth)();
 	(0, _topics2.default)();
 	(0, _sections.sections)();
 	(0, _posts.posts)();
@@ -1935,25 +1938,29 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
+	var _utils = __webpack_require__(39);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function create() {
-		var submitButton = document.getElementById('section-submit');
+		var cache = {};
+
+		var submitButton = (0, _utils.cacheId)(cache, 'section-submit');
 
 		function submit() {
 			var data = {};
-			data.topic = document.getElementById('section-topic-id').value;
-			data.topicTitle = document.getElementById('section-topic').value;
-			data.title = document.getElementById('section-title').value;
-			data.description = document.getElementById('section-description').value;
+			data.topic = (0, _utils.cacheId)(cache, 'section-topic-id');
+			data.topicTitle = (0, _utils.cacheId)(cache, 'section-topic');
+			data.title = (0, _utils.cacheId)(cache, 'section-title');
+			data.description = (0, _utils.cacheId)(cache, 'section-description');
 
 			submitButton.classList.add('show-loading');
 
 			_axios2.default.post('http://localhost:3000/sections', {
-				topic: data.topic,
-				topicTitle: data.topicTitle,
-				title: data.title,
-				description: data.description,
+				topic: data.topic.value,
+				topicTitle: data.topicTitle.value,
+				title: data.title.value,
+				description: data.description.value,
 				headers: {
 					'Content-Type': 'application/json'
 				}
@@ -1971,7 +1978,7 @@
 
 /***/ },
 /* 32 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -1979,11 +1986,15 @@
 		value: true
 	});
 	exports.single = single;
+
+	var _utils = __webpack_require__(39);
+
 	function single() {
+		var cache = {};
 
 		function makeAccordian(accordian) {
-			accordian = accordian || document.querySelectorAll('.single-section-posts');
-			var toggleButton = document.querySelectorAll('.close-section-button');
+			accordian = accordian || (0, _utils.cacheQuery)(cache, '.single-section-posts');
+			var toggleButton = (0, _utils.cacheQuery)(cache, '.close-section-button');
 			var currentTarget = void 0;
 
 			var _loop = function _loop() {
@@ -2009,37 +2020,6 @@
 			for (var i = 0; i < accordian.length; i++) {
 				makeAccordian(accordian[i]);
 			}
-
-			/*for (var i = 0; i < accordianSections.length; i++) {
-	  	let section = accordianSections[i];
-	  		for (var j = 0; j < toggleButtons.length; j++) {
-	  		let button = toggleButtons[j];
-	  			button.addEventListener('click', () => {
-	  			if (section.classList.contains('section-closed')) {
-	  				button.classList.remove('section-closed');
-	  				section.classList.remove('section-closed');
-	  			} else {
-	  				section.classList.add('section-closed');
-	  				button.classList.add('section-closed');
-	  			}
-	  		});
-	  	}
-	  } */
-			/*accordianSections.forEach((section) => {
-	  	let toggleButton = document.querySelectorAll('.close-section-button');
-	  	let toggleButtons = Array.prototype.slice.call(toggleButton, 0);
-	  		toggleButton.forEach((button) => {
-	  		button.addEventListener('click', () => {
-	  			if (section.classList.contains('section-closed')) {
-	  				toggleButton.classList.remove('section-closed');
-	  				section.classList.remove('section-closed');
-	  			} else {
-	  				section.classList.add('section-closed');
-	  				toggleButton.classList.add('section-closed');
-	  			}
-	  		});
-	  	});
-	  }); */
 		}
 
 		makeAccordian();
@@ -4613,8 +4593,13 @@
 
 	var _jsParser = __webpack_require__(37);
 
+	var _utils = __webpack_require__(39);
+
 	function single() {
-		var postContent = document.getElementById('post-content');
+
+		var cache = {};
+
+		var postContent = (0, _utils.cacheId)(cache, 'post-content');
 
 		function renderPost() {
 			document.body.addClass = 'is-loading';
@@ -4622,7 +4607,7 @@
 			var newPostContent = postContent.innerText;
 			postContent.innerHTML = newPostContent;
 
-			var codeContent = document.querySelectorAll('.js-markup');
+			var codeContent = (0, _utils.cacheQuery)(cache, '.js-markup');
 
 			Array.prototype.forEach.call(codeContent, function (content) {
 				content.innerHTML = (0, _jsParser.renderJs)(content);
@@ -4691,10 +4676,12 @@
 	var _utils = __webpack_require__(39);
 
 	function navShrink() {
+		var cache = {};
+
 		var lastKnownScrollY = 0;
-		var nav = document.querySelector('.nav');
-		var scrollContainer = document.querySelector('.index-page-view-content');
-		var scrollTimeout;
+		var nav = (0, _utils.cacheSingle)(cache, '.nav');
+		var scrollContainer = (0, _utils.cacheSingle)(cache, '.index-page-view-content');
+		var scrollTimeout = void 0;
 
 		init();
 
@@ -4717,7 +4704,6 @@
 
 		function checkPin() {
 			var currentScrollY = getScrollY();
-			console.log(currentScrollY);
 
 			if (currentScrollY < lastKnownScrollY) {
 				pin();
@@ -4788,34 +4774,155 @@
 		return obj;
 	}
 
-	function cacheQuery(query) {
-		this.cache = this.cache || {};
+	function cacheQuery(cache, query) {
+		cache = cache || {};
 
-		if (!this.cache[query]) {
-			this.cache[query] = document.querySelectorAll(query);
+		if (!cache[query]) {
+			cache[query] = document.querySelectorAll(query);
 		}
 
-		return this.cache[query];
+		return cache[query];
 	}
 
-	function cacheId(query) {
-		this.cache = this.cache || {};
+	function cacheId(cache, query) {
+		cache = cache || {};
 
-		if (!this.cache[query]) {
-			this.cache[query] = document.getElementById(query);
+		if (!cache[query]) {
+			cache[query] = document.getElementById(query);
 		}
 
-		return this.cache[query];
+		return cache[query];
 	}
 
-	function cacheSingle(query) {
-		this.cache = this.cache || {};
+	function cacheSingle(cache, query) {
+		cache = cache || {};
 
-		if (!this.cache[query]) {
-			this.cache[query] = document.querySelect(query);
+		if (!cache[query]) {
+			cache[query] = document.querySelector(query);
 		}
 
-		return this.cache[query];
+		return cache[query];
+	}
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.auth = auth;
+
+	var _signup = __webpack_require__(41);
+
+	function auth() {
+		if (window.location.href.indexOf('signup') != -1) {
+			(0, _signup.signup)();
+		}
+	}
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.signup = signup;
+
+	var _axios = __webpack_require__(4);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _utils = __webpack_require__(39);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function signup() {
+		console.log('woot?');
+		var cache = {};
+
+		var submitButton = (0, _utils.cacheId)(cache, 'signup-submit');
+		var email = (0, _utils.cacheId)(cache, 'signup-email');
+		var confirm = (0, _utils.cacheId)(cache, 'signup-confirm');
+		var password = (0, _utils.cacheId)(cache, 'signup-password');
+
+		email.addEventListener('blur', validateEmail);
+		confirm.addEventListener('blur', validatePassword);
+
+		submitButton.addEventListener('click', submit);
+
+		function submit() {
+			submitButton.classList.add('show-loading');
+
+			var data = {};
+			data.name = (0, _utils.cacheId)(cache, 'signup-name');
+			data.username = (0, _utils.cacheId)(cache, 'signup-username');
+			data.email = email;
+			data.password = password;
+
+			_axios2.default.post('http://localhost:3000/users', {
+				name: data.name.value,
+				username: data.username.value,
+				email: data.email.value,
+				password: data.password.value,
+
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(function (response) {
+				submitButton.classList.remove("show-loading");
+
+				if (response.data.success) {
+					submitButton.classList.add('submit-success');
+					// send notify
+					var user = JSON.stringify(response.data.res.record);
+					window.localStorage.setItem('user', user);
+					window.localStorage.setItem('blog-token', response.data.res.token);
+					window.location.href = '/';
+				} else {
+					submitButton.classList.add('submit-failed');
+					// notify response.data.res.message
+				}
+			});
+		}
+
+		function validateEmail() {
+			console.log('email');
+			var input = email.value;
+			var atpos = input.indexOf('@');
+			var dotpos = input.lastIndexOf(".");
+
+			if (atpos < 1 || dotpos - atpos < 2) {
+				email.parentNode.classList.add('email-invalid');
+			} else {
+				if (email.parentNode.classList.contains('email-invalid')) {
+					email.parentNode.classList.remove('email-invalid');
+				}
+
+				email.parentNode.classList.add('email-valid');
+			}
+		}
+
+		function validatePassword() {
+			console.log('password');
+			var confirmValue = confirm.value;
+			var passwordValue = password.value;
+
+			if (confirmValue != passwordValue) {
+				if (confirm.parentNode.classList.contains('password-valid')) {
+					confirm.parentNode.classList.remove('password-valid');
+				}
+
+				confirm.parentNode.classList.add('password-invalid');
+			} else {
+				confirm.parentNode.classList.add('password-valid');
+			}
+		}
 	}
 
 /***/ }
