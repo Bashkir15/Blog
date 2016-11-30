@@ -105,36 +105,40 @@
 		width: 100%
 		transition: all .4s ease
 
-
-		> div
+		a
+			width: 100%
 			display: flex
-			flex-direction: column
-			justify-content: center
 			align-items: center
-			height: 70px
-			width: 60px
 
-			span
-				font-size: 27px
-				//color: #9cd1fc
-				//color: #d3ebf3
-				color: rgb(105, 201, 186)
-				transition: all .4s ease
+			> div
+				display: flex
+				flex-direction: column
+				justify-content: center
+				align-items: center
+				height: 70px
+				width: 60px
 
-		> button
-			display: flex
-			flex: 1
-			align-items: center
-			height: 70px
-			padding-left: 10px
+				span
+					font-size: 27px
+					//color: #9cd1fc
+					//color: #d3ebf3
+					color: rgb(105, 201, 186)
+					transition: all .4s ease
 
-			span
-				@include lato()
-				font-weight: 300
-				letter-spacing: 3px
-				color: #fdfeff
-				font-size: 17px
-				transition: all .4s ease
+			> button
+				display: flex
+				flex: 1
+				align-items: center
+				height: 70px
+				padding-left: 10px
+
+				span
+					@include lato()
+					font-weight: 300
+					letter-spacing: 3px
+					color: #fdfeff
+					font-size: 17px
+					transition: all .4s ease
 
 		&:hover
 			background: darken(rgb(104, 201, 196), 35%)
