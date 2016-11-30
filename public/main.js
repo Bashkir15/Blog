@@ -10,7 +10,7 @@ navShrink();
 auth();
 topics();
 sections();
-posts();
+//posts();
 
 
 let SidenavTrigger = document.getElementById('side-nav-trigger');

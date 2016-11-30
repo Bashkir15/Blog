@@ -70,7 +70,8 @@
 	(0, _auth.auth)();
 	(0, _topics2.default)();
 	(0, _sections.sections)();
-	(0, _posts.posts)();
+	//posts();
+
 
 	var SidenavTrigger = document.getElementById('side-nav-trigger');
 	var Sidenav = new _sidenav2.default();
@@ -4817,9 +4818,13 @@
 
 	var _signup = __webpack_require__(41);
 
+	var _login = __webpack_require__(42);
+
 	function auth() {
 		if (window.location.href.indexOf('signup') != -1) {
 			(0, _signup.signup)();
+		} else if (window.location.href.indexOf('login') != -1) {
+			(0, _login.login)();
 		}
 	}
 
@@ -4843,7 +4848,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function signup() {
-		console.log('woot?');
 		var cache = {};
 
 		var submitButton = (0, _utils.cacheId)(cache, 'signup-submit');
@@ -4880,6 +4884,9 @@
 				if (response.data.success) {
 					submitButton.classList.add('submit-success');
 					// send notify
+					submitButton.removeEventListener('click', submit);
+					email.removeEventListener('blur', validateEmail);
+					password.removeEventListener('blur', validatePassword);
 					var user = JSON.stringify(response.data.res.record);
 					window.localStorage.setItem('user', user);
 					window.localStorage.setItem('blog-token', response.data.res.token);
@@ -4922,6 +4929,63 @@
 			} else {
 				confirm.parentNode.classList.add('password-valid');
 			}
+		}
+	}
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.login = login;
+
+	var _axios = __webpack_require__(4);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _utils = __webpack_require__(39);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function login() {
+		var cache = cache || {};
+
+		var submitButton = (0, _utils.cacheId)(cache, 'login-submit');
+
+		function submit() {
+			submitButton.classList.add('show-loading');
+
+			var data = {};
+			data.email = (0, _utils.cacheId)(cache, 'login-email');
+			data.password = (0, _utils.cacheId)(cache, 'login-password');
+
+			_axios2.default.post('http://localhost:3000/users', {
+				email: data.email.value,
+				password: data.password.value,
+
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(function (response) {
+				submitButton.classList.remove('show-loading');
+
+				if (response.data.success) {
+					submitButton.classList.add('loading-success');
+					// show login notify
+					var user = JSON.stringify(response.data.res.record);
+					window.localStorage.setItem('user', user);
+					window.localStorage.setItem('blog-token', response.data.res.token);
+					submitButton.removeEventListener('click', submit);
+					window.location.href = '/';
+				} else {
+					submitButton.classList.add('loading-failed');
+					// show error notify
+				}
+			});
 		}
 	}
 

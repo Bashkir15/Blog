@@ -1,0 +1,109 @@
+.latest-page-container
+	display: flex
+	flex-direction: column
+
+	header
+		padding: 50px 0 40px 0
+
+		h1
+			@include lato()
+			font-weight: 300
+			font-size: 32px
+			letter-spacing: 2px
+			color: rgba(0,0,0,0.7)
+			text-align: center
+
+.latest-posts-container
+	display: flex
+	flex-direction: column
+	align-items: center
+	width: 95%
+	margin: 0 auto
+
+.latest-single-post
+	display: flex
+	flex-direction: column
+	align-items: center
+	width: 100%
+	margin-bottom: 35px
+
+.latest-single-post-header
+	display: flex
+	align-items: stretch
+	padding: 10px
+	border-bottom: 1px solid rgba(0,0,0,0.12)
+	width: 100%
+
+	> div
+		display: flex
+		align-items: center
+		flex: 1
+		flex-basis: 0
+
+		&:nth-of-type(1)
+			justify-content: flex-start
+
+			h3
+				@include lato()
+				font-weight: 300
+				letter-spacing: 1px
+				font-size: 20px
+				line-height: 27px
+
+		&:nth-of-type(2)
+			justify-content: flex-end
+
+			span
+				@include lato()
+				font-weight: 300
+				letter-spacing: 1px
+				font-size: 18px
+				color: rgba(0,0,0,0.4)
+
+.latest-single-post-body
+	padding: 20px
+
+	p
+		@include noto()
+		font-weight: 400
+		font-size: 17px
+		letter-spacing: 2px
+		line-height: 26px
+		color: rgba(0,0,0,0.5)
+
+.latest-single-post-footer
+	display: flex
+	align-items: stretch
+	padding: 10px 0
+	width: 100%
+	border-top: 1px solid rgba(0,0,0,0.12)
+
+	> div
+		display: flex
+		align-items: center
+		flex: 1
+		flex-basis: 0
+
+		&:nth-of-type(1)
+			justify-content: flex-start
+
+			> div
+				display: flex
+				align-items: center
+				justify-content: center
+
+				button
+					span
+						@include lato()
+						font-weight: 300
+						font-size: 16px
+
+		&:nth-of-type(2)
+			justify-content: flex-end
+
+			button
+				span
+					@include lato()
+					font-weight: 300
+					font-size: 16px
+					color: rgba(0,0,0,0.4)

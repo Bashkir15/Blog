@@ -2,7 +2,6 @@ import axios from 'axios'
 import { cacheId } from '../../libs/utils'
 
 export function signup() {
-	console.log('woot?');
 	var cache = {};
 
 	let submitButton = cacheId(cache, 'signup-submit');
@@ -40,6 +39,9 @@ export function signup() {
 			if (response.data.success) {
 				submitButton.classList.add('submit-success');
 				// send notify
+				submitButton.removeEventListener('click', submit);
+				email.removeEventListener('blur', validateEmail);
+				password.removeEventListener('blur', validatePassword);
 				let user = JSON.stringify(response.data.res.record);
 				window.localStorage.setItem('user', user);
 				window.localStorage.setItem('blog-token', response.data.res.token);

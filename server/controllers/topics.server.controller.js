@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import async from 'async'
 
 module.exports = () => {
 	let Topic = mongoose.model('Topic');
@@ -27,8 +27,6 @@ module.exports = () => {
 				res.json(err);
 			}
 
-			console.log(topics);
-
 			res.render('index', {
 				topics: topics
 			});
@@ -36,24 +34,44 @@ module.exports = () => {
 	};
 
 	obj.single = (req, res) => {
-		Topic.findOne({title: req.params.title}, (err, topic) => {
+		var data = {};
+		async.series([
+			function(callback) {
+				Topic.findOne({title: req.params.title}, (err, topic) => {
+					if (err) {
+						return callback(err);
+					}
+					
+					if (topic) {
+						data.topic = topic;
+						callback();
+					}
+				});
+			},
+
+			function(callback) {
+				console.log(data.topic);
+				Section.find({topic: data.topic})
+				.populate('posts')
+				.exec((err, sections) => {
+					if (err) {
+						return callback(err);
+					}
+
+					data.sections = sections;
+					callback();
+				});
+			}
+		], function(err) {
 			if (err) {
-				res.json(err);
+				return next(err);
 			}
 
-			Section.find({topic: topic})
-			.populate('posts')
-			.exec((err, sections) => {
-				if (err) {
-					res.json(err);
-				}
-
-				res.render('./templates/topics/single/single', {
-					topic: topic,
-					sections: sections
-				});
+			res.render('./templates/topics/single/single', {
+				topic: data.topic,
+				sections: data.sections
 			});
-		});
+		}); 
 	};
 
 	obj.createSection = (req, res) => {
