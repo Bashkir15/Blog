@@ -1,0 +1,43 @@
+.notification-container
+	max-width: 98%
+	z-index: 999
+
+	&.shown
+		.notification
+			opacity: 1
+			transform: translateX(0)
+
+.notification
+	position: relative
+	width: 100%
+	min-height: 62px
+	margin-bottom: 12px
+	padding: 8px
+	background: #fff
+	opacity: 0
+	border-radius: 1px
+	box-shadow: 0 3px 10px 0 rgba(0,0,0,0.1), o 2px 15px 0 rgba(0,0,0,0.05)
+	transition: all .5s cubic-bezier(0.5, -0.5, 0.3, 1.4), opacity .3s ease-out
+
+	&.sucess
+		border-left: 2px solid #37bf5b
+
+	&.danger
+		border-left: 2px solid #bf3757
+
+.notification-title
+	margin: 0
+	padding: 10px
+	margin-bottom: 4px
+	@include lato()
+	font-weight: 300
+	font-size: 18px
+	letter-spacing: 2px
+	color: #3f4c5b
+
+.notification-text
+	padding: 5px 12px
+	@include noto()
+	font-weight: 400
+	font-size: 15px
+	letter-spacing: 1px

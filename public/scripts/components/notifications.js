@@ -1,3 +1,4 @@
+
 class notifications {
 	constructor(options) {
 		this.settings = {
@@ -8,7 +9,7 @@ class notifications {
 			content: "",
 			posX: 'right',
 			posY: 'bottom'
-		};
+		}
 
 		this.count = 0;
 		this._applySettings(options);
@@ -26,26 +27,26 @@ class notifications {
 		}
 	}
 
-	_buildOut {
+	_buildOut() {
 		var _container = document.createElement('div');
 		var _contentHolder = document.createElement('div');
 		var _content;
 
-		_container.classList.add('notification-container');
-		_contentHolder.classList.add('notification');
+		_container.className = 'notification-container';
+		_contentHolder.className = 'notification';
 
 		this.settings.container = _container;
 		this.settings.container.style.position = "fixed";
 
-		if (this.settings.content === 'string') {
+		if (this.settings.content === "string") {
 			_content = this.settings.content;
 		} else {
 			_content = this.settings.content.innerHTML;
 		}
 
 		this._checkOptions(_contentHolder);
-		_contentHolder.innerHTML = _content;
 
+		_contentHolder.innerHTML = _content;
 		this.settings.container.appendChild(_contentHolder);
 		document.body.appendChild(this.settings.container);
 	}
@@ -67,28 +68,29 @@ class notifications {
 
 		switch(this.settings.posX) {
 			case "right":
-				this.settings.container.style.right = "20" + px;
+				this.settings.container.style.right = 20 + "px";
 				break;
 			case "left":
-				this.settings.container.style.left = "20" + px;
+				this.settings.container.style.left = 20 + "px";
+				break;
 			default:
-				this.settings.container.style.right = "20" + px;
+				this.settings.container.style.right = 20 + "px";
 		}
 
 		switch(this.settings.posY) {
-			case "top":
-				this.settings.container.style.top = "20" + px;
-				break;
-			case "bottom":
-				this.settings.container.style.bottom = "20" + px;
-				break;
-			default:
-				this.settings.container.style.bottom = "20" + px
+				case "top":
+					this.settings.container.style.top = 20 + "px";
+					break;
+				case "bottom":
+					this.settings.container.style.bottom = 20 + "px";
+					break;
+				default:
+					this.settings.container.style.bottom = 20 + "px";
 		}
 	}
 
 	_open() {
-		let notifyId = "notification-" + this.count;
+		var notifyId = "notification-" + this.count;
 		this._buildOut.call(this);
 
 		setTimeout(() => {
@@ -104,7 +106,7 @@ class notifications {
 
 		this.count += 1;
 
-		return notifyId
+		return notifyId;
 	}
 
 	_close(notificationId) {
@@ -113,7 +115,10 @@ class notifications {
 		if (notification) {
 			notification.classList.remove('shown');
 
-			this.count -= 1;
+			setTimeout(() => {
+				notification.parentNode.removeChild(notification);
+			}, 600);
+
 			return true;
 		} else {
 			return false;

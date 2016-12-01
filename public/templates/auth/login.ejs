@@ -19,49 +19,32 @@
 				<div class='index-page-view-content'>	<div class='auth-page-container'>
 						<div class='auth-page-header'>
 							<header>
-								<h1>Sign up</h1>
+								<h1>Login</h1>
 							</header>
-
-							<p>By signing up you get access to having favorite posts and commenting</p>
 						</div>
 
 						<div class='auth-form'>
-							<form name='signup-form'>
+							<form class='login-form' novalidate>
 								<div class='auth-wrapper'>
-									<input type='text' name='name' required id='signup-name'>
-									<label>Name</label>
-								</div>
-
-								<div class='auth-wrapper'>
-									<input type='text' name='username' required id='signup-username'>
-									<label>Username</label>
-								</div>
-
-								<div class='auth-wrapper'>
-									<input type='email' name='email' required id='signup-email'>
+									<input type='email' required id='login-email'>
 									<label>Email</label>
 								</div>
 
 								<div class='auth-wrapper'>
-									<input type='password' name='password' id='signup-password'>
+									<input type='password' required id='login-password'>
 									<label>Password</label>
 								</div>
 
-								<div class='auth-wrapper'>
-									<input type='password' name='confirm' id='signup-confirm'>
-									<label>Confirm Password</label>
-								</div>
-
 								<div class='auth-form-submit'>
-									<button type='button' id='signup-submit'>
-										<span>Signup</span>
+									<button id='login-submit' aria-label='submit login form'>
+										<span>Login</span>
 									</button>
 								</div>
 							</form>
 						</div>
 
 						<div class='auth-footer'>
-							<p>Already have an account? <a href='/login'>Login here</a></p>
+							<p>Don't have an account?<a href='/login'>Signup here</a></p>
 						</div>
 					</div>
 				</div>
@@ -69,13 +52,13 @@
 		</div>
 
 		<div id='success-content'>
-			<h3 class='notification-title'>Hooray!</h3>
-			<p class='notification-text'>Welcome to the Blog</p>
+			<h3 class='notification-title'>Success!</h3>
+			<p class='notification-text'>You have logged in</p>
 		</div>
 
 		<div id='failure-content'>
 			<h3 class='notification-title'>Uh Oh!</h3>
-			<p class='notification-text'>You should check your form</p>
+			<p class='notification-text'>There is something wrong with your form</p>
 		</div>
 
 		<script src='./scripts/main.min.js'></script>

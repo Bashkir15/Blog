@@ -64,19 +64,63 @@
 
 	var _auth = __webpack_require__(40);
 
+	var _auth2 = __webpack_require__(44);
+
+	var _utils = __webpack_require__(39);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	(0, _navShrink2.default)();
-	(0, _auth.auth)();
-	(0, _topics2.default)();
-	(0, _sections.sections)();
-	//posts();
+	function start() {
+		var cache = {};
 
+		var SidenavTrigger = (0, _utils.cacheId)(cache, 'side-nav-trigger');
+		var Sidenav = new _sidenav2.default();
 
-	var SidenavTrigger = document.getElementById('side-nav-trigger');
-	var Sidenav = new _sidenav2.default();
+		function checkLinks() {
+			var token = window.localStorage.getItem('blog-token');
+			var unauthedLinks = (0, _utils.cacheQuery)(cache, '.unauthed-link');
+			var authedLinks = (0, _utils.cacheQuery)(cache, '.authed-link');
+			var logoutButton = (0, _utils.cacheId)(cache, 'logout-button');
 
-	SidenavTrigger.addEventListener('click', Sidenav.toggleSidenav);
+			if (token) {
+
+				Array.prototype.forEach.call(unauthedLinks, function (link) {
+					link.style.display = "none";
+				});
+
+				logoutButton.addEventListener('click', logout);
+			} else {
+				Array.prototype.forEach.call(authedLinks, function (link) {
+					link.style.display = "none";
+				});
+			}
+		}
+
+		function logout(e) {
+			e.preventDefault();
+
+			window.localStorage.removeItem('user');
+			window.localStorage.removeItem('blog-token');
+
+			logoutButton.removeEventListener('click', logout);
+		}
+
+		checkLinks();
+		(0, _navShrink2.default)();
+		(0, _auth.auth)();
+		(0, _topics2.default)();
+		(0, _sections.sections)();
+		//posts();
+
+		if (window.innerWidth || document.documentElement.clientWidth < 1300) {
+			SidenavTrigger.addEventListener('click', Sidenav.toggleSidenav);
+		}
+	}
+
+	window.addEventListener('DOMContentLoaded', function () {
+		document.body.classList.remove('loading');
+		start();
+	});
 
 /***/ },
 /* 1 */
@@ -4845,6 +4889,10 @@
 
 	var _utils = __webpack_require__(39);
 
+	var _notifications = __webpack_require__(43);
+
+	var _notifications2 = _interopRequireDefault(_notifications);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function signup() {
@@ -4854,11 +4902,59 @@
 		var email = (0, _utils.cacheId)(cache, 'signup-email');
 		var confirm = (0, _utils.cacheId)(cache, 'signup-confirm');
 		var password = (0, _utils.cacheId)(cache, 'signup-password');
+		var successContent = (0, _utils.cacheId)(cache, 'success-content');
+		var failureContent = (0, _utils.cacheId)(cache, 'failure-content');
 
-		email.addEventListener('blur', validateEmail);
-		confirm.addEventListener('blur', validatePassword);
+		var successNotify = new _notifications2.default({
+			timeout: 1500,
+			content: successContent,
+			type: 'success'
+		});
 
-		submitButton.addEventListener('click', submit);
+		var failureNotify = new _notifications2.default({
+			timeout: 1500,
+			content: failureContent,
+			type: 'danger'
+		});
+
+		function validateEmail() {
+			var input = email.value;
+			var atpos = input.indexOf('@');
+			var dotpos = input.lastIndexOf(".");
+
+			if (atpos < 1 || dotpos - atpos < 2) {
+				if (email.parentNode.classList.contains('email-valid')) {
+					email.parentNode.classList.remove('email-valid');
+				}
+
+				email.parentNode.classList.add('email-invalid');
+			} else {
+				if (email.parentNode.classList.contains('email-invalid')) {
+					email.parentNode.classList.remove('email-invalid');
+				}
+
+				email.parentNode.classList.add('email-valid');
+			}
+		}
+
+		function validatePassword() {
+			var confirmValue = confirm.value;
+			var passwordValue = password.value;
+
+			if (confirmValue != passwordValue) {
+				if (confirm.parentNode.classList.contains('password-valid')) {
+					confirm.parentNode.classList.remove('password-valid');
+				}
+
+				confirm.parentNode.classList.add('password-invalid');
+			} else {
+				if (confirm.parentNode.classList.contains('password-invalid')) {
+					confirm.parentNode.classList.remove('password-invalid');
+				}
+
+				confirm.parentNode.classList.add('password-valid');
+			}
+		}
 
 		function submit() {
 			submitButton.classList.add('show-loading');
@@ -4883,53 +4979,34 @@
 
 				if (response.data.success) {
 					submitButton.classList.add('submit-success');
-					// send notify
-					submitButton.removeEventListener('click', submit);
-					email.removeEventListener('blur', validateEmail);
-					password.removeEventListener('blur', validatePassword);
-					var user = JSON.stringify(response.data.res.record);
+					var success = new Event('signed-up');
+					window.dispatchEvent(success);
+					removeEvents();
 					window.localStorage.setItem('user', user);
 					window.localStorage.setItem('blog-token', response.data.res.token);
-					window.location.href = '/';
+
+					setTimeout(function () {
+						window.location.href = '/';
+					}, 500);
 				} else {
 					submitButton.classList.add('submit-failed');
-					// notify response.data.res.message
+					var failure = new Event('signup-fail');
+					window.dispatchEvent(failure);
 				}
 			});
 		}
 
-		function validateEmail() {
-			console.log('email');
-			var input = email.value;
-			var atpos = input.indexOf('@');
-			var dotpos = input.lastIndexOf(".");
-
-			if (atpos < 1 || dotpos - atpos < 2) {
-				email.parentNode.classList.add('email-invalid');
-			} else {
-				if (email.parentNode.classList.contains('email-invalid')) {
-					email.parentNode.classList.remove('email-invalid');
-				}
-
-				email.parentNode.classList.add('email-valid');
-			}
+		function removeEvents() {
+			submitButton.removeEventListener('click', submit);
+			email.removeEventListener('blur', validateEmail);
+			email.removeEventListener('blur', validatePassword);
 		}
 
-		function validatePassword() {
-			console.log('password');
-			var confirmValue = confirm.value;
-			var passwordValue = password.value;
-
-			if (confirmValue != passwordValue) {
-				if (confirm.parentNode.classList.contains('password-valid')) {
-					confirm.parentNode.classList.remove('password-valid');
-				}
-
-				confirm.parentNode.classList.add('password-invalid');
-			} else {
-				confirm.parentNode.classList.add('password-valid');
-			}
-		}
+		email.addEventListener('blur', validateEmail);
+		confirm.addEventListener('blur', validatePassword);
+		submitButton.addEventListener('click', submit);
+		window.addEventListener('signed-up', successNotify.open);
+		window.addEventListener('signup-fail', failureNotify.open);
 	}
 
 /***/ },
@@ -4947,6 +5024,10 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
+	var _notifications = __webpack_require__(43);
+
+	var _notifications2 = _interopRequireDefault(_notifications);
+
 	var _utils = __webpack_require__(39);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -4954,7 +5035,43 @@
 	function login() {
 		var cache = cache || {};
 
+		var loginEmail = (0, _utils.cacheId)(cache, 'login-email');
+		var loginPassword = (0, _utils.cacheId)(cache, 'login-password');
 		var submitButton = (0, _utils.cacheId)(cache, 'login-submit');
+		var successContent = (0, _utils.cacheId)(cache, 'success-content');
+		var failureContent = (0, _utils.cacheId)(cache, 'failure-content');
+
+		var successNotify = new _notifications2.default({
+			content: successNotify,
+			type: 'success',
+			timeout: 1500
+		});
+
+		var failureNotify = new _notifications2.default({
+			content: failureNotify,
+			type: 'danger',
+			timeout: 1500
+		});
+
+		function validateEmail() {
+			var input = loginEmail.value;
+			var atpos = input.indexOf('@');
+			var dotpos = input.lastIndexOf('.');
+
+			if (atpos < 1 || dotpos - atpos < 2) {
+				if (loginEmail.parentNode.classList.contains('email-valid')) {
+					loginEmail.parentNode.classList.remove('email-valid');
+				}
+
+				loginEmail.parentNode.classList.add('email-invalid');
+			} else {
+				if (loginEmail.parentNode.classList.contains('email-invalid')) {
+					loginEmail.parentNode.classList.remove('email-invalid');
+				}
+
+				loginEmail.parentNode.classList.add('email-invalid');
+			}
+		}
 
 		function submit() {
 			submitButton.classList.add('show-loading');
@@ -4975,17 +5092,234 @@
 
 				if (response.data.success) {
 					submitButton.classList.add('loading-success');
-					// show login notify
+
+					var success = newEvent('login-success');
 					var user = JSON.stringify(response.data.res.record);
+
+					window.dispatchEvent(success);
 					window.localStorage.setItem('user', user);
 					window.localStorage.setItem('blog-token', response.data.res.token);
-					submitButton.removeEventListener('click', submit);
-					window.location.href = '/';
+					removeEvents();
+
+					setTimeout(function () {
+						window.location.href = '/';
+					}, 500);
 				} else {
 					submitButton.classList.add('loading-failed');
-					// show error notify
+
+					var failure = new Event('login-failure');
+					window.dispatchEvent(failure);
 				}
 			});
+		}
+
+		function removeEvents() {
+			submitButton.removeEventListener('click', submit);
+			loginEmail.removeEventListener('blur', validateEmail);
+			window.removeEventListener('login-failure', failureNotify.open);
+			window.removeEventListener('login-success', successNotify.open);
+		}
+
+		submitButton.addEventListener('click', submit);
+		loginEmail.addEventListener('blur', validateEmail);
+		window.addEventListener('login-failure', failureNotify);
+		window.addEventListener('login-success', successNotify);
+	}
+
+/***/ },
+/* 43 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var notifications = function () {
+		function notifications(options) {
+			_classCallCheck(this, notifications);
+
+			this.settings = {
+				container: null,
+				notification: null,
+				timeout: 0,
+				type: 'alert',
+				content: "",
+				posX: 'right',
+				posY: 'bottom'
+			};
+
+			this.count = 0;
+			this._applySettings(options);
+			this.open = this._open.bind(this);
+			this.close = this._close.bind(this);
+		}
+
+		_createClass(notifications, [{
+			key: '_applySettings',
+			value: function _applySettings(options) {
+				if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+					for (var i in options) {
+						if (options.hasOwnProperty(i)) {
+							this.settings[i] = options[i];
+						}
+					}
+				}
+			}
+		}, {
+			key: '_buildOut',
+			value: function _buildOut() {
+				var _container = document.createElement('div');
+				var _contentHolder = document.createElement('div');
+				var _content;
+
+				_container.className = 'notification-container';
+				_contentHolder.className = 'notification';
+
+				this.settings.container = _container;
+				this.settings.container.style.position = "fixed";
+
+				if (this.settings.content === "string") {
+					_content = this.settings.content;
+				} else {
+					_content = this.settings.content.innerHTML;
+				}
+
+				this._checkOptions(_contentHolder);
+
+				_contentHolder.innerHTML = _content;
+				this.settings.container.appendChild(_contentHolder);
+				document.body.appendChild(this.settings.container);
+			}
+		}, {
+			key: '_checkOptions',
+			value: function _checkOptions(item) {
+				switch (this.settings.type) {
+					case "success":
+						item.classList.add('success');
+						break;
+					case "danger":
+						item.classList.add('danger');
+						break;
+					case "warning":
+						item.classList.add('warning');
+						break;
+					default:
+						item.classList.add('alert');
+				}
+
+				switch (this.settings.posX) {
+					case "right":
+						this.settings.container.style.right = 20 + "px";
+						break;
+					case "left":
+						this.settings.container.style.left = 20 + "px";
+						break;
+					default:
+						this.settings.container.style.right = 20 + "px";
+				}
+
+				switch (this.settings.posY) {
+					case "top":
+						this.settings.container.style.top = 20 + "px";
+						break;
+					case "bottom":
+						this.settings.container.style.bottom = 20 + "px";
+						break;
+					default:
+						this.settings.container.style.bottom = 20 + "px";
+				}
+			}
+		}, {
+			key: '_open',
+			value: function _open() {
+				var _this = this;
+
+				var notifyId = "notification-" + this.count;
+				this._buildOut.call(this);
+
+				setTimeout(function () {
+					_this.settings.container.classList.add('shown');
+					_this.settings.container.setAttribute('id', notifyId);
+				}, 100);
+
+				if (this.settings.timeout > 0) {
+					setTimeout(function () {
+						_this.close(notifyId);
+					}, this.settings.timeout);
+				}
+
+				this.count += 1;
+
+				return notifyId;
+			}
+		}, {
+			key: '_close',
+			value: function _close(notificationId) {
+				var notification = document.getElementById(notificationId);
+
+				if (notification) {
+					notification.classList.remove('shown');
+
+					setTimeout(function () {
+						notification.parentNode.removeChild(notification);
+					}, 600);
+
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}]);
+
+		return notifications;
+	}();
+
+	exports.default = notifications;
+
+/***/ },
+/* 44 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.authVisibility = authVisibility;
+	exports.checkAuthRoute = checkAuthRoute;
+	function authVisibility(node) {
+		;
+		console.log('shit');
+		node.parentNode.removeChild(node);
+	}
+
+	function checkAuthRoute() {
+		var token = checkToken();
+
+		if (token) {
+			return;
+		} else {
+			var notAuthorized = new Event('unauthorized');
+			window.location.href = '/login';
+			window.dispatchEvent(notAuthorized);
+		}
+	}
+
+	function checkToken() {
+		var token = window.localStorage.getItem('blog-token');
+
+		if (token) {
+			return token;
+		} else {
+			return false;
 		}
 	}
 
