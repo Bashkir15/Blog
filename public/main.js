@@ -50,7 +50,7 @@ function start() {
 	auth();
 	topics();
 	sections();
-	//posts();
+	posts();
 
 	if (window.innerWidth || document.documentElement.clientWidth < 1300) {
 		SidenavTrigger.addEventListener('click', Sidenav.toggleSidenav);

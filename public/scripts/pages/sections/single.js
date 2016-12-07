@@ -3,6 +3,7 @@ import { cacheQuery } from '../../libs/utils'
 export function single() {
 	var accordians = document.querySelectorAll('.single-section-posts');
 	var sectionTitles = document.querySelectorAll('.single-section-title');
+	var postTitles = document.querySelectorAll('.single-post-title');
 
 
 
@@ -36,7 +37,15 @@ export function single() {
 		fixTitles(sectionTitles[i]);
 	}
 
+	for (var i = 0; i < postTitles.length; i++) {
+		fixPost(postTitles[i]);
+	}
+
 	function fixTitles(title) {
+		title.textContent = title.textContent.split("-").join(" ");
+	}
+
+	function fixPost(title) {
 		title.textContent = title.textContent.split("-").join(" ");
 	}
 

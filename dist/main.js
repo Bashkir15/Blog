@@ -110,7 +110,7 @@
 		(0, _auth.auth)();
 		(0, _topics2.default)();
 		(0, _sections.sections)();
-		//posts();
+		(0, _posts.posts)();
 
 		if (window.innerWidth || document.documentElement.clientWidth < 1300) {
 			SidenavTrigger.addEventListener('click', Sidenav.toggleSidenav);
@@ -2178,6 +2178,7 @@
 	function single() {
 		var accordians = document.querySelectorAll('.single-section-posts');
 		var sectionTitles = document.querySelectorAll('.single-section-title');
+		var postTitles = document.querySelectorAll('.single-post-title');
 
 		function makeAccordian(accordian) {
 			//accordian = accordian || document.querySelectorAll('.single-section-posts');
@@ -2213,7 +2214,15 @@
 			fixTitles(sectionTitles[i]);
 		}
 
+		for (var i = 0; i < postTitles.length; i++) {
+			fixPost(postTitles[i]);
+		}
+
 		function fixTitles(title) {
+			title.textContent = title.textContent.split("-").join(" ");
+		}
+
+		function fixPost(title) {
 			title.textContent = title.textContent.split("-").join(" ");
 		}
 
@@ -2245,9 +2254,10 @@
 	var _single = __webpack_require__(39);
 
 	function posts() {
+		var matches = window.location.pathname.split('/');
 		if (window.location.href.indexOf('create-post') != -1) {
 			(0, _editor.editor)();
-		} else {
+		} else if (matches.length == 4) {
 			(0, _single.single)();
 		}
 	}
