@@ -27,7 +27,9 @@
 								<div class='latest-single-post'>
 									<div class='latest-single-post-header'>
 										<div>
-											<h3><%= post.title %></h3>
+											<a href='/<%= post.section.topicTitle %>/<%= post.sectionTitle %>/<%= post.title %>'>
+												<h3 class='latest-post-title'><%= post.title %></h3>
+											</a>
 										</div>
 
 										<div>
@@ -53,9 +55,11 @@
 										</div>
 
 										<div>
-											<button>
-												<span><%= post.sectionTitle %></span>
-											</button>
+											<a href='/<%= post.section.topicTitle %>'>
+												<button>
+													<span class='latest-post-section'><%= post.sectionTitle %></span>
+												</button>
+											</a>
 										</div>
 									</div>
 								</div>
@@ -64,6 +68,8 @@
 					</div>
 				</div>
 			</div>
+
+			<script src='./scripts/main.min.js'></script>
 		</div>
 	</body>
 </html>

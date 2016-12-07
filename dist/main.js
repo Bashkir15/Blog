@@ -2253,10 +2253,14 @@
 
 	var _single = __webpack_require__(39);
 
+	var _latest = __webpack_require__(45);
+
 	function posts() {
 		var matches = window.location.pathname.split('/');
 		if (window.location.href.indexOf('create-post') != -1) {
 			(0, _editor.editor)();
+		} else if (window.location.href.indexOf('latest') != -1) {
+			(0, _latest.latest)();
 		} else if (matches.length == 4) {
 			(0, _single.single)();
 		}
@@ -5348,6 +5352,36 @@
 			return token;
 		} else {
 			return false;
+		}
+	}
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.latest = latest;
+
+	var _utils = __webpack_require__(3);
+
+	function latest() {
+		var postTitles = document.querySelectorAll('.latest-post-title');
+		var postSections = document.querySelectorAll('.latest-post-section');
+
+		function fixTitle(title) {
+			title.textContent = title.textContent.split("-").join(" ");
+		}
+
+		for (var i = 0; i < postTitles.length; i++) {
+			fixTitle(postTitles[i]);
+		}
+
+		for (var i = 0; i < postSections.length; i++) {
+			fixTitle(postSections[i]);
 		}
 	}
 
