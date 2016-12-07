@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import json from '../helpers/json'
 
 module.exports = () => {
 	let obj = {};
@@ -56,6 +57,25 @@ module.exports = () => {
 			res.render('./templates/posts/latest/latest', {
 				posts: posts
 			});
+		});
+	};
+
+	obj.search = (req, res) => {
+		let keyword = req.params.keyword;
+		let criteria = {
+			title: new RegExp(keyword, 'ig')
+		};
+
+		Post.find(criteria, null)
+		.populate('topic')
+		.exec((err, posts) => {
+			if (err) {
+				return json.bad(err, res);
+			}
+
+			json.good({
+				records: posts
+			}, res);
 		});
 	};
 

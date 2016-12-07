@@ -1,11 +1,14 @@
 import { cacheQuery } from '../../libs/utils'
 
 export function single() {
-	var cache = {};
+	var accordians = document.querySelectorAll('.single-section-posts');
+	var sectionTitles = document.querySelectorAll('.single-section-title');
+
+
 
 	function makeAccordian(accordian) {
-		accordian = accordian || cacheQuery(cache, '.single-section-posts');
-		let toggleButton = cacheQuery(cache, '.close-section-button');
+		//accordian = accordian || document.querySelectorAll('.single-section-posts');
+		let toggleButton = document.querySelectorAll('.close-section-button');
 		let currentTarget;
 
 		for (var i = 0; i < toggleButton.length; i++) {
@@ -14,7 +17,7 @@ export function single() {
 			target.addEventListener('click', function() {
 				currentTarget = this.parentNode;
 
-				if (currentTarget.classList.contains('closed')) {
+				if (target.classList.contains('section-closed')) {
 					target.classList.remove('section-closed');
 					currentTarget.classList.remove('closed');
 				} else {
@@ -23,11 +26,31 @@ export function single() {
 				}
 			}, false);
 		}
-
-		for (var i = 0; i < accordian.length; i++) {
-			makeAccordian(accordian[i]);
-		}
 	}
 
-	makeAccordian();
+	for (var i = 0; i < accordians.length; i++) {
+		makeAccordian(accordians[i]);
+	}
+
+	for (var i = 0; i < sectionTitles.length; i++) {
+		fixTitles(sectionTitles[i]);
+	}
+
+	function fixTitles(title) {
+		title.textContent = title.textContent.split("-").join(" ");
+	}
+
+
+	/*init() {
+		for (var i = 0; i < accordians.length; i++) {
+			makeAccordian(accordians[i]);
+		}
+
+	//	for (var i = 0; i < titles.length; i++) {
+	//		fixTitles(title);
+	//	}
+
+	} */
+
+	//makeAccordian();
 }

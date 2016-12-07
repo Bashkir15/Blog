@@ -50,23 +50,23 @@
 
 	var _sidenav2 = _interopRequireDefault(_sidenav);
 
-	var _navShrink = __webpack_require__(38);
+	var _navShrink = __webpack_require__(2);
 
 	var _navShrink2 = _interopRequireDefault(_navShrink);
 
-	var _topics = __webpack_require__(2);
+	var _topics = __webpack_require__(4);
 
 	var _topics2 = _interopRequireDefault(_topics);
 
-	var _sections = __webpack_require__(30);
+	var _sections = __webpack_require__(32);
 
-	var _posts = __webpack_require__(33);
+	var _posts = __webpack_require__(35);
 
 	var _auth = __webpack_require__(40);
 
 	var _auth2 = __webpack_require__(44);
 
-	var _utils = __webpack_require__(39);
+	var _utils = __webpack_require__(3);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -218,7 +218,148 @@
 		value: true
 	});
 
-	var _create = __webpack_require__(3);
+	var _utils = __webpack_require__(3);
+
+	function navShrink() {
+		var cache = {};
+
+		var lastKnownScrollY = 0;
+		var nav = (0, _utils.cacheSingle)(cache, '.nav');
+		var scrollContainer = (0, _utils.cacheSingle)(cache, '.index-page-view-content');
+		var scrollTimeout = void 0;
+
+		init();
+
+		function getScrollY() {
+			return scrollContainer.pageYOffset || scrollContainer.scrollTop;
+		}
+
+		function init() {
+			scrollContainer.addEventListener('scroll', scrollThrottle);
+		}
+
+		function scrollThrottle() {
+			if (!scrollTimeout) {
+				scrollTimeout = setTimeout(function () {
+					scrollTimeout = null;
+					checkPin();
+				}, 250);
+			}
+		}
+
+		function checkPin() {
+			var currentScrollY = getScrollY();
+
+			if (currentScrollY < lastKnownScrollY) {
+				pin();
+			}
+
+			if (currentScrollY > lastKnownScrollY) {
+				unpin();
+			}
+
+			lastKnownScrollY = getScrollY();
+		}
+
+		function pin() {
+			nav.style.willChange = "transform";
+
+			if (nav.classList.contains('nav-unpinned')) {
+				nav.classList.remove('nav-unpinned');
+				nav.classList.add('nav-pinned');
+			} else {
+				nav.classList.add('nav-pinned');
+			}
+
+			nav.style.willChange = "auto";
+		}
+
+		function unpin() {
+			nav.style.willChange = "transform";
+
+			if (nav.classList.contains('nav-pinned')) {
+				nav.classList.remove('nav-pinned');
+				nav.classList.add('nav-unpinned');
+			} else {
+				nav.classList.add('nav-unpinned');
+			}
+
+			nav.style.willChange = "auto";
+		}
+	}
+
+	exports.default = navShrink;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.mergeObj = mergeObj;
+	exports.cacheQuery = cacheQuery;
+	exports.cacheId = cacheId;
+	exports.cacheSingle = cacheSingle;
+	function mergeObj() {
+		var obj = {};
+
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
+		}
+
+		args.forEach(function (arg) {
+			OBject.keys(arg).forEach(function (k) {
+				obj[k] = arg[k];
+			});
+		});
+
+		return obj;
+	}
+
+	function cacheQuery(cache, query) {
+		cache = cache || {};
+
+		if (!cache[query]) {
+			cache[query] = document.querySelectorAll(query);
+		}
+
+		return cache[query];
+	}
+
+	function cacheId(cache, query) {
+		cache = cache || {};
+
+		if (!cache[query]) {
+			cache[query] = document.getElementById(query);
+		}
+
+		return cache[query];
+	}
+
+	function cacheSingle(cache, query) {
+		cache = cache || {};
+
+		if (!cache[query]) {
+			cache[query] = document.querySelector(query);
+		}
+
+		return cache[query];
+	}
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _create = __webpack_require__(5);
 
 	function topics() {
 		if (window.location.href.indexOf('create-topic') != -1) {
@@ -229,7 +370,7 @@
 	exports.default = topics;
 
 /***/ },
-/* 3 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -239,7 +380,7 @@
 	});
 	exports.create = create;
 
-	var _axios = __webpack_require__(4);
+	var _axios = __webpack_require__(6);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -279,20 +420,20 @@
 	}
 
 /***/ },
-/* 4 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(5);
+	module.exports = __webpack_require__(7);
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(6);
-	var bind = __webpack_require__(7);
-	var Axios = __webpack_require__(8);
+	var utils = __webpack_require__(8);
+	var bind = __webpack_require__(9);
+	var Axios = __webpack_require__(10);
 
 	/**
 	 * Create an instance of Axios
@@ -325,15 +466,15 @@
 	};
 
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(27);
-	axios.CancelToken = __webpack_require__(28);
-	axios.isCancel = __webpack_require__(24);
+	axios.Cancel = __webpack_require__(29);
+	axios.CancelToken = __webpack_require__(30);
+	axios.isCancel = __webpack_require__(26);
 
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(29);
+	axios.spread = __webpack_require__(31);
 
 	module.exports = axios;
 
@@ -342,12 +483,12 @@
 
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var bind = __webpack_require__(7);
+	var bind = __webpack_require__(9);
 
 	/*global toString:true*/
 
@@ -647,7 +788,7 @@
 
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -664,17 +805,17 @@
 
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(9);
-	var utils = __webpack_require__(6);
-	var InterceptorManager = __webpack_require__(21);
-	var dispatchRequest = __webpack_require__(22);
-	var isAbsoluteURL = __webpack_require__(25);
-	var combineURLs = __webpack_require__(26);
+	var defaults = __webpack_require__(11);
+	var utils = __webpack_require__(8);
+	var InterceptorManager = __webpack_require__(23);
+	var dispatchRequest = __webpack_require__(24);
+	var isAbsoluteURL = __webpack_require__(27);
+	var combineURLs = __webpack_require__(28);
 
 	/**
 	 * Create a new instance of Axios
@@ -755,13 +896,13 @@
 
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(6);
-	var normalizeHeaderName = __webpack_require__(11);
+	var utils = __webpack_require__(8);
+	var normalizeHeaderName = __webpack_require__(13);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -778,10 +919,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(12);
+	    adapter = __webpack_require__(14);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(12);
+	    adapter = __webpack_require__(14);
 	  }
 	  return adapter;
 	}
@@ -845,10 +986,10 @@
 	  }
 	};
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -1034,12 +1175,12 @@
 
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(8);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -1052,18 +1193,18 @@
 
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(6);
-	var settle = __webpack_require__(13);
-	var buildURL = __webpack_require__(16);
-	var parseHeaders = __webpack_require__(17);
-	var isURLSameOrigin = __webpack_require__(18);
-	var createError = __webpack_require__(14);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(19);
+	var utils = __webpack_require__(8);
+	var settle = __webpack_require__(15);
+	var buildURL = __webpack_require__(18);
+	var parseHeaders = __webpack_require__(19);
+	var isURLSameOrigin = __webpack_require__(20);
+	var createError = __webpack_require__(16);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(21);
 
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1159,7 +1300,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(20);
+	      var cookies = __webpack_require__(22);
 
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1233,15 +1374,15 @@
 	  });
 	};
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createError = __webpack_require__(14);
+	var createError = __webpack_require__(16);
 
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -1267,12 +1408,12 @@
 
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enhanceError = __webpack_require__(15);
+	var enhanceError = __webpack_require__(17);
 
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -1290,7 +1431,7 @@
 
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1315,12 +1456,12 @@
 
 
 /***/ },
-/* 16 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(8);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -1389,12 +1530,12 @@
 
 
 /***/ },
-/* 17 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(8);
 
 	/**
 	 * Parse headers into an object
@@ -1432,12 +1573,12 @@
 
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(8);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -1506,7 +1647,7 @@
 
 
 /***/ },
-/* 19 */
+/* 21 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1548,12 +1689,12 @@
 
 
 /***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(8);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -1607,12 +1748,12 @@
 
 
 /***/ },
-/* 21 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(8);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -1665,15 +1806,15 @@
 
 
 /***/ },
-/* 22 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(6);
-	var transformData = __webpack_require__(23);
-	var isCancel = __webpack_require__(24);
-	var defaults = __webpack_require__(9);
+	var utils = __webpack_require__(8);
+	var transformData = __webpack_require__(25);
+	var isCancel = __webpack_require__(26);
+	var defaults = __webpack_require__(11);
 
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -1750,12 +1891,12 @@
 
 
 /***/ },
-/* 23 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(6);
+	var utils = __webpack_require__(8);
 
 	/**
 	 * Transform the data for a request or a response
@@ -1776,7 +1917,7 @@
 
 
 /***/ },
-/* 24 */
+/* 26 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1787,7 +1928,7 @@
 
 
 /***/ },
-/* 25 */
+/* 27 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1807,7 +1948,7 @@
 
 
 /***/ },
-/* 26 */
+/* 28 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1825,7 +1966,7 @@
 
 
 /***/ },
-/* 27 */
+/* 29 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1850,12 +1991,12 @@
 
 
 /***/ },
-/* 28 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Cancel = __webpack_require__(27);
+	var Cancel = __webpack_require__(29);
 
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -1913,7 +2054,7 @@
 
 
 /***/ },
-/* 29 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1946,7 +2087,7 @@
 
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1956,9 +2097,9 @@
 	});
 	exports.sections = sections;
 
-	var _create = __webpack_require__(31);
+	var _create = __webpack_require__(33);
 
-	var _single = __webpack_require__(32);
+	var _single = __webpack_require__(34);
 
 	function sections() {
 		if (window.location.href.indexOf('create-section') != -1) {
@@ -1969,7 +2110,7 @@
 	}
 
 /***/ },
-/* 31 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1979,11 +2120,11 @@
 	});
 	exports.create = create;
 
-	var _axios = __webpack_require__(4);
+	var _axios = __webpack_require__(6);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _utils = __webpack_require__(39);
+	var _utils = __webpack_require__(3);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2022,7 +2163,7 @@
 	}
 
 /***/ },
-/* 32 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2032,14 +2173,15 @@
 	});
 	exports.single = single;
 
-	var _utils = __webpack_require__(39);
+	var _utils = __webpack_require__(3);
 
 	function single() {
-		var cache = {};
+		var accordians = document.querySelectorAll('.single-section-posts');
+		var sectionTitles = document.querySelectorAll('.single-section-title');
 
 		function makeAccordian(accordian) {
-			accordian = accordian || (0, _utils.cacheQuery)(cache, '.single-section-posts');
-			var toggleButton = (0, _utils.cacheQuery)(cache, '.close-section-button');
+			//accordian = accordian || document.querySelectorAll('.single-section-posts');
+			var toggleButton = document.querySelectorAll('.close-section-button');
 			var currentTarget = void 0;
 
 			var _loop = function _loop() {
@@ -2048,7 +2190,7 @@
 				target.addEventListener('click', function () {
 					currentTarget = this.parentNode;
 
-					if (currentTarget.classList.contains('closed')) {
+					if (target.classList.contains('section-closed')) {
 						target.classList.remove('section-closed');
 						currentTarget.classList.remove('closed');
 					} else {
@@ -2061,17 +2203,34 @@
 			for (var i = 0; i < toggleButton.length; i++) {
 				_loop();
 			}
-
-			for (var i = 0; i < accordian.length; i++) {
-				makeAccordian(accordian[i]);
-			}
 		}
 
-		makeAccordian();
+		for (var i = 0; i < accordians.length; i++) {
+			makeAccordian(accordians[i]);
+		}
+
+		for (var i = 0; i < sectionTitles.length; i++) {
+			fixTitles(sectionTitles[i]);
+		}
+
+		function fixTitles(title) {
+			title.textContent = title.textContent.split("-").join(" ");
+		}
+
+		/*init() {
+	 	for (var i = 0; i < accordians.length; i++) {
+	 		makeAccordian(accordians[i]);
+	 	}
+	 	//	for (var i = 0; i < titles.length; i++) {
+	 //		fixTitles(title);
+	 //	}
+	 	} */
+
+		//makeAccordian();
 	}
 
 /***/ },
-/* 33 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2081,9 +2240,9 @@
 	});
 	exports.posts = posts;
 
-	var _editor = __webpack_require__(34);
+	var _editor = __webpack_require__(36);
 
-	var _single = __webpack_require__(36);
+	var _single = __webpack_require__(39);
 
 	function posts() {
 		if (window.location.href.indexOf('create-post') != -1) {
@@ -2094,7 +2253,7 @@
 	}
 
 /***/ },
-/* 34 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2104,15 +2263,15 @@
 	});
 	exports.editor = editor;
 
-	var _showdown = __webpack_require__(35);
+	var _showdown = __webpack_require__(37);
 
 	var _showdown2 = _interopRequireDefault(_showdown);
 
-	var _axios = __webpack_require__(4);
+	var _axios = __webpack_require__(6);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _jsParser = __webpack_require__(37);
+	var _jsParser = __webpack_require__(38);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2169,7 +2328,7 @@
 	}
 
 /***/ },
-/* 35 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;;/*! showdown 11-11-2016 */
@@ -4626,46 +4785,7 @@
 
 
 /***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.single = single;
-
-	var _jsParser = __webpack_require__(37);
-
-	var _utils = __webpack_require__(39);
-
-	function single() {
-
-		var cache = {};
-
-		var postContent = (0, _utils.cacheId)(cache, 'post-content');
-
-		function renderPost() {
-			document.body.addClass = 'is-loading';
-
-			var newPostContent = postContent.innerText;
-			postContent.innerHTML = newPostContent;
-
-			var codeContent = (0, _utils.cacheQuery)(cache, '.js-markup');
-
-			Array.prototype.forEach.call(codeContent, function (content) {
-				content.innerHTML = (0, _jsParser.renderJs)(content);
-			});
-
-			postContent.innerHTML = postContent.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>");
-		}
-
-		renderPost();
-	}
-
-/***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -4709,7 +4829,7 @@
 	//regex /(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\\\r\n])+\/[gimyu]{0,5}(?=\s*($|[\r\n,.;})]))/
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4717,136 +4837,34 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.single = single;
 
-	var _utils = __webpack_require__(39);
+	var _jsParser = __webpack_require__(38);
 
-	function navShrink() {
+	var _utils = __webpack_require__(3);
+
+	function single() {
+
 		var cache = {};
 
-		var lastKnownScrollY = 0;
-		var nav = (0, _utils.cacheSingle)(cache, '.nav');
-		var scrollContainer = (0, _utils.cacheSingle)(cache, '.index-page-view-content');
-		var scrollTimeout = void 0;
+		var postContent = (0, _utils.cacheId)(cache, 'post-content');
 
-		init();
+		function renderPost() {
+			document.body.addClass = 'is-loading';
 
-		function getScrollY() {
-			return scrollContainer.pageYOffset || scrollContainer.scrollTop;
-		}
+			var newPostContent = postContent.innerText;
+			postContent.innerHTML = newPostContent;
 
-		function init() {
-			scrollContainer.addEventListener('scroll', scrollThrottle);
-		}
+			var codeContent = (0, _utils.cacheQuery)(cache, '.js-markup');
 
-		function scrollThrottle() {
-			if (!scrollTimeout) {
-				scrollTimeout = setTimeout(function () {
-					scrollTimeout = null;
-					checkPin();
-				}, 250);
-			}
-		}
-
-		function checkPin() {
-			var currentScrollY = getScrollY();
-
-			if (currentScrollY < lastKnownScrollY) {
-				pin();
-			}
-
-			if (currentScrollY > lastKnownScrollY) {
-				unpin();
-			}
-
-			lastKnownScrollY = getScrollY();
-		}
-
-		function pin() {
-			nav.style.willChange = "transform";
-
-			if (nav.classList.contains('nav-unpinned')) {
-				nav.classList.remove('nav-unpinned');
-				nav.classList.add('nav-pinned');
-			} else {
-				nav.classList.add('nav-pinned');
-			}
-
-			nav.style.willChange = "auto";
-		}
-
-		function unpin() {
-			nav.style.willChange = "transform";
-
-			if (nav.classList.contains('nav-pinned')) {
-				nav.classList.remove('nav-pinned');
-				nav.classList.add('nav-unpinned');
-			} else {
-				nav.classList.add('nav-unpinned');
-			}
-
-			nav.style.willChange = "auto";
-		}
-	}
-
-	exports.default = navShrink;
-
-/***/ },
-/* 39 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.mergeObj = mergeObj;
-	exports.cacheQuery = cacheQuery;
-	exports.cacheId = cacheId;
-	exports.cacheSingle = cacheSingle;
-	function mergeObj() {
-		var obj = {};
-
-		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-			args[_key] = arguments[_key];
-		}
-
-		args.forEach(function (arg) {
-			OBject.keys(arg).forEach(function (k) {
-				obj[k] = arg[k];
+			Array.prototype.forEach.call(codeContent, function (content) {
+				content.innerHTML = (0, _jsParser.renderJs)(content);
 			});
-		});
 
-		return obj;
-	}
-
-	function cacheQuery(cache, query) {
-		cache = cache || {};
-
-		if (!cache[query]) {
-			cache[query] = document.querySelectorAll(query);
+			postContent.innerHTML = postContent.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>");
 		}
 
-		return cache[query];
-	}
-
-	function cacheId(cache, query) {
-		cache = cache || {};
-
-		if (!cache[query]) {
-			cache[query] = document.getElementById(query);
-		}
-
-		return cache[query];
-	}
-
-	function cacheSingle(cache, query) {
-		cache = cache || {};
-
-		if (!cache[query]) {
-			cache[query] = document.querySelector(query);
-		}
-
-		return cache[query];
+		renderPost();
 	}
 
 /***/ },
@@ -4862,7 +4880,7 @@
 
 	var _signup = __webpack_require__(41);
 
-	var _login = __webpack_require__(42);
+	var _login = __webpack_require__(43);
 
 	function auth() {
 		if (window.location.href.indexOf('signup') != -1) {
@@ -4883,13 +4901,13 @@
 	});
 	exports.signup = signup;
 
-	var _axios = __webpack_require__(4);
+	var _axios = __webpack_require__(6);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _utils = __webpack_require__(39);
+	var _utils = __webpack_require__(3);
 
-	var _notifications = __webpack_require__(43);
+	var _notifications = __webpack_require__(42);
 
 	var _notifications2 = _interopRequireDefault(_notifications);
 
@@ -5011,123 +5029,6 @@
 
 /***/ },
 /* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.login = login;
-
-	var _axios = __webpack_require__(4);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _notifications = __webpack_require__(43);
-
-	var _notifications2 = _interopRequireDefault(_notifications);
-
-	var _utils = __webpack_require__(39);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function login() {
-		var cache = cache || {};
-
-		var loginEmail = (0, _utils.cacheId)(cache, 'login-email');
-		var loginPassword = (0, _utils.cacheId)(cache, 'login-password');
-		var submitButton = (0, _utils.cacheId)(cache, 'login-submit');
-		var successContent = (0, _utils.cacheId)(cache, 'success-content');
-		var failureContent = (0, _utils.cacheId)(cache, 'failure-content');
-
-		var successNotify = new _notifications2.default({
-			content: successNotify,
-			type: 'success',
-			timeout: 1500
-		});
-
-		var failureNotify = new _notifications2.default({
-			content: failureNotify,
-			type: 'danger',
-			timeout: 1500
-		});
-
-		function validateEmail() {
-			var input = loginEmail.value;
-			var atpos = input.indexOf('@');
-			var dotpos = input.lastIndexOf('.');
-
-			if (atpos < 1 || dotpos - atpos < 2) {
-				if (loginEmail.parentNode.classList.contains('email-valid')) {
-					loginEmail.parentNode.classList.remove('email-valid');
-				}
-
-				loginEmail.parentNode.classList.add('email-invalid');
-			} else {
-				if (loginEmail.parentNode.classList.contains('email-invalid')) {
-					loginEmail.parentNode.classList.remove('email-invalid');
-				}
-
-				loginEmail.parentNode.classList.add('email-invalid');
-			}
-		}
-
-		function submit() {
-			submitButton.classList.add('show-loading');
-
-			var data = {};
-			data.email = (0, _utils.cacheId)(cache, 'login-email');
-			data.password = (0, _utils.cacheId)(cache, 'login-password');
-
-			_axios2.default.post('http://localhost:3000/users', {
-				email: data.email.value,
-				password: data.password.value,
-
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).then(function (response) {
-				submitButton.classList.remove('show-loading');
-
-				if (response.data.success) {
-					submitButton.classList.add('loading-success');
-
-					var success = newEvent('login-success');
-					var user = JSON.stringify(response.data.res.record);
-
-					window.dispatchEvent(success);
-					window.localStorage.setItem('user', user);
-					window.localStorage.setItem('blog-token', response.data.res.token);
-					removeEvents();
-
-					setTimeout(function () {
-						window.location.href = '/';
-					}, 500);
-				} else {
-					submitButton.classList.add('loading-failed');
-
-					var failure = new Event('login-failure');
-					window.dispatchEvent(failure);
-				}
-			});
-		}
-
-		function removeEvents() {
-			submitButton.removeEventListener('click', submit);
-			loginEmail.removeEventListener('blur', validateEmail);
-			window.removeEventListener('login-failure', failureNotify.open);
-			window.removeEventListener('login-success', successNotify.open);
-		}
-
-		submitButton.addEventListener('click', submit);
-		loginEmail.addEventListener('blur', validateEmail);
-		window.addEventListener('login-failure', failureNotify);
-		window.addEventListener('login-success', successNotify);
-	}
-
-/***/ },
-/* 43 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5283,6 +5184,123 @@
 	}();
 
 	exports.default = notifications;
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.login = login;
+
+	var _axios = __webpack_require__(6);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _notifications = __webpack_require__(42);
+
+	var _notifications2 = _interopRequireDefault(_notifications);
+
+	var _utils = __webpack_require__(3);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function login() {
+		var cache = cache || {};
+
+		var loginEmail = (0, _utils.cacheId)(cache, 'login-email');
+		var loginPassword = (0, _utils.cacheId)(cache, 'login-password');
+		var submitButton = (0, _utils.cacheId)(cache, 'login-submit');
+		var successContent = (0, _utils.cacheId)(cache, 'success-content');
+		var failureContent = (0, _utils.cacheId)(cache, 'failure-content');
+
+		var successNotify = new _notifications2.default({
+			content: successNotify,
+			type: 'success',
+			timeout: 1500
+		});
+
+		var failureNotify = new _notifications2.default({
+			content: failureNotify,
+			type: 'danger',
+			timeout: 1500
+		});
+
+		function validateEmail() {
+			var input = loginEmail.value;
+			var atpos = input.indexOf('@');
+			var dotpos = input.lastIndexOf('.');
+
+			if (atpos < 1 || dotpos - atpos < 2) {
+				if (loginEmail.parentNode.classList.contains('email-valid')) {
+					loginEmail.parentNode.classList.remove('email-valid');
+				}
+
+				loginEmail.parentNode.classList.add('email-invalid');
+			} else {
+				if (loginEmail.parentNode.classList.contains('email-invalid')) {
+					loginEmail.parentNode.classList.remove('email-invalid');
+				}
+
+				loginEmail.parentNode.classList.add('email-invalid');
+			}
+		}
+
+		function submit() {
+			submitButton.classList.add('show-loading');
+
+			var data = {};
+			data.email = (0, _utils.cacheId)(cache, 'login-email');
+			data.password = (0, _utils.cacheId)(cache, 'login-password');
+
+			_axios2.default.post('http://localhost:3000/users', {
+				email: data.email.value,
+				password: data.password.value,
+
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(function (response) {
+				submitButton.classList.remove('show-loading');
+
+				if (response.data.success) {
+					submitButton.classList.add('loading-success');
+
+					var success = new Event('login-success');
+					var user = JSON.stringify(response.data.res.record);
+
+					window.dispatchEvent(success);
+					window.localStorage.setItem('user', user);
+					window.localStorage.setItem('blog-token', response.data.res.token);
+					removeEvents();
+
+					setTimeout(function () {
+						window.location.href = '/';
+					}, 500);
+				} else {
+					submitButton.classList.add('loading-failed');
+
+					var failure = new Event('login-failure');
+					window.dispatchEvent(failure);
+				}
+			});
+		}
+
+		function removeEvents() {
+			submitButton.removeEventListener('click', submit);
+			loginEmail.removeEventListener('blur', validateEmail);
+			window.removeEventListener('login-failure', failureNotify.open);
+			window.removeEventListener('login-success', successNotify.open);
+		}
+
+		submitButton.addEventListener('click', submit);
+		loginEmail.addEventListener('blur', validateEmail);
+		window.addEventListener('login-failure', failureNotify);
+		window.addEventListener('login-success', successNotify);
+	}
 
 /***/ },
 /* 44 */

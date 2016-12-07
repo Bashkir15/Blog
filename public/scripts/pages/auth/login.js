@@ -66,7 +66,7 @@ export function login() {
 			if (response.data.success) {
 				submitButton.classList.add('loading-success');
 
-				let success = newEvent('login-success');
+				let success = new Event('login-success');
 				let user = JSON.stringify(response.data.res.record);
 
 				window.dispatchEvent(success); 
