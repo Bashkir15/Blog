@@ -6,6 +6,7 @@ export function single() {
 	var cache = {};
 
 	let postContent = cacheId(cache, 'post-content');
+	let ImageSrc = '../../../static/me.jpg';
 
 	function renderPost() {
 		document.body.addClass = 'is-loading';
@@ -22,5 +23,16 @@ export function single() {
 		postContent.innerHTML = postContent.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>");
 	}
 
+	function changeImage() {
+		let sidenavImage = document.querySelectorAll('.sidenav-image');
+
+		for (var i = 0; i < sidenavImage.length; i++) {
+			let image = sidenavImage[i];
+
+			image.src = "./../../static/me.jpg";
+		}
+	}
+
 	renderPost();
+	changeImage();
 }

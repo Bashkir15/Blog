@@ -35,5 +35,34 @@ module.exports = () => {
 		});
 	};
 
+	obj.authenticate = (req, res) => {
+		User.findOne({email: req.body.email}, (err, user) => {
+			if (err) {
+				return json.bad(err, res);
+			}
+
+			if (user.secureLock) {
+				return json.bad({message: 'Sorry, due to number of incorrect attempts you have been locked out of your account'}, res);
+			}
+
+			user.comparePassword(req.body.password, user.password, (err, isMatch) => {
+				if (err) {
+					return json.bad(err, res);
+				}
+
+				if (isMatch) {
+					// handle updates to loginAttempts, lock, secureLock, and set those updates before issuing token.
+
+					let token = generateToken(user);
+
+					json.good({
+						record: user,
+						token: token
+					}, res);
+				}
+			});
+		});
+	};
+
 	return obj;
 };

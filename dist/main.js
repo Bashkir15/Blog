@@ -62,9 +62,9 @@
 
 	var _posts = __webpack_require__(35);
 
-	var _auth = __webpack_require__(40);
+	var _auth = __webpack_require__(41);
 
-	var _auth2 = __webpack_require__(44);
+	var _auth2 = __webpack_require__(45);
 
 	var _utils = __webpack_require__(3);
 
@@ -178,7 +178,7 @@
 
 				this._addEvents();
 				this.container.classList.remove(this.openClass);
-				this.closeButton.removeEventListener('click');
+				this.closeButton.removeEventListener('click', this.toggleSidenav);
 				document.removeEventListener('keydown');
 			}
 		}, {
@@ -2253,7 +2253,7 @@
 
 	var _single = __webpack_require__(39);
 
-	var _latest = __webpack_require__(45);
+	var _latest = __webpack_require__(40);
 
 	function posts() {
 		var matches = window.location.pathname.split('/');
@@ -4862,6 +4862,7 @@
 		var cache = {};
 
 		var postContent = (0, _utils.cacheId)(cache, 'post-content');
+		var ImageSrc = '../../../static/me.jpg';
 
 		function renderPost() {
 			document.body.addClass = 'is-loading';
@@ -4878,7 +4879,18 @@
 			postContent.innerHTML = postContent.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>");
 		}
 
+		function changeImage() {
+			var sidenavImage = document.querySelectorAll('.sidenav-image');
+
+			for (var i = 0; i < sidenavImage.length; i++) {
+				var image = sidenavImage[i];
+
+				image.src = "./../../static/me.jpg";
+			}
+		}
+
 		renderPost();
+		changeImage();
 	}
 
 /***/ },
@@ -4890,11 +4902,41 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.latest = latest;
+
+	var _utils = __webpack_require__(3);
+
+	function latest() {
+		var postTitles = document.querySelectorAll('.latest-post-title');
+		var postSections = document.querySelectorAll('.latest-post-section');
+
+		function fixTitle(title) {
+			title.textContent = title.textContent.split("-").join(" ");
+		}
+
+		for (var i = 0; i < postTitles.length; i++) {
+			fixTitle(postTitles[i]);
+		}
+
+		for (var i = 0; i < postSections.length; i++) {
+			fixTitle(postSections[i]);
+		}
+	}
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	exports.auth = auth;
 
-	var _signup = __webpack_require__(41);
+	var _signup = __webpack_require__(42);
 
-	var _login = __webpack_require__(43);
+	var _login = __webpack_require__(44);
 
 	function auth() {
 		if (window.location.href.indexOf('signup') != -1) {
@@ -4905,7 +4947,7 @@
 	}
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4921,7 +4963,7 @@
 
 	var _utils = __webpack_require__(3);
 
-	var _notifications = __webpack_require__(42);
+	var _notifications = __webpack_require__(43);
 
 	var _notifications2 = _interopRequireDefault(_notifications);
 
@@ -5042,7 +5084,7 @@
 	}
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5200,7 +5242,7 @@
 	exports.default = notifications;
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5214,7 +5256,7 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _notifications = __webpack_require__(42);
+	var _notifications = __webpack_require__(43);
 
 	var _notifications2 = _interopRequireDefault(_notifications);
 
@@ -5317,7 +5359,7 @@
 	}
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5352,36 +5394,6 @@
 			return token;
 		} else {
 			return false;
-		}
-	}
-
-/***/ },
-/* 45 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.latest = latest;
-
-	var _utils = __webpack_require__(3);
-
-	function latest() {
-		var postTitles = document.querySelectorAll('.latest-post-title');
-		var postSections = document.querySelectorAll('.latest-post-section');
-
-		function fixTitle(title) {
-			title.textContent = title.textContent.split("-").join(" ");
-		}
-
-		for (var i = 0; i < postTitles.length; i++) {
-			fixTitle(postTitles[i]);
-		}
-
-		for (var i = 0; i < postSections.length; i++) {
-			fixTitle(postSections[i]);
 		}
 	}
 

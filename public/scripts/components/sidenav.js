@@ -38,7 +38,7 @@ class SideNav {
 
 		this._addEvents();
 		this.container.classList.remove(this.openClass);
-		this.closeButton.removeEventListener('click');
+		this.closeButton.removeEventListener('click', this.toggleSidenav);
 		document.removeEventListener('keydown');
 	}
 
