@@ -6,7 +6,7 @@ function navShrink() {
 	let lastKnownScrollY = 0;
 	let nav = cacheSingle(cache, '.nav');
 	let scrollContainer = cacheSingle(cache, '.index-page-view-content');
-	let scrollTimeout;
+	let scrollTimeout = false;
 
 	init();
 
@@ -20,11 +20,13 @@ function navShrink() {
 
 	function scrollThrottle() {
 		if (!scrollTimeout) {
-			scrollTimeout = setTimeout(() => {
-				scrollTimeout = null;
+			window.requestAnimationFrame(() => {
 				checkPin();
-			}, 250);
+				scrollTimeout = false;
+			});
 		}
+
+		scrollTimeout = true;
 	}
 
 	function checkPin() {

@@ -40,7 +40,7 @@ export function login() {
 				loginEmail.parentNode.classList.remove('email-invalid');
 			}
 
-			loginEmail.parentNode.classList.add('email-invalid');
+			loginEmail.parentNode.classList.add('email-valid');
 		}
 	}
 
@@ -52,7 +52,7 @@ export function login() {
 		data.email = cacheId(cache, 'login-email');
 		data.password = cacheId(cache, 'login-password');
 
-		axios.post('http://localhost:3000/users', {
+		axios.post('http://localhost:3000/users/authenticate', {
 			email: data.email.value,
 			password: data.password.value,
 
@@ -69,14 +69,12 @@ export function login() {
 				let success = new Event('login-success');
 				let user = JSON.stringify(response.data.res.record);
 
+
 				window.dispatchEvent(success); 
 				window.localStorage.setItem('user', user);
 				window.localStorage.setItem('blog-token', response.data.res.token);
 				removeEvents();
-				
-				setTimeout(() => {
-					window.location.href = '/';
-				}, 500);
+				window.location.href = '/admin';
 
 			} else {
 				submitButton.classList.add('loading-failed');

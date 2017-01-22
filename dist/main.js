@@ -71,41 +71,10 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function start() {
-		var cache = {};
-
-		var SidenavTrigger = (0, _utils.cacheId)(cache, 'side-nav-trigger');
+		var SidenavTrigger = document.getElementById('side-nav-trigger');
 		var Sidenav = new _sidenav2.default();
 
-		function checkLinks() {
-			var token = window.localStorage.getItem('blog-token');
-			var unauthedLinks = (0, _utils.cacheQuery)(cache, '.unauthed-link');
-			var authedLinks = (0, _utils.cacheQuery)(cache, '.authed-link');
-			var logoutButton = (0, _utils.cacheId)(cache, 'logout-button');
-
-			if (token) {
-
-				Array.prototype.forEach.call(unauthedLinks, function (link) {
-					link.style.display = "none";
-				});
-
-				logoutButton.addEventListener('click', logout);
-			} else {
-				Array.prototype.forEach.call(authedLinks, function (link) {
-					link.style.display = "none";
-				});
-			}
-		}
-
-		function logout(e) {
-			e.preventDefault();
-
-			window.localStorage.removeItem('user');
-			window.localStorage.removeItem('blog-token');
-
-			logoutButton.removeEventListener('click', logout);
-		}
-
-		checkLinks();
+		(0, _auth2.checkLinks)();
 		(0, _navShrink2.default)();
 		(0, _auth.auth)();
 		(0, _topics2.default)();
@@ -226,7 +195,7 @@
 		var lastKnownScrollY = 0;
 		var nav = (0, _utils.cacheSingle)(cache, '.nav');
 		var scrollContainer = (0, _utils.cacheSingle)(cache, '.index-page-view-content');
-		var scrollTimeout = void 0;
+		var scrollTimeout = false;
 
 		init();
 
@@ -240,11 +209,13 @@
 
 		function scrollThrottle() {
 			if (!scrollTimeout) {
-				scrollTimeout = setTimeout(function () {
-					scrollTimeout = null;
+				window.requestAnimationFrame(function () {
 					checkPin();
-				}, 250);
+					scrollTimeout = false;
+				});
 			}
+
+			scrollTimeout = true;
 		}
 
 		function checkPin() {
@@ -5301,7 +5272,7 @@
 					loginEmail.parentNode.classList.remove('email-invalid');
 				}
 
-				loginEmail.parentNode.classList.add('email-invalid');
+				loginEmail.parentNode.classList.add('email-valid');
 			}
 		}
 
@@ -5312,7 +5283,7 @@
 			data.email = (0, _utils.cacheId)(cache, 'login-email');
 			data.password = (0, _utils.cacheId)(cache, 'login-password');
 
-			_axios2.default.post('http://localhost:3000/users', {
+			_axios2.default.post('http://localhost:3000/users/authenticate', {
 				email: data.email.value,
 				password: data.password.value,
 
@@ -5332,10 +5303,7 @@
 					window.localStorage.setItem('user', user);
 					window.localStorage.setItem('blog-token', response.data.res.token);
 					removeEvents();
-
-					setTimeout(function () {
-						window.location.href = '/';
-					}, 500);
+					window.location.href = '/admin';
 				} else {
 					submitButton.classList.add('loading-failed');
 
@@ -5369,9 +5337,14 @@
 	});
 	exports.authVisibility = authVisibility;
 	exports.checkAuthRoute = checkAuthRoute;
+	exports.checkLinks = checkLinks;
+	exports.logout = logout;
+	var unauthedLinks = document.querySelectorAll('.unauthed-link');
+	var authedLinks = document.querySelectorAll('.authed-link');
+	var logoutButton = document.getElementById('logout-button');
+
 	function authVisibility(node) {
 		;
-		console.log('shit');
 		node.parentNode.removeChild(node);
 	}
 
@@ -5387,6 +5360,37 @@
 		}
 	}
 
+	function checkLinks() {
+		var len = authedLinks.length;
+		var len2 = unauthedLinks.length;
+
+		if (loggedIn) {
+			var i = void 0;
+			var j = void 0;
+
+			for (i = 0; i < len; i++) {
+				authedLinks[i].classList.add('authed');
+			}
+
+			for (j = 0; j < len2; j++) {
+				unauthedLinks[j].classList.add('authed');
+			}
+
+			logoutButton.addEventListener('click', logout, false);
+		} else {
+			var _i = void 0;
+			var _j = void 0;
+
+			for (_i = 0; _i < len; _i++) {
+				authedLinks[_i].classList.remove('authed');
+			}
+
+			for (_j = 0; _j < len2; _j++) {
+				unauthedLinks[_j].classList.remove('authed');
+			}
+		}
+	}
+
 	function checkToken() {
 		var token = window.localStorage.getItem('blog-token');
 
@@ -5396,6 +5400,13 @@
 			return false;
 		}
 	}
+
+	function logout() {
+		window.localStorage.removeItem('user');
+		window.localStorage.removeItem('blog-token');
+	}
+
+	var loggedIn = exports.loggedIn = checkToken();
 
 /***/ }
 /******/ ]);

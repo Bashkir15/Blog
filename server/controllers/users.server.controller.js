@@ -36,29 +36,82 @@ module.exports = () => {
 	};
 
 	obj.authenticate = (req, res) => {
+		console.log(req.body);
 		User.findOne({email: req.body.email}, (err, user) => {
 			if (err) {
 				return json.bad(err, res);
+			}
+
+			if (user.isLocked) {
+				return user.incorrectLoginAttempts((err) => {
+					if (err) {
+						return json.bad(err, res);
+					}
+
+					json.bad({message: `Sorry, you have reached the maximum number of logins. Your account is locked until: ${user.lockUntil}`}, res);
+				});
 			}
 
 			if (user.secureLock) {
 				return json.bad({message: 'Sorry, due to number of incorrect attempts you have been locked out of your account'}, res);
 			}
 
-			user.comparePassword(req.body.password, user.password, (err, isMatch) => {
+			user.comparePassword(req.body.password, (err, isMatch) => {
 				if (err) {
 					return json.bad(err, res);
 				}
 
 				if (isMatch) {
-					// handle updates to loginAttempts, lock, secureLock, and set those updates before issuing token.
+					if (!user.loginAttempts && !user.lockUntil && !user.secureLock) {
+						let token = generateToken(user);
 
-					let token = generateToken(user);
+						json.good({
+							record: user,
+							token: token
+						}, res);
+					} else {
 
-					json.good({
-						record: user,
-						token: token
-					}, res);
+						var updates = {
+							$set: {
+								loginAttempts: 0,
+								limitReached: 0
+							},
+
+							$unset: {
+								lockUntil: 1
+							}
+						};
+
+						return user.update(updates, (err, item) => {
+							if (err) {
+								return json.bad(err, res);
+							}
+
+							var token = generateToken(user);
+
+							json.good({
+								record: user,
+								token: token
+							}, res);
+						});
+					}
+				} else {
+
+					user.incorrectLoginAttempts((err) => {
+						let totalAttempts;
+
+						if (err) {
+							return json.bad(err, res);
+						}
+
+						if (User.limitReached >= 2) {
+							totalAttempts = 3;
+						} else {
+							totalAttempts = 5
+						}
+
+						json.bad({message: `Sorry, either your email or password were incorrect. You have ${totalAttempts - user.loginAttempts} remaining until your account is locked`}, res);
+					});
 				}
 			});
 		});

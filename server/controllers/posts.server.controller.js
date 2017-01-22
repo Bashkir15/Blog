@@ -47,6 +47,57 @@ module.exports = () => {
 		});
 	};
 
+	obj.edit = (req, res) => {
+		Post.findOne({title: req.params.title})
+		.exec((err, post) => {
+			if (err) {
+				res.json(err);
+			}
+
+			if (post) {
+				if (req.body.title != post.title) {
+					post.title = req.body.title;
+				}
+
+				if (req.body.description != post.description) {
+					post.description = req.body.description;
+				}
+
+				if (req.body.content != post.content) {
+					post.content = req.body.content;
+				}
+
+				post.lastUpdated = Date.now();
+				post.save((err) => {
+					if (err) {
+						return json.bad(err, res);
+					}
+
+					json.good({
+						record: post
+					}, res);
+				});
+			}
+		});
+	};
+
+	obj.remove = (req, res) => {
+		Post.findOne({title: req.params.title})
+		.exec((err, post) => {
+			if (err) {
+				return json.bad(err, res);
+			} else {
+				post.remove((err) => {
+					if (err) {
+						return json.bad(err, res);
+					}
+
+					json.good({}, res);
+				});
+			}
+		});
+	};
+
 	obj.latest = (req, res) => {
 		Post.find({}, null, {sort: {created: -1}})
 		.populate('section')

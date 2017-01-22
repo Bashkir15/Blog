@@ -38,4 +38,8 @@ var PostsSchema = new mongoose.Schema({
 	}
 });
 
+PostsSchema.pre('remove', (next) => {
+	this.model('Section').update({posts: this._id}, {$pull: {posts: {$in: [this._id]}}}, next);
+});
+
 mongoose.model('Post', PostsSchema);
