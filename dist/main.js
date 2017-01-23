@@ -2278,6 +2278,8 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
+	var _events = __webpack_require__(46);
+
 	var _jsParser = __webpack_require__(38);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -2291,18 +2293,17 @@
 		var sectionTitle = document.getElementById('post-section-title');
 		var topicTitle = document.getElementById('post-topic-section');
 		var section = document.getElementById('post-section');
-		var codeElement = documet.querySelectorAll('.js-markup');
+		var codeElement = document.querySelectorAll('.js-markup');
 
-		function convertTextToMarkdown() {
-			var markdownText = pad.value.split("\t").join("#").split('\n').join("~");
-			markdownSection.innerHTML = markdownText;
-
-			Array.prototype.forEach.call(codeElement, function (element) {
-				element.innerHTML = (0, _jsParser.renderJs)(element);
-			});
-
-			markdownSection.innerHTML = markdownSection.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>");
-		}
+		/*function convertTextToMarkdown() {
+	 	let markdownText = pad.value.split("\t").join("#").split('\n').join("~");
+	 	markdownSection.innerHTML = markdownText;
+	 	
+	 	Array.prototype.forEach.call(codeElement, (element) => {
+	 		element.innerHTML = renderJs(element);
+	 	});
+	 		markdownSection.innerHTML = markdownSection.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>")
+	 	} */
 
 		function submit() {
 			var data = {};
@@ -2324,7 +2325,9 @@
 			});
 		}
 
-		pad.addEventListener('input', convertTextToMarkdown);
+		pad.addEventListener('input', function () {
+			(0, _events.convertToFormat)(pad, markdownSection);
+		});
 		pad.addEventListener('keydown', function (e) {
 
 			if (e.which == 9) {
@@ -5432,6 +5435,28 @@
 	}
 
 	var loggedIn = exports.loggedIn = checkToken();
+
+/***/ },
+/* 46 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.convertToFormat = convertToFormat;
+	function convertToFormat(fromEl, toEl) {
+		return new Promise(function (resolve, reject) {
+			var markdownText = fromEl.value;
+			var tabbedText = markdownText.split("\t").join("<span class='indent'></span>");
+			var newlineText = tabbedText.split("\n").join("<br />");
+
+			toEl.innerHTML = newlineText;
+
+			resolve(toEl);
+		});
+	}
 
 /***/ }
 /******/ ]);

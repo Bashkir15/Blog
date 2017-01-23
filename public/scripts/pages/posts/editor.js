@@ -1,5 +1,6 @@
 import showdown from 'showdown'
 import axios from 'axios'
+import { convertToFormat } from './libs/events'
 import { renderJs } from '../../libs/js-parser'
 
 export function editor() {
@@ -11,9 +12,10 @@ export function editor() {
 	let sectionTitle = document.getElementById('post-section-title');
 	let topicTitle = document.getElementById('post-topic-section');
 	let section = document.getElementById('post-section');
-	let codeElement = documet.querySelectorAll('.js-markup');
+	let codeElement = document.querySelectorAll('.js-markup');
 
-	function convertTextToMarkdown() {
+
+	/*function convertTextToMarkdown() {
 		let markdownText = pad.value.split("\t").join("#").split('\n').join("~");
 		markdownSection.innerHTML = markdownText;
 		
@@ -23,7 +25,7 @@ export function editor() {
 
 		markdownSection.innerHTML = markdownSection.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>")
 
-	}
+	} */
 
 	function submit() {
 		let data = {};
@@ -46,7 +48,11 @@ export function editor() {
 		});
 	}
 
-	pad.addEventListener('input', convertTextToMarkdown);
+
+
+	pad.addEventListener('input', () => {
+		convertToFormat(pad, markdownSection);
+	});
 	pad.addEventListener('keydown', (e) => {
 
 		if (e.which == 9) {
