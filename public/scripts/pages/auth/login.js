@@ -3,21 +3,19 @@ import notify from '../../components/notifications'
 import { cacheId } from '../../libs/utils'
 
 export function login() {
-	var cache = cache || {};
+	const loginEmail = document.getElementById('login-email');
+	const loginPassword = document.getElementById('login-password');
+	const loginButton = document.getElementById('login-submit');
+	const successContent = document.getElementById('success-content');
+	const failureContent = document.getElementById('failure-content');
 
-	let loginEmail = cacheId(cache, 'login-email');
-	let loginPassword = cacheId(cache, 'login-password');
-	let submitButton = cacheId(cache, 'login-submit');
-	let successContent = cacheId(cache, 'success-content');
-	let failureContent = cacheId(cache, 'failure-content');
-
-	let successNotify = new notify({
+	const successNotify = new notify({
 		content: successNotify,
 		type: 'success',
 		timeout: 1500
 	});
 
-	let failureNotify = new notify({
+	const failureNotify = new notify({
 		content: failureNotify,
 		type: 'danger',
 		timeout: 1500
@@ -46,11 +44,11 @@ export function login() {
 
 
 	function submit() {
-		submitButton.classList.add('show-loading');
-
 		let data = {};
-		data.email = cacheId(cache, 'login-email');
-		data.password = cacheId(cache, 'login-password');
+		data.email = loginEmail;
+		data.password = loginPassword;
+
+		loginButton.classList.add('show-loading');
 
 		axios.post('http://localhost:3000/users/authenticate', {
 			email: data.email.value,
@@ -61,10 +59,10 @@ export function login() {
 			}
 		})
 		.then((response) => {
-			submitButton.classList.remove('show-loading');
+			loginButton.classList.remove('show-loading');
 
 			if (response.data.success) {
-				submitButton.classList.add('loading-success');
+				loginButton.classList.add('loading-success');
 
 				let success = new Event('login-success');
 				let user = JSON.stringify(response.data.res.record);
@@ -73,11 +71,13 @@ export function login() {
 				window.dispatchEvent(success); 
 				window.localStorage.setItem('user', user);
 				window.localStorage.setItem('blog-token', response.data.res.token);
+
 				removeEvents();
+				
 				window.location.href = '/admin';
 
 			} else {
-				submitButton.classList.add('loading-failed');
+				loginButton.classList.add('loading-failed');
 				
 				let failure = new Event('login-failure');
 				window.dispatchEvent(failure);
@@ -86,13 +86,13 @@ export function login() {
 	}
 
 	function removeEvents() {
-		submitButton.removeEventListener('click', submit);
+		loginButton.removeEventListener('click', submit);
 		loginEmail.removeEventListener('blur', validateEmail);
 		window.removeEventListener('login-failure', failureNotify.open);
 		window.removeEventListener('login-success', successNotify.open);
 	}
 
-	submitButton.addEventListener('click', submit);
+	loginButton.addEventListener('click', submit);
 	loginEmail.addEventListener('blur', validateEmail);
 	window.addEventListener('login-failure', failureNotify);
 	window.addEventListener('login-success', successNotify);

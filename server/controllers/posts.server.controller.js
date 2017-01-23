@@ -47,6 +47,21 @@ module.exports = () => {
 		});
 	};
 
+	obj.getEdit = (req, res) => {
+		Post.findOne({title: req.params.title})
+		.exec((err, post) => {
+			if (err) {
+				res.json(err);
+			}
+
+			if (post) {
+				res.render('./templates/posts/edit/post', {
+					post: post
+				});
+			}
+		});
+	};
+
 	obj.edit = (req, res) => {
 		Post.findOne({title: req.params.title})
 		.exec((err, post) => {

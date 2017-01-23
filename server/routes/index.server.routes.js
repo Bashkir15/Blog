@@ -26,5 +26,6 @@ router.get('/:title', topics.single);
 router.get('/:title/create-section', topics.createSection);
 router.get('/:title/create-post', sections.createPost);
 router.get('/:topicTitle/:postTitle/:title', posts.single);
+router.get('/:title/edit', posts.getEdit);
 
 module.exports = router

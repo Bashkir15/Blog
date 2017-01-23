@@ -1,0 +1,134 @@
+
+Getting Started With Gulp4
+
+	Although it hasn't been officially released yet, Gulp 4 is looking to bring about 
+	some changes to how we handle control-flow in our task runners. Those of you who are 
+	familiar with using Gulp will remember some of the difficulties of controlling the execution 
+	order your tasks, requiring an outside module like run-sequence to let you specify whether
+	tasks should be run sequentially or in parallel. The latest planned release of Gulp hopes to remedy
+	that by changing the way they handle composing tasks and their dependencies. Gulp no longer
+	supports tasks that have exernal task dependencies in the same way as they did before. 
+
+	Who cares about that incomprehensible jargon though -- let's get into the code. 
+
+
+	Previously in Gulp when we wanted to define a task, we would write something similar to
+	this:
+
+	gulp.task('styles', () => {});
+
+	This task has no dependency on any other task, and so in Gulp 4 doesn't need to be changed!
+	The 2-parameter gulp tasks will run exactly the same in Gulp 3 and gulp 4.
+
+
+	This is a really simple task though. In a real-world environment when you are using Gulp
+	as a build tool, you will probably have tasks that look more like this:
+
+	gulp.task('build', ['styles', 'scripts', 'images', 'templates', 'clean'], () => {});
+
+	This won't cut it anymore with how Gulp 4 handles nested task dependencies and tries
+	to provide you more control over your execution context. Gulp 4 does not support the three
+	parameter version of tasks that have dependencies on other tasks.
+
+	**If you have an older gulp-file still using the 3-parameter syntax, you can still run these 
+	with Gulp 4 as we will see later, but only if your package.json is using the older gulp version
+
+	In order to remedy this problem, allow for more functional composition, and provide us with a
+	great control over our task execution, Gulp has introduced two new method: gulp.series() and 
+	gulp.parallel();
+
+	The methods do exactly what their name would imply and as we will see shortly are very important
+	for handling tasks that have dependencies on other tasks, but we are getting ahead of ourselves. 
+	We need to install the new version of Gulp before we get into the meat of it all.
+
+
+Installing
+	Normal when updating a package through npm it is as simple as changin the version number in your
+	package.json file and running npm install, but I bet for most of you it won't be this simple. For 
+	a large number of us, unless you're running your scripts through your package.json (good for you if you are),
+	but sometimes it is just plain simple and easy to install gulp locally AND globally so we can use its
+	Command Line Interface. If this is the case, then you will need to remove the older version of Gulp from
+	your machine globally.
+
+	You can do this by running:
+
+	sudo npm uninstall -g gulp
+
+	With the release of Gulp 4, like some other task runners Grunt, they have opted to split their cli tool
+	into a separate package. So we will need to globally install this instead of running install Gulp again
+
+	sudo npm install -g gulp-cli
+
+	Once this is done you can move into your project directory and install the Gulp 4 development branch
+	locally by running
+
+	npm install -D gulpjs/gulp.git#4.0
+
+
+Basic Usage
+	In Gulp 3 all tasks were syncronous by default. In order to take advantage of asynchronous programming
+	we had to one of a few things:
+
+	1) Callbacks
+		You could provide a callback function to your task and then call it when your task has finished executing
+
+		import del from 'del'
+
+		gulp.task('clean', (done) => {
+			del([./src], done);
+		});
+
+	2) Streams
+		You could also return a stream using gulp.src, or you could go so far as to use the vinyl-source-stream
+		package itself
+
+
+		gulp.task('scripts', () => {
+			return gulp.src('path/to/directory')
+				.pipe(somePlugin())
+				.pipe(gulp.dest('path/to/dest'))
+		});
+
+	3) Promises
+		Promises are everywhere these days with ES6 being becoming more and more widely supported which brings
+		with it native Promises, and through libraries like Q and Bluebird before that.
+
+		gulp.task('clean', () => {
+			return new Promise((resolve) => {
+				--do Something--
+				resolve();
+			});
+		});
+
+	In Gulp 4 we have even more options to handle asynchronicity in our tasks. Gulp 4 makes heavy use of the async-done package
+	which allows us to take full advantage of current ES6 features.
+
+	4) Returning a Child Process
+		Now you can spawn up Child Processes and just return them! This provides a lot of utility because it gives us the ability
+		to run npm scripts from our Gulp file if loading up your package.json file with a bunch of scripts and configuration happens
+		to not be your thing
+
+		import childProcess from 'child-process';
+		const spawn = childProcess.spawn();
+
+		gulp.task('clean', () => {
+			spawn('rm', ['-rf', path.join(__dirname, 'src')]);
+		});
+
+	5) Returning an Observable
+		Yes. If you want you can use RxJs and return an observable for your tasks. With how much everyone seems to love this
+		library, this should make everyone very happy
+
+		import rx from 'rx'
+		let Observable = rx.Observable();
+
+		gulp.task('something', () => {
+			return Observable.return(val);
+		});
+
+
+	Since we have all sorts of asynchronous support now, let's look at Gulp default supports synchronous and 
+	asynchronous running of multiple tasks.
+
+	If you remember, earlier we talked about gulp.series() and gulp.parallel(); gulp.series() executes your task synchronously,
+	one after the other, and parallel executes them asynchronously. 

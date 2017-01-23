@@ -66,8 +66,6 @@
 
 	var _auth2 = __webpack_require__(45);
 
-	var _utils = __webpack_require__(3);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function start() {
@@ -86,9 +84,33 @@
 		}
 	}
 
-	window.addEventListener('DOMContentLoaded', function () {
-		document.body.classList.remove('loading');
-		start();
+	HTMLDocument.prototype.ready = function () {
+		return new Promise(function (resolve, reject) {
+			var startTime = new Date().getTime();
+			var endTime;
+
+			if (document.readyState === 'complete') {
+				endTime = new Date().getTime();
+				resolve(document, startTime, endTime);
+			} else {
+				document.addEventListener('DOMContentLoaded', function () {
+					endTime = new Date().getTime();
+					resolve(document, startTime, endTime);
+				});
+			}
+		});
+	};
+
+	document.ready().then(function (startTime, endTime) {
+		if (endTime - startTime > 300) {
+			document.body.classList.add('loaded');
+			start();
+		} else {
+			setTimeout(function () {
+				document.body.classList.add('loaded');
+				start();
+			}, 1000);
+		}
 	});
 
 /***/ },
@@ -5236,13 +5258,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function login() {
-		var cache = cache || {};
-
-		var loginEmail = (0, _utils.cacheId)(cache, 'login-email');
-		var loginPassword = (0, _utils.cacheId)(cache, 'login-password');
-		var submitButton = (0, _utils.cacheId)(cache, 'login-submit');
-		var successContent = (0, _utils.cacheId)(cache, 'success-content');
-		var failureContent = (0, _utils.cacheId)(cache, 'failure-content');
+		var loginEmail = document.getElementById('login-email');
+		var loginPassword = document.getElementById('login-password');
+		var loginButton = document.getElementById('login-submit');
+		var successContent = document.getElementById('success-content');
+		var failureContent = document.getElementById('failure-content');
 
 		var successNotify = new _notifications2.default({
 			content: successNotify,
@@ -5277,11 +5297,11 @@
 		}
 
 		function submit() {
-			submitButton.classList.add('show-loading');
-
 			var data = {};
-			data.email = (0, _utils.cacheId)(cache, 'login-email');
-			data.password = (0, _utils.cacheId)(cache, 'login-password');
+			data.email = loginEmail;
+			data.password = loginPassword;
+
+			loginButton.classList.add('show-loading');
 
 			_axios2.default.post('http://localhost:3000/users/authenticate', {
 				email: data.email.value,
@@ -5291,10 +5311,10 @@
 					'Content-Type': 'application/json'
 				}
 			}).then(function (response) {
-				submitButton.classList.remove('show-loading');
+				loginButton.classList.remove('show-loading');
 
 				if (response.data.success) {
-					submitButton.classList.add('loading-success');
+					loginButton.classList.add('loading-success');
 
 					var success = new Event('login-success');
 					var user = JSON.stringify(response.data.res.record);
@@ -5302,10 +5322,12 @@
 					window.dispatchEvent(success);
 					window.localStorage.setItem('user', user);
 					window.localStorage.setItem('blog-token', response.data.res.token);
+
 					removeEvents();
+
 					window.location.href = '/admin';
 				} else {
-					submitButton.classList.add('loading-failed');
+					loginButton.classList.add('loading-failed');
 
 					var failure = new Event('login-failure');
 					window.dispatchEvent(failure);
@@ -5314,13 +5336,13 @@
 		}
 
 		function removeEvents() {
-			submitButton.removeEventListener('click', submit);
+			loginButton.removeEventListener('click', submit);
 			loginEmail.removeEventListener('blur', validateEmail);
 			window.removeEventListener('login-failure', failureNotify.open);
 			window.removeEventListener('login-success', successNotify.open);
 		}
 
-		submitButton.addEventListener('click', submit);
+		loginButton.addEventListener('click', submit);
 		loginEmail.addEventListener('blur', validateEmail);
 		window.addEventListener('login-failure', failureNotify);
 		window.addEventListener('login-success', successNotify);

@@ -23,7 +23,7 @@
 							<p><%= topic.description %></p>
 
 							<div class='section-create-button'>
-								<a href='/<%= topic.title %>/create-section'>
+								<a href='/<%= topic.title %>/create-section' class='authed-link'>
 									<button>
 										<span class='icon-add'></span>
 									</button>
@@ -42,7 +42,7 @@
 											<h3 class='single-section-title'><%= section.title %></h3>
 											<p><%= section.description %></p>
 											<div class='section-create-post'>
-												<a href='/<%= section.title %>/create-post'>
+												<a href='/<%= section.title %>/create-post' class='authed-link'>
 													<button>
 														<span class='icon-add'></span>
 													</button>
