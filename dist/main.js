@@ -2291,7 +2291,7 @@
 		var submitButton = document.getElementById('submit-post');
 		var postTitle = document.getElementById('post-title');
 		var sectionTitle = document.getElementById('post-section-title');
-		var topicTitle = document.getElementById('post-topic-section');
+		var topicTitle = document.getElementById('post-topic-title');
 		var section = document.getElementById('post-section');
 		var codeElement = document.querySelectorAll('.js-markup');
 
@@ -2325,18 +2325,37 @@
 			});
 		}
 
-		pad.addEventListener('input', function () {
-			(0, _events.convertToFormat)(pad, markdownSection);
-		});
-		pad.addEventListener('keydown', function (e) {
+		function handleKeyPress(e) {
+			var results;
 
 			if (e.which == 9) {
 				e.preventDefault();
-				var s = pad.selectionStart;
-				pad.value = pad.value.substring(0, pad.selectionStart) + "\t" + pad.value.substring(pad.selectionEnd);
-				pad.selectionEnd = s + 1;
+
+				results = (0, _events.convertInput)(e, pad);
+				pad.selectionEnd = results.end;
+				pad.value = results.value;
 			}
+		}
+
+		pad.addEventListener('input', function () {
+			(0, _events.convertToFormat)(pad, markdownSection);
 		});
+		pad.addEventListener('keydown', handleKeyPress);
+		/* pad.addEventListener('keydown', (e) => {
+	 	if (e.which == 9) {
+	 		var results = convertInput(e, pad);
+	 		pad.selectionEnd = results.end;
+	 		pad.value = results.value;
+	 	}
+	 });
+	 /* pad.addEventListener('keydown', (e) => {
+	 		if (e.which == 9) {
+	 		e.preventDefault();
+	 		let s = pad.selectionStart;
+	 		pad.value = pad.value.substring(0, pad.selectionStart) + "\t" + pad.value.substring(pad.selectionEnd);
+	 		pad.selectionEnd = s + 1
+	 	}
+	 });*/
 		submitButton.addEventListener('click', submit);
 	}
 
@@ -5446,6 +5465,7 @@
 		value: true
 	});
 	exports.convertToFormat = convertToFormat;
+	exports.convertInput = convertInput;
 	function convertToFormat(fromEl, toEl) {
 		return new Promise(function (resolve, reject) {
 			var markdownText = fromEl.value;
@@ -5454,8 +5474,26 @@
 
 			toEl.innerHTML = newlineText;
 
-			resolve(toEl);
+			return resolve(toEl.innerHTML);
 		});
+	}
+
+	function convertInput(e, el) {
+
+		if (e.which == 9) {
+			e.preventDefault();
+			var s = el.selectionStart;
+			var end = el.selectionEnd;
+			var value = el.value;
+
+			value = value.substring(0, s) + "\t" + value.substring(end);
+			end = s + 1;
+
+			return {
+				value: value,
+				end: end
+			};
+		}
 	}
 
 /***/ }

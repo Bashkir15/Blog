@@ -1,6 +1,6 @@
 import showdown from 'showdown'
 import axios from 'axios'
-import { convertToFormat } from './libs/events'
+import { convertToFormat, convertInput } from './libs/events'
 import { renderJs } from '../../libs/js-parser'
 
 export function editor() {
@@ -10,7 +10,7 @@ export function editor() {
 	let submitButton = document.getElementById('submit-post');
 	let postTitle = document.getElementById('post-title');
 	let sectionTitle = document.getElementById('post-section-title');
-	let topicTitle = document.getElementById('post-topic-section');
+	let topicTitle = document.getElementById('post-topic-title');
 	let section = document.getElementById('post-section');
 	let codeElement = document.querySelectorAll('.js-markup');
 
@@ -48,12 +48,30 @@ export function editor() {
 		});
 	}
 
+	function handleKeyPress(e) {
+		var results;
 
+		if (e.which == 9) {
+			e.preventDefault();
+
+			results = convertInput(e, pad);
+			pad.selectionEnd = results.end;
+			pad.value = results.value;
+		}
+	}
 
 	pad.addEventListener('input', () => {
 		convertToFormat(pad, markdownSection);
 	});
-	pad.addEventListener('keydown', (e) => {
+	pad.addEventListener('keydown', handleKeyPress);
+	/* pad.addEventListener('keydown', (e) => {
+		if (e.which == 9) {
+			var results = convertInput(e, pad);
+			pad.selectionEnd = results.end;
+			pad.value = results.value;
+		}
+	});
+	/* pad.addEventListener('keydown', (e) => {
 
 		if (e.which == 9) {
 			e.preventDefault();
@@ -61,6 +79,6 @@ export function editor() {
 			pad.value = pad.value.substring(0, pad.selectionStart) + "\t" + pad.value.substring(pad.selectionEnd);
 			pad.selectionEnd = s + 1
 		}
-	});
+	});*/
 	submitButton.addEventListener('click', submit);
 }
