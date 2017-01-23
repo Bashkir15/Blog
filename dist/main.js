@@ -2295,16 +2295,6 @@
 		var section = document.getElementById('post-section');
 		var codeElement = document.querySelectorAll('.js-markup');
 
-		/*function convertTextToMarkdown() {
-	 	let markdownText = pad.value.split("\t").join("#").split('\n').join("~");
-	 	markdownSection.innerHTML = markdownText;
-	 	
-	 	Array.prototype.forEach.call(codeElement, (element) => {
-	 		element.innerHTML = renderJs(element);
-	 	});
-	 		markdownSection.innerHTML = markdownSection.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>")
-	 	} */
-
 		function submit() {
 			var data = {};
 			data.title = postTitle.value;
@@ -2337,25 +2327,12 @@
 			}
 		}
 
-		pad.addEventListener('input', function () {
-			(0, _events.convertToFormat)(pad, markdownSection);
-		});
+		function convertPad() {
+			markdownSection.innerHTML = (0, _events.convertToFormat)(pad, markdownSection);
+		}
+
+		pad.addEventListener('input', convertPad);
 		pad.addEventListener('keydown', handleKeyPress);
-		/* pad.addEventListener('keydown', (e) => {
-	 	if (e.which == 9) {
-	 		var results = convertInput(e, pad);
-	 		pad.selectionEnd = results.end;
-	 		pad.value = results.value;
-	 	}
-	 });
-	 /* pad.addEventListener('keydown', (e) => {
-	 		if (e.which == 9) {
-	 		e.preventDefault();
-	 		let s = pad.selectionStart;
-	 		pad.value = pad.value.substring(0, pad.selectionStart) + "\t" + pad.value.substring(pad.selectionEnd);
-	 		pad.selectionEnd = s + 1
-	 	}
-	 });*/
 		submitButton.addEventListener('click', submit);
 	}
 
@@ -5467,15 +5444,10 @@
 	exports.convertToFormat = convertToFormat;
 	exports.convertInput = convertInput;
 	function convertToFormat(fromEl, toEl) {
-		return new Promise(function (resolve, reject) {
-			var markdownText = fromEl.value;
-			var tabbedText = markdownText.split("\t").join("<span class='indent'></span>");
-			var newlineText = tabbedText.split("\n").join("<br />");
+		var markdownText = fromEl.value;
+		var newlineText = markdownText.split("\n").join("<br />");
 
-			toEl.innerHTML = newlineText;
-
-			return resolve(toEl.innerHTML);
-		});
+		return newlineText;
 	}
 
 	function convertInput(e, el) {

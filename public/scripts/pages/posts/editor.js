@@ -15,17 +15,6 @@ export function editor() {
 	let codeElement = document.querySelectorAll('.js-markup');
 
 
-	/*function convertTextToMarkdown() {
-		let markdownText = pad.value.split("\t").join("#").split('\n').join("~");
-		markdownSection.innerHTML = markdownText;
-		
-		Array.prototype.forEach.call(codeElement, (element) => {
-			element.innerHTML = renderJs(element);
-		});
-
-		markdownSection.innerHTML = markdownSection.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>")
-
-	} */
 
 	function submit() {
 		let data = {};
@@ -60,25 +49,11 @@ export function editor() {
 		}
 	}
 
-	pad.addEventListener('input', () => {
-		convertToFormat(pad, markdownSection);
-	});
-	pad.addEventListener('keydown', handleKeyPress);
-	/* pad.addEventListener('keydown', (e) => {
-		if (e.which == 9) {
-			var results = convertInput(e, pad);
-			pad.selectionEnd = results.end;
-			pad.value = results.value;
-		}
-	});
-	/* pad.addEventListener('keydown', (e) => {
+	function convertPad() {
+		markdownSection.innerHTML = convertToFormat(pad, markdownSection);
+	}
 
-		if (e.which == 9) {
-			e.preventDefault();
-			let s = pad.selectionStart;
-			pad.value = pad.value.substring(0, pad.selectionStart) + "\t" + pad.value.substring(pad.selectionEnd);
-			pad.selectionEnd = s + 1
-		}
-	});*/
+	pad.addEventListener('input', convertPad);
+	pad.addEventListener('keydown', handleKeyPress);
 	submitButton.addEventListener('click', submit);
 }
