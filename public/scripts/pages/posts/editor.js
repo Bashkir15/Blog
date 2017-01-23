@@ -7,13 +7,16 @@ export function editor() {
 	let pad = document.getElementById('pad');
 	let markdownSection = document.getElementById('markdown-section');
 	let submitButton = document.getElementById('submit-post');
+	let postTitle = document.getElementById('post-title');
+	let sectionTitle = document.getElementById('post-section-title');
+	let topicTitle = document.getElementById('post-topic-section');
+	let section = document.getElementById('post-section');
+	let codeElement = documet.querySelectorAll('.js-markup');
 
 	function convertTextToMarkdown() {
 		let markdownText = pad.value.split("\t").join("#").split('\n').join("~");
 		markdownSection.innerHTML = markdownText;
 		
-		let codeElement = document.querySelectorAll('.js-markup');
-
 		Array.prototype.forEach.call(codeElement, (element) => {
 			element.innerHTML = renderJs(element);
 		});
@@ -24,10 +27,10 @@ export function editor() {
 
 	function submit() {
 		let data = {};
-		data.title = document.getElementById('post-title').value;
-		data.sectionTitle = document.getElementById('post-section-title').value;
-		data.topicTitle = document.getElementById('post-topic-title').value;
-		data.section = document.getElementById('post-section').value;
+		data.title = postTitle.value;
+		data.sectionTitle = sectionTitle.value;
+		data.topicTitle = topicTitle.value;
+		data.section = section.value;
 		data.content = pad.value.split("\t").join("#").split('\n').join("~");
 		axios.post('http://localhost:3000/posts',  {
 			title: data.title,
