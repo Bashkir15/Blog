@@ -62,9 +62,9 @@
 
 	var _posts = __webpack_require__(35);
 
-	var _auth = __webpack_require__(41);
+	var _auth = __webpack_require__(42);
 
-	var _auth2 = __webpack_require__(45);
+	var _auth2 = __webpack_require__(46);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -164,13 +164,15 @@
 		}, {
 			key: '_close',
 			value: function _close() {
+				var onCloseKey = this._closeKeyHandler.bind(this);
+
 				this.sidenav.style.willChange = 'transform';
 				this.container.classList.add(this.animatedClass);
 
 				this._addEvents();
 				this.container.classList.remove(this.openClass);
 				this.closeButton.removeEventListener('click', this.toggleSidenav);
-				document.removeEventListener('keydown');
+				document.removeEventListener('keydown', onCloseKey);
 			}
 		}, {
 			key: '_closeKeyHandler',
@@ -354,8 +356,11 @@
 
 	var _create = __webpack_require__(5);
 
+	var _auth = __webpack_require__(46);
+
 	function topics() {
 		if (window.location.href.indexOf('create-topic') != -1) {
+			(0, _auth.checkAuthRoute)();
 			(0, _create.create)();
 		}
 	}
@@ -392,7 +397,7 @@
 			data.icon = document.getElementById('topic-icon').value;
 			data.description = document.getElementById('topic-description').value;
 
-			_axios2.default.post('http://localhost:3000/topics', {
+			_axios2.default.post('http://localhost:8000/topics', {
 				title: data.title,
 				icon: data.icon,
 				description: data.description,
@@ -2094,8 +2099,11 @@
 
 	var _single = __webpack_require__(34);
 
+	var _auth = __webpack_require__(46);
+
 	function sections() {
 		if (window.location.href.indexOf('create-section') != -1) {
+			(0, _auth.checkAuthRoute)();
 			(0, _create.create)();
 		} else {
 			(0, _single.single)();
@@ -2122,24 +2130,20 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function create() {
-		var cache = {};
-
-		var submitButton = (0, _utils.cacheId)(cache, 'section-submit');
+		var submitButton = document.getElementById('section-submit');
+		var topic = document.getElementById('section-topic-id');
+		var topicTitle = document.getElementById('section-topic');
+		var title = document.getElementById('section-tite');
+		var description = document.getElementById('section-description');
 
 		function submit() {
-			var data = {};
-			data.topic = (0, _utils.cacheId)(cache, 'section-topic-id');
-			data.topicTitle = (0, _utils.cacheId)(cache, 'section-topic');
-			data.title = (0, _utils.cacheId)(cache, 'section-title');
-			data.description = (0, _utils.cacheId)(cache, 'section-description');
-
 			submitButton.classList.add('show-loading');
 
 			_axios2.default.post('http://localhost:3000/sections', {
-				topic: data.topic.value,
-				topicTitle: data.topicTitle.value,
-				title: data.title.value,
-				description: data.description.value,
+				topic: topic.value,
+				topicTitle: topicTitle.value,
+				title: title.value,
+				description: description.value,
 				headers: {
 					'Content-Type': 'application/json'
 				}
@@ -2148,7 +2152,7 @@
 				submitButton.classList.add('loading-finished');
 			}).then(function () {
 				submitButton.removeEventListener('click', submit);
-				window.location.href = '/' + data.topicTitle;
+				window.location.href = '/' + topicTitle.value;
 			});
 		}
 
@@ -2244,13 +2248,16 @@
 
 	var _editor = __webpack_require__(36);
 
-	var _single = __webpack_require__(39);
+	var _single = __webpack_require__(40);
 
-	var _latest = __webpack_require__(40);
+	var _latest = __webpack_require__(41);
+
+	var _auth = __webpack_require__(46);
 
 	function posts() {
 		var matches = window.location.pathname.split('/');
 		if (window.location.href.indexOf('create-post') != -1) {
+			(0, _auth.checkAuthRoute)();
 			(0, _editor.editor)();
 		} else if (window.location.href.indexOf('latest') != -1) {
 			(0, _latest.latest)();
@@ -2278,9 +2285,9 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _events = __webpack_require__(46);
+	var _events = __webpack_require__(38);
 
-	var _jsParser = __webpack_require__(38);
+	var _jsParser = __webpack_require__(39);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4797,6 +4804,42 @@
 /* 38 */
 /***/ function(module, exports) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.convertToFormat = convertToFormat;
+	exports.convertInput = convertInput;
+	function convertToFormat(fromEl, toEl) {
+		var markdownText = fromEl.value;
+		var newlineText = markdownText.split("\n").join("<br />");
+
+		return newlineText;
+	}
+
+	function convertInput(e, el) {
+
+		if (e.which == 9) {
+			e.preventDefault();
+			var s = el.selectionStart;
+			var end = el.selectionEnd;
+			var value = el.value;
+
+			value = value.substring(0, s) + "\t" + value.substring(end);
+			end = s + 1;
+
+			return {
+				value: value,
+				end: end
+			};
+		}
+	}
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -4838,7 +4881,7 @@
 	//regex /(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\\\r\n])+\/[gimyu]{0,5}(?=\s*($|[\r\n,.;})]))/
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4848,7 +4891,7 @@
 	});
 	exports.single = single;
 
-	var _jsParser = __webpack_require__(38);
+	var _jsParser = __webpack_require__(39);
 
 	var _utils = __webpack_require__(3);
 
@@ -4889,7 +4932,7 @@
 	}
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4919,7 +4962,7 @@
 	}
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4929,9 +4972,9 @@
 	});
 	exports.auth = auth;
 
-	var _signup = __webpack_require__(42);
+	var _signup = __webpack_require__(43);
 
-	var _login = __webpack_require__(44);
+	var _login = __webpack_require__(45);
 
 	function auth() {
 		if (window.location.href.indexOf('signup') != -1) {
@@ -4942,7 +4985,7 @@
 	}
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4958,7 +5001,7 @@
 
 	var _utils = __webpack_require__(3);
 
-	var _notifications = __webpack_require__(43);
+	var _notifications = __webpack_require__(44);
 
 	var _notifications2 = _interopRequireDefault(_notifications);
 
@@ -5079,7 +5122,7 @@
 	}
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5237,7 +5280,7 @@
 	exports.default = notifications;
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5251,7 +5294,7 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
-	var _notifications = __webpack_require__(43);
+	var _notifications = __webpack_require__(44);
 
 	var _notifications2 = _interopRequireDefault(_notifications);
 
@@ -5351,7 +5394,7 @@
 	}
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5378,9 +5421,7 @@
 		if (token) {
 			return;
 		} else {
-			var notAuthorized = new Event('unauthorized');
 			window.location.href = '/login';
-			window.dispatchEvent(notAuthorized);
 		}
 	}
 
@@ -5431,42 +5472,6 @@
 	}
 
 	var loggedIn = exports.loggedIn = checkToken();
-
-/***/ },
-/* 46 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.convertToFormat = convertToFormat;
-	exports.convertInput = convertInput;
-	function convertToFormat(fromEl, toEl) {
-		var markdownText = fromEl.value;
-		var newlineText = markdownText.split("\n").join("<br />");
-
-		return newlineText;
-	}
-
-	function convertInput(e, el) {
-
-		if (e.which == 9) {
-			e.preventDefault();
-			var s = el.selectionStart;
-			var end = el.selectionEnd;
-			var value = el.value;
-
-			value = value.substring(0, s) + "\t" + value.substring(end);
-			end = s + 1;
-
-			return {
-				value: value,
-				end: end
-			};
-		}
-	}
 
 /***/ }
 /******/ ]);

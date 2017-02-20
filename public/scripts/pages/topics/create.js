@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export function create() {
 
-	let submitButton = document.getElementById('topic-submit');
+	const submitButton = document.getElementById('topic-submit');
 
 	function submit() {
 		let data = {};
@@ -13,7 +13,7 @@ export function create() {
 		data.icon = document.getElementById('topic-icon').value;
 		data.description = document.getElementById('topic-description').value;
 
-		axios.post('http://localhost:3000/topics', {
+		axios.post('http://localhost:8000/topics', {
 			title: data.title,
 			icon: data.icon,
 			description: data.description,

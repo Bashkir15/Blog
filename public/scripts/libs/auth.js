@@ -12,9 +12,7 @@ export function checkAuthRoute() {
 	if (token) {
 		return;
 	} else {
-		var notAuthorized = new Event('unauthorized');
 		window.location.href = '/login';
-		window.dispatchEvent(notAuthorized);
 	}
 }
 

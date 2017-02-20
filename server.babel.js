@@ -8,8 +8,8 @@ import Users from './server/models/users'
 
 import express from './server/config/express'
 
-
-const config = require('./server/config/env/' + (process.env.NODE_ENV || 'development'));
+const environment = (process.env.NODE_ENV || 'development');
+const config = require(`./server/config/env/${environment}`);
 
 const db = mongoose.connect(config.db, () => {
 	console.log('Database connected');
@@ -21,6 +21,6 @@ const server = http.createServer(app);
 global.config = config;
 
 
-server.listen(3000, () => {
+server.listen(config.server.port, () => {
 	console.log('The application has connected');
 });

@@ -33,13 +33,15 @@ class SideNav {
 	}
 
 	_close() {
+		let onCloseKey = this._closeKeyHandler.bind(this);
+
 		this.sidenav.style.willChange = 'transform';
 		this.container.classList.add(this.animatedClass);
 
 		this._addEvents();
 		this.container.classList.remove(this.openClass);
 		this.closeButton.removeEventListener('click', this.toggleSidenav);
-		document.removeEventListener('keydown');
+		document.removeEventListener('keydown', onCloseKey);
 	}
 
 	_closeKeyHandler(e) {

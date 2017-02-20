@@ -2,24 +2,20 @@ import axios from 'axios'
 import { cacheId } from '../../libs/utils'
 
 export function create() {
-	var cache = {};
-
-	let submitButton = cacheId(cache, 'section-submit');
+	const submitButton = document.getElementById('section-submit')
+	const topic = document.getElementById('section-topic-id');
+	const topicTitle = document.getElementById('section-topic');
+	const title = document.getElementById('section-tite');
+	const description = document.getElementById('section-description');
 
 	function submit() {
-		let data = {};
-		data.topic = cacheId(cache, 'section-topic-id')
-		data.topicTitle = cacheId(cache, 'section-topic')
-		data.title = cacheId(cache, 'section-title')
-		data.description = cacheId(cache, 'section-description');
-
 		submitButton.classList.add('show-loading');
 
 		axios.post('http://localhost:3000/sections', {
-			topic: data.topic.value,
-			topicTitle: data.topicTitle.value,
-			title: data.title.value,
-			description: data.description.value,
+			topic: topic.value,
+			topicTitle: topicTitle.value,
+			title: title.value,
+			description: description.value,
 			headers: {
 				'Content-Type': 'application/json'
 			}
@@ -29,7 +25,7 @@ export function create() {
 			submitButton.classList.add('loading-finished');
 		}).then(() => {
 			submitButton.removeEventListener('click', submit);
-			window.location.href= `/${data.topicTitle}`;
+			window.location.href= `/${topicTitle.value}`;
 		});
 	}
 

@@ -31,7 +31,7 @@ const paths = {
 
 gulp.task('browserSync', () => {
 	browserSync.init(null, {
-		proxy: 'http://localhost:3000',
+		proxy: 'http://localhost:8000',
 		files: ["public/**/*.*"],
 		port: 7000
 	});

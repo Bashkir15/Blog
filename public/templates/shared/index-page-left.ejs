@@ -2,12 +2,12 @@
 <div class='side-nav-container' id='side-nav-container'>
 	<div class='side-nav' id='side-nav'>
 		<div class='side-nav-close' id='side-nav-close'>
-			<button>
+			<button type='button' aria-label='close sidenav'>
 				<span class='icon-close'></span>
 			</button>
 		</div>
 		<div class='side-nav-header'>
-			<img src='./static/me.jpg' class='sidenav-image'>
+			<img src='./static/me.jpg' class='sidenav-image' alt='image of Forrest'>
 			<p>Welcome!</p>
 		</div>
 
@@ -15,7 +15,7 @@
 			<ul class='side-nav-body-list'>
 				<li>
 					<a href='/latest'>
-						<button>
+						<button type='button' aria-label='latest posts'>
 							<span>Latest</span>
 						</button>
 
@@ -96,7 +96,7 @@
 			<ul class='side-nav-body-list'>
 				<li>
 					<a href='/latest'>
-						<button>
+						<button type='button' aria-label='see latest posts'>
 							<span>Latest</span>
 						</button>
 
@@ -130,7 +130,7 @@
 					</a>
 				</li>
 
-				<li>
+				<li class='authed-link'>
 					<a href='/create-topic'>
 						<button>
 							<span>Create Topic</span>

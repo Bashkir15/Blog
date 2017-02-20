@@ -2,14 +2,13 @@ import mongoose from 'mongoose';
 import async from 'async'
 
 module.exports = () => {
-	let Topic = mongoose.model('Topic');
-	let Section = mongoose.model('Section')
+	const Topic = mongoose.model('Topic');
+	const Section = mongoose.model('Section')
 	
 	let obj = {};
 
 	obj.create = (req, res) => {
-		var topic = new Topic(req.body);
-		console.log(req.body);
+		let topic = new Topic(req.body);
 
 		topic.save((err) => {
 			if (err) {
@@ -34,7 +33,8 @@ module.exports = () => {
 	};
 
 	obj.single = (req, res) => {
-		var data = {};
+		let data = {};
+
 		async.series([
 			function(callback) {
 				Topic.findOne({title: req.params.title}, (err, topic) => {
@@ -50,7 +50,6 @@ module.exports = () => {
 			},
 
 			function(callback) {
-				console.log(data.topic);
 				Section.find({topic: data.topic})
 				.populate('posts')
 				.exec((err, sections) => {
