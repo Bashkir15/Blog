@@ -5,28 +5,146 @@
 		<meta name='viewport' content="width=device-width, initial-scale=1">
 		<link rel='stylesheet' href='./static/icons/ico/style.css'>
 		<link rel='stylesheet' href='./styles/main.min.css'>
-
-		<link href="https://fonts.googleapis.com/css?family=Lato:300,400i|Noto+Sans:400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400|Open+Sans:300" rel="stylesheet">
 	</head>
 
 	<body>
-		<div class="index-page-container">
-				<% include ./templates/shared/index-page-left %>
-			<div class='index-page-right'>
-				<% include ./templates/shared/nav %>
+		<main class='landing-page-container'>
+			<% include ./templates/index/nav %>
 
-				<div class='index-page-view-content'>
-					<div class='index-header'>
-						<% include ./templates/index/header %>
+			<header class='landing-header'>
+				<div class='landing-header-overlay'></div>
+			</header>
+
+			<section class='landing-blog-container'>
+				<div class='landing-blog-content'>
+					<div class='landing-blog-left'>
+						<div class='landing-blog-item'>
+							<img src='./static/images/post1.png'>
+
+
+							<div class='post-details'>
+								<div class='post-left'>
+									<div>
+										<span class='icon-stop-watch'></span>
+									</div>
+
+									<div>
+										<p>January 01, 2017</p>
+									</div>
+								</div>
+
+								<div class='post-right'>
+									<div>
+										<span class='icon-chat_bubble_outline'></span>
+									</div>
+
+									<span>17</span>
+								</div>
+							</div>
+
+							<h4>Hosting a Node App on AWS</h4>
+							<p>In the first post of this series we will take a basic Node application, setup an Amazon EC2 instance, clone our application into this instance, setup a mongoDB connection, and then proxy our request and cache static assets with Nginx</p>
+							<a href='/'>Read More</a>
+
+						</div>
 					</div>
 
-					<div class='index-topics'>
-						<% include ./templates/index/topics %>
+					<div class='landing-blog-right'>
+						<div class='blog-right-section'>
+							<div class='blog-right-header'>
+								<h5>Categories</h5>
+								<span></span>
+							</div>
+
+							<ul class='blog-right-list'>
+								<li>General Js<span class='icon-keyboard_arrow_right'></span></li>
+								<li>Devops<span class='icon-keyboard_arrow_right'></span></li>
+								<li>React<span class='icon-keyboard_arrow_right'></span></li>
+								<li>Node<span class='icon-keyboard_arrow_right'></span></li>
+								<li>Performance<<span class='icon-keyboard_arrow_right'></span>/li>
+							</ul>
+						</div>
+
+						<div class='blog-right-section'>
+							<div class='blog-right-header'>
+								<h5>Tags</h5>
+								<span></span>
+							</div>
+
+							<ul class='blog-right-tags'>
+								<li>Javascript</li>
+								<li>Animation</li>
+								<li>Performance</li>
+								<li>Tutorial</li>
+								<li>Build</li>
+								<li>Ui/Ux</li>
+								<li>React</li>
+								<li>Vue</li>
+								<li>Angular</li>
+								<li>Node</li>
+								<li>Mongo</li>
+							</ul>
+						</div>
+
+						<div class='blog-right-section'>
+							<div class='blog-right-header'>
+								<h5>Recent</h5>
+								<span></span>
+							</div>
+
+							<ul class='blog-right-list'>
+								<li>Hosting a Node app on AWS<span class='icon-keyboard_arrow_right'></span></li>
+								<li>Building a modern JS stack<span class='icon-keyboard_arrow_right'></span></li>
+								<li>Building an Observable Framework<span class='icon-keyboard_arrow_right'></span></li>
+								<li>Getting start with microservices<span class='icon-keyboard_arrow_right'></span></li>
+								<li>Optimizing ES next for the web<span class='icon-keyboard_arrow_right'></span></li>
+							</ul>
+						</div>
+
+						<div class='blog-right-section'>
+							<div class='blog-right-header'>
+								<h5>Popular</h5>
+								<span></span>
+							</div>
+
+							<ul class='blog-right-popular'>
+								<li>
+									<a href='/'>Optimizing JS performance</a>
+									<span>3 months ago</span>
+
+									<div class='blog-right-popular-hearts'>
+										<i class='icon-award'></i>
+										<span>200</span>
+									</div>
+								</li>
+
+								<li>
+									<a href='/'>Improving your Pagescore</a>
+									<span>2 weeks ago</span>
+
+									<div class='blog-right-popular-hearts'>
+										<i class='icon-award'></i>
+										<span>189</span>
+									</div>
+								</li>
+
+								<li>
+									<a href='/'>Hosting a Node app on AWS</a>
+									<span>6 months ago</span>
+
+									<div class='blog-right-popular-hearts'>
+										<i class='icon-award'></i>
+										<span>178</span>
+									</div>
+								</li>
+							</ul>
+						</div>
+
 					</div>
 				</div>
-			</div>
-		</div>
+			</section>
+		</main>
 
-		<script src='./scripts/main.min.js'></script>		
 	</body>
 </html>

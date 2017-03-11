@@ -1,55 +1,30 @@
 .nav
 	display: flex
 	align-items: stretch
-	position: fixed
-	height: 65px
-	top: 0
-	left: 0
-	width: 100%
-	border-bottom: 1px solid rgba(0,0,0,0.12)
-	overflow: hidden
-	background: #fdfeff
-	transition: all .38s ease-out
+	justify-content: center
+	position: relative
+	width: 80%
+	margin: 0 auto
+	z-index: 10
 
-	&.nav-unpinned
-		transform: translateY(-80px)
-	&.nav-pinned
-		transform: translateY(0)
+.landing-nav
+	padding-top: 23px
+	border-top: 1px solid #ccc
+	transform: translateY(30px)
 
 .nav-left
-	display: flex
-	align-items: center
-	justify-content: flex-start
-
-	.nav-item
-		a
-			@include lato()
-			font-weight: 300
-			letter-spacing: 2px
-			font-size: 18px
-			color: rgba(0,0,0,0.5)
-			
-		&:nth-of-type(1)	
-			display: none
-
-
-
-.nav-rest
-	display: flex
-	align-items: stretch
-	position: relative
-	width: 100%
-	padding-right: 20px
-
-.nav-rest-left
 	display: flex
 	flex: 1
 	flex-basis: 0
 	align-items: center
-	justify-content: flex-end
+	justify-content: flex-start
 
-.nav-rest-right
-	display: none
+.nav-center
+	display: flex
+	align-items: center
+
+.nav-right
+	display: flex
 	flex: 1
 	flex-basis: 0
 	align-items: center
@@ -59,152 +34,25 @@
 	display: flex
 	align-items: center
 	justify-content: center
-	padding: 10px
+	padding: 0 15px
 
-	button
-		height: 55px
+	a
+		@include open()
+		font-weight: 300
+		letter-spacing: 3.5px
+		line-height: 25.2px
+		font-size: 16px
+		color: rgb(119, 119, 119)
 
-		span
-			@include lato()
-			font-weight: 300
-			letter-spacing: 3px
-			font-size: 19px
-			color: #767676
+	h4
+		@include mont()
+		font-size: 20px
+		font-weight: 400
+		letter-spacing: 5px
+		line-height: 26.18px
+		text-transform: uppercase
+		color: #111
 
-	&.unauthed-link
-		display: flex
-
-		&.authed
-			display: none
-
-	&.authed-link
-		display: none
-
-		&.authed
-			display: flex
-
-.nav-search
-	display: flex
-	flex: 1
-	align-items: center
-	padding-left: 20px
-	height: 55px
-	width: 85%
-	margin-left: 15%
-
-	> div
-		&:nth-of-type(1)
-			display: flex
-			align-items: center
-			justify-content: center
-			height: 35px
-			padding-left: 10px
-			border-top-left-radius: 22px
-			border-bottom-left-radius: 22px
-			background: #f6f9fa
-
-			span
-				color: #a9a9a9
-				font-size: 23px
-		&:nth-of-type(2)
-			display: flex
-			flex: 1
-			align-items: center
-
-			position: relative
-			height: 55px
-
-			label
-				position: absolute
-				top: 20px
-				left: 10px
-				@include lato()
-				font-weight: 300
-				font-size: 19px
-				color: #878787
-				z-index: 40
-				opacity: 1
-				transition: all .4s ease
-
-			input
-				position: relative
-				height: 35px
-				width: 100%
-				border-top-right-radius: 22px
-				border-bottom-right-radius: 22px
-				background: #f6f9fa
-				padding-left: 10px
-				@include lato()
-				font-weight: 300
-				font-size: 19px
-
-				border: none
-				outline: none
-
-				&:focus
-					& + label
-						opacity: 0
-						left: -30px
-
-@media screen and (min-width: 640px)
-	.nav-search
-		width: 70%
-		margin-left: 30%
-
-@media screen and (min-width: 1000px)
-
-	.nav-rest-right
-		display: flex
-		flex: 0
-
-	.nav-rest-left
-		padding-left: 200px
-
-	.nav-search
-		display: flex
-		flex: 1
-		margin-left: 0
-
-		> div
-			&:nth-of-type(2)
-				display: flex
-				flex: 1
-
-@media screen and (min-width: 1300px)
-	.nav
-		position: fixed
-		top: 0
-		left: 300px
-
-	.nav-left
-		.nav-item
-			&:nth-of-type(1)
-				display: flex
-
-			&:nth-of-type(2)
-				display: none
-
-	.nav-rest-left
-		flex: 1
-
-
-	.nav-rest-right
-		flex: 1
-		justify-content: flex-start
-
-@media screen and (min-width: 1500px)
-	.nav-rest
-		padding-right: 0
-
-	.nav-rest-right
-		padding-left: 100px
-
-@media screen and (min-width: 1600px)
-	.nav-rest-right
-		margin-right: -100px
-		padding-left: 140px
-
-@media screen and (min-width: 1800px)
-	.nav-rest-right
-		margin-right: -225px
-		padding-left: 290px
+	span
+		font-size: 22px
+		color: #999

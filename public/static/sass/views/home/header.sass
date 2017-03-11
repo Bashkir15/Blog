@@ -1,168 +1,279 @@
+.landing-page-container
+	position: relative
 
-.index-header
+.landing-header
+	width: 100%
+	height: 300px
+	overflow: hidden
+	background: url('../static/images/landing-header.jpg')
+	background-size: cover
+	background-position: 0 -75px
+	transform: translateY(-56px)
+
+.landing-header-overlay
+	position: absolute
+	top: 0
+	left: 0
+	width: 100%
+	height: 100%
+	background: rgba(244, 244, 244, 0.85)
+
+.landing-blog-container
+	width: 100%
+	transform: translateY(-56px)
+	background: #efefef
+	padding-bottom: 30px
+
+.landing-blog-content
+	display: flex
+	flex-direction: row
+	width: 60%
+	height: 100%
+	margin: 0 auto
+
+.landing-blog-left
 	display: flex
 	flex-direction: column
+	align-items: center
+	width: 60%
+	height: 100%
+	padding-top: 60px
+	margin-right: 5%
+
+.landing-blog-item
+
+	width: 100%
+	padding-bottom: 40px
+	margin-bottom: 60px
+	background: #fff
+	box-shadow: 0px 1px 1px rgba(0,0,0,0.2)
+
+	h4
+		@include mont()
+		font-weight: 400
+		line-height: 20px
+		letter-spacing: 3.5px
+		font-size: 18.2px
+		margin-left: 11px
+		text-transform: uppercase
+		color: rgb(17, 17, 17)
+
+	> p
+		@include open()
+		font-size: 14px
+		font-weight: 300
+		letter-spacing: 0.2px
+		line-height: 25.2px
+		width: 85%
+		margin: 30px 0 30px 11px
+		color: #777
+
+	> a
+		display: inline-block
+		background: rgb(17, 17, 17)
+		color: rgb(236, 236, 236)
+		@include mont()
+		font-weight: 400
+		padding: 10px 35px
+		margin-left: 10px
+		letter-spacing: 2.5px
+		line-height: 18.9px
+		font-size: 10.5px
+		text-transform: uppercase
+
+.landing-blog-right
+	height: 100%
+	width: 27%
+	margin-top: 60px
+	background: #fff
+
+.blog-right-section
+	padding-top: 35px
+	width: 90%
+	margin: 0 auto 18px auto
+
+.blog-right-header
+	display: flex
+	align-items: center
+
+	h5
+		@include mont()
+		font-weight: 400
+		line-height: 15.4px
+		font-size: 14px
+		letter-spacing: 2px
+		color: #111
+		text-transform: uppercase
+
+	span
+		display: inline-block
+		border-top: 1px solid rgb(204, 204, 204)
+		width: 100%
+		margin-left: 10px
+
+
+.blog-right-list
+	padding-top: 20px
+
+	li
+		padding: 5px 0
+		border-bottom: 1px solid rgb(204, 204, 204)
+		@include open()
+		font-weight: 300
+		font-size: 12px
+		letter-spacing: 2px
+		line-height: 25.2px
+		color: #777
+
+		&:last-child
+			border-bottom: none
+
+		span
+			display: inline-block
+			margin-top: 10px
+			float: right
+.blog-right-tags
+	padding-top: 20px
+
+	li
+		display: inline-block
+		@include open()
+		font-weight: 300
+		font-size: 12px
+		letter-spacing: 2px
+		line-height: 25.2px
+		padding: 0 10px
+		margin-bottom: 8px
+		color: #999
+		border: 1px solid #ccc
+		text-transform: uppercase
+
+.blog-right-popular
+	padding-top: 20px
+
+	li
+		position: relative
+		padding: 12px 0 12px 19px
+		margin-bottom: 15px
+		border: 1px solid #e3e3e3
+		border-radius: 4px
+
+		a
+			@include open()
+			display: block
+			font-weight: 300
+			letter-spacing: 2px
+			font-size: 12px
+			width: 180px
+			letter-spacing: 2px
+			line-height: 25.2px
+			color: #777
+			white-space: pre-wrap
+			word-wrap: break-word
+			hyphens: auto
+
+		span
+			@include open()
+			font-weight: 300
+			letter-spacing: 1px
+			font-size: 10px
+			line-height: 15px
+			color: #999
+
+.blog-right-popular-hearts
+	position: absolute
+	right: 0
+	top: 0
+	display: block
+	height: 100%
+	width: 70px
+	border-left: 1px solid #e4e4e4
+
+	i
+		display: inline-block
+		padding: 10px 9px 10px
+		margin-top: 27px
+		margin-left: -19px
+		color: #444
+		border-radius: 50%
+		background: #e4e4e4
+		vertical-align: 0px
+		font-size: 18px
+		box-shadow: inset 0 1px 2px rgba(0,0,0,0.1)
+
+	span
+		@include open()
+		font-weight: 300
+		letter-spacing: 1px
+		line-height: 25px
+		font-size: 14px
+		color: #777
+		display: block
+		position: absolute
+		top: 37px
+		left: 10%
+		width: 90%
+		text-align: center
+
+.post-details
+	display: flex
+	align-items: stretch
+	padding: 30px 0
+
+.post-left
+	display: flex
+	align-items: center
+	justify-content: flex-start
+	flex: 1
+	flex-basis: 0
 
 	> div
 		display: flex
-		flex-direction: column
-		border-bottom: 1px solid rgba(0,0,0,0.12)
-		padding-top: 65px
-		padding-left: 35px
-		//background: #41a3ff
-		//background: #59b6fe
-		//background: #52d4c4
-		background: rgb(105, 201, 186)
+		align-items: center
+		justify-content: center
+		padding: 0 10px
 
-	header
-		padding-bottom: 30px
-		text-align: left
-		width: 100%
+		&:nth-of-type(1)
+			border-right: 1px solid rgb(153, 153, 153)
 
-		h1
-			@include lato()
+		span
+			font-size: 18px
+			color: rgb(178, 178, 178)
+
+		p
+			@include open()
 			font-weight: 300
-			letter-spacing: 3px
-			font-size: 46px
-			color: #fefefe
-
-	.index-header-about
-		display: flex
-		flex-direction: column
-		width: 100%
-		padding-top: 40px
-		padding-bottom: 60px
-		border-bottom: 1px solid rgba(0,0,0,0.12)
-		background: #fff
-
-	p
-		@include noto()
-		font-weight: 400
-		letter-spacing: 1px
-		font-size: 20px
-		text-align: left
-		padding-left: 3px
-		color: rgba(255,255,255,0.6)
+			letter-spacing: 2px
+			line-height: 25px
+			font-size: 14px
+			color: rgb(153, 153, 153)
 
 
 
-
-.index-header-latest
+.post-right
 	display: flex
 	align-items: center
 	justify-content: flex-end
-	width: 88%
-	padding-top: 55px
-	padding-bottom: 35px
-	margin: 0 auto
-
-	button
-		height: 40px
-		width: 155px
-		border-radius: 22px
-		border: 3px solid #69c9ba
-		//background: #44bba9
-		background: #283139
-
-		span
-			@include lato()
-			font-weight: 300
-			color: #dfe1df
-			font-size: 17px
-
-.index-header-about
+	flex: 1
+	flex-basis: 0
+	margin-right: 10px
 
 	> div
 		display: flex
-		flex-direction: column
-		width: 85% 
-		margin: 0 auto 85px auto
+		align-items: center
+		justify-content: center
+		padding: 0 10px
+		border-right: 1px solid rgb(153, 153, 153)
+		margin-right: 5px
 
-		h3
-			@include lato()
-			font-weight: 300
-			font-size: 30px
-			letter-spacing: 3px
-			text-align: center
-			padding-bottom: 45px
+		span
+			font-size: 18px
+			color: rgb(178, 178, 178)
 
-		p
-			@include lato()
-			font-weight: 300
-			letter-spacing: 2px
-			color: rgba(0,0,0,0.5)
-			text-align: center
-			line-height: 30px
-
-		&:nth-of-type(2)
-			margin-bottom: 40px
-
-.index-header-icon
-	display: flex
-	align-items: center
-	justify-content: center
-	padding-top: 25px
-
-	span
-		font-size: 27px
-
-@media screen and (min-width: 1300px)
-	.index-header
-
-		header
-			text-align: center
-
-		p
-			text-align: center
-
-		.index-header-about
-			flex-direction: row
-			flex-wrap: wrap
-			align-items: center
-			justify-content: space-around
-			padding-bottom: 0
-
-			> div
-				margin: 0
-				height: 300px
-				width: 450px
-				padding-top: 15px
-
-				h3
-					padding-bottom: 25px
-
-				p
-					font-size: 15px
-
-				&:nth-of-type(2)
-					p
-						padding-bottom: 33px
-
-@media screen and (min-width: 1550px)
-	.index-header
-
-		> div
-			&:nth-of-type(1)
-				padding-bottom: 45px
-
-		.index-header-about
-			> div
-				height: 250px
-				width: 600px
-
-		.index-header-latest
-			width: 100%
-			display: none
-			align-items: center
-			justify-content: center
-			padding-bottom: 0
-
-			button
-				height: 55px
-				width: 220px
-				border-radius: 0
-				border-left: 2px solid #56c2b1
-				border-top: 2px solid #56c2b1
-				border-right: 2px solid #56c2b1
-				border-bottom: none
-
+	> span
+		@include open()
+		font-weight: 300
+		font-size: 14px
+		line-height: 25px
+		letter-spacing: 2px
+		color: rgb(153, 153, 153)
