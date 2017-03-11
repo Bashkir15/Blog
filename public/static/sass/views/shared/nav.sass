@@ -3,7 +3,7 @@
 	align-items: stretch
 	justify-content: center
 	position: relative
-	width: 80%
+	width: 90%
 	margin: 0 auto
 	z-index: 10
 
@@ -20,7 +20,7 @@
 	justify-content: flex-start
 
 .nav-center
-	display: flex
+	display: none
 	align-items: center
 
 .nav-right
@@ -56,3 +56,20 @@
 	span
 		font-size: 22px
 		color: #999
+	
+	.icon-magnifying-glass
+		display: none
+
+@media screen and (min-width: 1300px)
+	.nav
+		width: 80%
+		
+	.nav-center
+		display: flex
+
+	.nav-item
+		.icon-magnifying-glass
+			display: inline-block
+
+		.icon-add
+			display: none
