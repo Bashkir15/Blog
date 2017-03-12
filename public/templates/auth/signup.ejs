@@ -5,79 +5,45 @@
 		<meta name='viewport' content="width=device-width, initial-scale=1">
 		<link rel='stylesheet' href='./static/icons/ico/style.css'>
 		<link rel='stylesheet' href='./styles/main.min.css'>
-
-		<link href="https://fonts.googleapis.com/css?family=Lato:300,400i|Noto+Sans:400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400|Open+Sans:300" rel="stylesheet">
 	</head>
 
 	<body>
-		<div class="index-page-container">
-			<% include ../shared/index-page-left %>
+		<% include ../shared/nav %>
+		<main class='signup-page-container'>
+			<section class='auth-form-container'>
+				<form name='signupForm'>
+					<h5>Register for an Account</h5>
 
-			<div class='index-page-right'>
-				<% include ../shared/nav %>
-
-				<div class='index-page-view-content'>	<div class='auth-page-container'>
-						<div class='auth-page-header'>
-							<header>
-								<h1>Sign up</h1>
-							</header>
-
-							<p>By signing up you get access to having favorite posts and commenting</p>
-						</div>
-
-						<div class='auth-form'>
-							<form name='signup-form'>
-								<div class='auth-wrapper'>
-									<input type='text' name='name' required id='signup-name'>
-									<label>Name</label>
-								</div>
-
-								<div class='auth-wrapper'>
-									<input type='text' name='username' required id='signup-username'>
-									<label>Username</label>
-								</div>
-
-								<div class='auth-wrapper'>
-									<input type='email' name='email' required id='signup-email'>
-									<label>Email</label>
-								</div>
-
-								<div class='auth-wrapper'>
-									<input type='password' name='password' id='signup-password'>
-									<label>Password</label>
-								</div>
-
-								<div class='auth-wrapper'>
-									<input type='password' name='confirm' id='signup-confirm'>
-									<label>Confirm Password</label>
-								</div>
-
-								<div class='auth-form-submit'>
-									<button type='button' id='signup-submit'>
-										<span>Signup</span>
-									</button>
-								</div>
-							</form>
-						</div>
-
-						<div class='auth-footer'>
-							<p>Already have an account? <a href='/login'>Login here</a></p>
-						</div>
+					<div class='auth-form-wrapper'>
+						<input type='text' id='signup-name' name='name'>
+						<label for='signup-name'>Name</label>
 					</div>
-				</div>
-			</div>
-		</div>
 
-		<div id='success-content'>
-			<h3 class='notification-title'>Hooray!</h3>
-			<p class='notification-text'>Welcome to the Blog</p>
-		</div>
+					<div class='auth-form-wrapper'>
+						<input type='email' id='signup-email' name='email'>
+						<label for='signup-email'>Email</label>
+					</div>
 
-		<div id='failure-content'>
-			<h3 class='notification-title'>Uh Oh!</h3>
-			<p class='notification-text'>You should check your form</p>
-		</div>
+					<div class='auth-form-wrapper'>
+						<input type='password' id='signup-password' name='password'>
+						<label for='signup-password'>Password</label>
+					</div>
 
-		<script src='./scripts/main.min.js'></script>
+					<div class='auth-form-wrapper'>
+						<input type='password' id='signup-confirm' name='confirm'>
+						<label for='signup-confirm'>Confirm Password</label>
+					</div>
+
+					<div class='auth-form-submit'>
+						<button type='button' aria-label='submit signup form'>
+							<span>Signup</span>
+						</button>
+					</div>
+
+					<p>Have an Account? <a href='/login'>Login</a></p>
+				</form>
+			</section>
+		</main> 
 	</body>
 </html>

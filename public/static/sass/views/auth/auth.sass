@@ -1,1 +1,123 @@
 @import "signup"
+
+.auth-form-container
+	background: rgba(244, 244, 244, 0.7)
+	display: flex
+	flex-direction: column
+	align-items: center
+	justify-content: center
+	padding: 60px 0 
+
+	form
+		display: flex
+		flex-direction: column
+		align-items: center
+		width: 90%
+		padding: 70px 0
+		margin: 0 auto
+		background: #fff
+		box-shadow: 0 1px 1px rgba(0,0,0,0.2)
+
+		h5
+			@include mont()
+			font-weight: 400
+			font-size: 16px
+			line-height: 17.6px
+			letter-spacing: 3px
+			color: rgb(51, 51, 51)
+			text-transform: uppercase
+			margin-bottom: 45px
+
+		p
+			@include mont()
+			font-weight: 400
+			font-size: 16px
+			letter-spacing: 3px
+			line-height: 17.6px
+			color: #ccc
+			text-transform: uppercase
+
+			a
+				color: #ddd
+
+.auth-form-wrapper
+	position: relative
+	width: 90%
+	margin: 0 auto 42px auto
+
+	input
+		height: 40px
+		width: 100%
+		border: 1px solid #ddd
+		line-height: 22px
+		letter-spacing: .5px
+		@include open()
+		font-weight: 300
+		font-size: 15px
+		color: rgb(85, 85, 85)
+		outline: none
+		transition: all .4s ease
+
+		&:focus
+			border-color: #777
+
+	label
+		position: absolute
+		top: 12px
+		left: 11px
+		@include open()
+		font-weight: 300
+		font-size: 15px
+		color: #ddd
+		letter-spacing: 1px
+
+.auth-form-submit
+	padding: 20px 0 45px 0
+
+	button
+		@include mont()
+		font-weight: 400
+		letter-spacing: 2.5px
+		line-height: 18.9px
+		font-size: 12.5px
+		text-transform: uppercase
+		background: rgb(17, 17, 17)
+		color: rgb(236, 236, 236)
+		padding: 13px 38px
+
+
+
+@media screen and (min-width: 800px)
+	.auth-form-container
+		form
+			width: 75%
+
+			h5
+				font-size: 18px
+
+@media screen and (min-width: 1000px)
+	.auth-form-container
+		padding-top: 100px
+		padding-bottom: 120px
+
+		form
+			width: 65%
+
+
+@media screen and (min-width: 1200px)
+	.auth-form-container
+		form
+			width: 50%
+
+
+@media screen and (min-width: 1400px)
+	.auth-form-container
+		form
+			width: 40%
+
+@media screen and (min-width: 1600px)
+	.auth-form-container
+		padding-bottom: 190px
+
+		form
+			width: 25%

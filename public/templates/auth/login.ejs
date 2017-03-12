@@ -10,57 +10,31 @@
 	</head>
 
 	<body>
-		<div class="index-page-container">
-			<% include ../shared/index-page-left %>
+		<% include ../shared/nav %>
+		<main class='login-page-container'>
+			<section class='auth-form-container'>
+				<form name='loginForm'>
+					<h5>Login to your account</h5>
 
-			<div class='index-page-right'>
-				<% include ../shared/nav %>
-
-				<div class='index-page-view-content'>	<div class='auth-page-container'>
-						<div class='auth-page-header'>
-							<header>
-								<h1>Login</h1>
-							</header>
-						</div>
-
-						<div class='auth-form'>
-							<form class='login-form' novalidate>
-								<div class='auth-wrapper'>
-									<input type='email' required id='login-email'>
-									<label>Email</label>
-								</div>
-
-								<div class='auth-wrapper'>
-									<input type='password' required id='login-password'>
-									<label>Password</label>
-								</div>
-
-								<div class='auth-form-submit'>
-									<button id='login-submit' aria-label='submit login form' type='button'>
-										<span>Login</span>
-									</button>
-								</div>
-							</form>
-						</div>
-
-						<div class='auth-footer'>
-							<p>Don't have an account?<a href='/login'>Signup here</a></p>
-						</div>
+					<div class='auth-form-wrapper'>
+						<input type='email' name='email' id='login-email'>
+						<label for='login-email'>Email</label>
 					</div>
-				</div>
-			</div>
-		</div>
 
-		<div id='success-content'>
-			<h3 class='notification-title'>Success!</h3>
-			<p class='notification-text'>You have logged in</p>
-		</div>
+					<div class='auth-form-wrapper'>
+						<input type='password' name='password' id='login-password'>
+						<label for='login-password'>Password</label>
+					</div>
 
-		<div id='failure-content'>
-			<h3 class='notification-title'>Uh Oh!</h3>
-			<p class='notification-text'>There is something wrong with your form</p>
-		</div>
+					<div class='auth-form-submit'>
+						<button type='button' aria-label='submit login form'>
+							<span>Login</span>
+						</button>
+					</div>
 
-		<script src='./scripts/main.min.js'></script>
+					<p>Don't have an account? <a href='/signup'>Signup</a></p>
+				</form>
+			</section>
+		</main>
 	</body>
 </html>
