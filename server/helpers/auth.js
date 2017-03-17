@@ -62,7 +62,8 @@ function ensureAdmin (req, res, next) {
 				}
 
 				if (user) {
-					if (user.roles.indexOf('admin') !== -1) {
+					console.log(user);
+					if (user.roles.indexOf('admin') != -1) {
 						req.user = user;
 						next();
 					} else {

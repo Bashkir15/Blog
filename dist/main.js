@@ -122,6 +122,8 @@
 	});
 	exports.startRouter = startRouter;
 
+	var _auth = __webpack_require__(33);
+
 	var _signup = __webpack_require__(2);
 
 	var _login = __webpack_require__(30);
@@ -131,7 +133,13 @@
 			(0, _signup.signup)();
 		} else if (window.location.href.indexOf('login') != -1) {
 			(0, _login.login)();
+		} else if (window.location.href.indexOf('create-post') != -1) {
+			(0, _auth.checkAdminPriv)(stuff);
 		}
+	}
+
+	function stuff() {
+		console.log('woot');
 	}
 
 /***/ },
@@ -2315,6 +2323,49 @@
 			submitButton.classList.add('form-valid');
 		}
 	}
+
+/***/ },
+/* 33 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.checkAuthRoute = checkAuthRoute;
+	exports.checkAdminPriv = checkAdminPriv;
+	function checkToken() {
+		var token = window.localStorage.getItem('blog-token');
+
+		if (token) {
+			return token;
+		} else {
+			return false;
+		}
+	}
+
+	function checkAuthRoute(callback) {
+		var token = checkToken();
+
+		if (token) {
+			callback();
+		} else {
+			window.location.href = '/login';
+		}
+	}
+
+	function checkAdminPriv(callback) {
+		var user = JSON.parse(window.localStorage.getItem('user'));
+
+		if (user.roles.indexOf('admin') != -1) {
+			callback();
+		} else {
+			window.location.href = '/';
+		}
+	}
+
+	var isLoggedIn = exports.isLoggedIn = checkToken();
 
 /***/ }
 /******/ ]);
