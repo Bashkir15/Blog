@@ -58,11 +58,9 @@
 							</div>
 
 							<ul class='blog-right-list'>
-								<li>General Js<span class='icon-keyboard_arrow_right'></span></li>
-								<li>Devops<span class='icon-keyboard_arrow_right'></span></li>
-								<li>React<span class='icon-keyboard_arrow_right'></span></li>
-								<li>Node<span class='icon-keyboard_arrow_right'></span></li>
-								<li>Performance<<span class='icon-keyboard_arrow_right'></span>/li>
+								<% categories.map((category) => { %>
+									<li><%= category.name %><span class='icon-keyboard_arrow_right'></span></li>
+								<% }); %>
 							</ul>
 						</div>
 

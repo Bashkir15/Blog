@@ -6,9 +6,6 @@ import path from 'path'
 import ejs from 'ejs'
 
 import indexRoutes from '../routes/index.server.routes'
-import topicsRoutes from '../routes/topics.server.routes'
-import sectionsRoutes from '../routes/sections.server.routes'
-import PostsRoutes from '../routes/posts.server.routes'
 import UsersRoutes from '../routes/users.server.routes'
 
 module.exports = (db) => {
@@ -33,9 +30,6 @@ module.exports = (db) => {
 	app.use(express.static(path.join(__dirname, '../../node_modules')));
 
 	app.use('/', indexRoutes);
-	app.use('/topics', topicsRoutes);
-	app.use('/sections', sectionsRoutes);
-	app.use('/posts', PostsRoutes);
 	app.use('/users', UsersRoutes);
 
 	return app;

@@ -1,17 +1,13 @@
 import express from 'express'
-import topicsController from '../controllers/topics.server.controller'
-import sectionsController from '../controllers/sections.server.controller'
-import postsController from '../controllers/posts.server.controller'
+import indexController from '../controllers/index.server.controller'
 
-let router = express.Router();
-let topics = topicsController();
-let sections = sectionsController();
-let posts = postsController();
+const router = express.Router();
+const index = indexController();
 
-router.get('/', topics.list);
-router.get('/create-topic', (req, res) => {
-	res.render('./templates/topics/create/create');
-});
+router.get('/', index.home);
+
+
+
 
 router.get('/signup', (req, res) => {
 	res.render('./templates/auth/signup');
@@ -21,11 +17,5 @@ router.get('/login', (req, res) => {
 	res.render('./templates/auth/login');
 });
 
-router.get('/latest', posts.latest);
-router.get('/:title', topics.single);
-router.get('/:title/create-section', topics.createSection);
-router.get('/:title/create-post', sections.createPost);
-router.get('/:topicTitle/:postTitle/:title', posts.single);
-router.get('/:title/edit', posts.getEdit);
 
 module.exports = router
