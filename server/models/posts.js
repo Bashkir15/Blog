@@ -12,7 +12,7 @@ const postSchema = new mongoose.Schema({
 
 	description: {
 		type: String,
-		required: true,
+		required: false,
 		get: escapeProperty
 	},
 
@@ -26,17 +26,22 @@ const postSchema = new mongoose.Schema({
 		default: false
 	},
 
+	category: {
+		type: mongoose.Schema.ObjectId,
+		required: false,
+		ref: 'Category'
+	},
+
 	/* series: {
 		type: mongoose.Schema.ObjectId,
 		required: false,
 		ref: 'Series'
-	}, 
+	}, */
 
-	tags: [{
-		type: mongoose.Schema.ObjectId,
-		required: false,
-		ref: 'Tags'
-	}], */
+	tags: {
+		type: Array,
+		default: []
+	},
 
 	likes: [{
 		type: mongoose.Schema.ObjectId,

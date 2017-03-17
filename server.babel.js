@@ -2,6 +2,7 @@
 import http from 'http'
 import mongoose from 'mongoose'
 import Category from './server/models/categories'
+import Post from './server/models/posts'
 import Users from './server/models/users'
 
 import express from './server/config/express'

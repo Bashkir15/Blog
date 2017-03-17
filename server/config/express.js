@@ -7,6 +7,7 @@ import ejs from 'ejs'
 
 import indexRoutes from '../routes/index.server.routes'
 import UsersRoutes from '../routes/users.server.routes'
+import postRoutes from '../routes/posts.server.routes'
 
 module.exports = (db) => {
 	let app = express();
@@ -31,6 +32,7 @@ module.exports = (db) => {
 
 	app.use('/', indexRoutes);
 	app.use('/users', UsersRoutes);
+	app.use('/posts', postRoutes);
 
 	return app;
 }

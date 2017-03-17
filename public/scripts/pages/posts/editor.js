@@ -9,6 +9,7 @@ export function editor() {
 	const postTitle = document.getElementById('post-title');
 	const postCategory = document.getElementById('post-category');
 	const postTags = document.getElementById('post-tags');
+	const submitButton = document.querySelector('.editor-submit button');
 
 	function handleKeyPress(e) {
 		let results;
@@ -31,13 +32,14 @@ export function editor() {
 			title: postTitle.value,
 			category: postCategory.value,
 			content: pad.value.split("\t").join('#').split('\n').join('~'),
+			tags: postTags.value.split(" "),
 
 			headers: {
 				'Content-Type': 'Application/Json'
 			}
 		})
 		.then((response) => {
-			window.location.href = `/${data.title}`;
+			console.log(response);
 		})
 	}
 

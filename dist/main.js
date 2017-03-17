@@ -2396,6 +2396,7 @@
 		var postTitle = document.getElementById('post-title');
 		var postCategory = document.getElementById('post-category');
 		var postTags = document.getElementById('post-tags');
+		var submitButton = document.querySelector('.editor-submit button');
 
 		function handleKeyPress(e) {
 			var results = void 0;
@@ -2418,12 +2419,13 @@
 				title: postTitle.value,
 				category: postCategory.value,
 				content: pad.value.split("\t").join('#').split('\n').join('~'),
+				tags: postTags.value.split(" "),
 
 				headers: {
 					'Content-Type': 'Application/Json'
 				}
 			}).then(function (response) {
-				window.location.href = '/' + data.title;
+				console.log(response);
 			});
 		}
 
