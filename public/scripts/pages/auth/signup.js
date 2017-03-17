@@ -1,5 +1,6 @@
 import axios from 'axios'
 import notify from '../../components/notifications'
+import { onBlur } from '../../libs/validators/forms'
 
 export function signup() {
 	const name = document.getElementById('signup-name');
@@ -7,12 +8,13 @@ export function signup() {
 	const password = document.getElementById('signup-password');
 	const confirm = document.getElementById('signup-password');
 	const submitButton = document.querySelector('.auth-form-submit button');
+	const inputs = document.querySelectorAll('.form-input');
 
 	function submit() {
 		if (submitButton.classList.contains('form-valid')) {
 			submitButton.classList.add('form-loading');
 
-			axios.post('http://localhost:8000/signup', {
+			axios.post('http://localhost:8000/users', {
 				name: name.value,
 				email: email.value,
 				password: password.value,
@@ -22,6 +24,7 @@ export function signup() {
 				}
 			})
 			.then((response) => {
+				console.log(response);
 				submitButton.classList.remove('form-loading');
 
 				if (response.data.success) {
@@ -48,4 +51,8 @@ export function signup() {
 			window.dispatchEvent(error);
 		}
 	}
+
+	onBlur(inputs);
+
+	submitButton.addEventListener('click', submit, false);
 }

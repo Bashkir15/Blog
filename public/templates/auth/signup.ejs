@@ -16,22 +16,22 @@
 					<h5>Register for an Account</h5>
 
 					<div class='auth-form-wrapper form-wrapper'>
-						<input type='text' id='signup-name' name='name'>
+						<input type='text' id='signup-name' name='name' class='form-input'>
 						<label for='signup-name'>Name</label>
 					</div>
 
 					<div class='auth-form-wrapper form-wrapper form-email'>
-						<input type='email' id='signup-email' name='email'>
+						<input type='email' id='signup-email' name='email' class='form-input'>
 						<label for='signup-email'>Email</label>
 					</div>
 
-					<div class='auth-form-wrapper form-password'>
-						<input type='password' id='signup-password' name='password'>
+					<div class='auth-form-wrapper form-wrapper'>
+						<input type='password' id='signup-password' name='password' class='form-input form-password'>
 						<label for='signup-password'>Password</label>
 					</div>
 
-					<div class='auth-form-wrapper form-confirm'>
-						<input type='password' id='signup-confirm' name='confirm'>
+					<div class='auth-form-wrapper form-confirm form-wrapper'>
+						<input type='password' id='signup-confirm' name='confirm' class='form-input password-confirm'>
 						<label for='signup-confirm'>Confirm Password</label>
 					</div>
 
@@ -44,6 +44,8 @@
 					<p>Have an Account? <a href='/login'>Login</a></p>
 				</form>
 			</section>
-		</main> 
+		</main>
+
+		<script src='./scripts/main.min.js'></script> 
 	</body>
 </html>

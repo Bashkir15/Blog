@@ -27,6 +27,8 @@ module.exports = () => {
 					return json.bad(err, res);
 				}
 
+				user.password = '';			
+
 				json.good({
 					record: user,
 					token: token

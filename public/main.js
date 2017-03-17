@@ -1,4 +1,13 @@
-import SideNav from './scripts/components/sidenav'
+import { startRouter } from './scripts/libs/router'
+
+
+function init() {
+	startRouter();
+}
+
+init();
+
+/** import SideNav from './scripts/components/sidenav'
 
 import navShrink from './scripts/components/nav-shrink'
 import topics from './scripts/pages/topics/topics'
@@ -53,3 +62,4 @@ document.ready().then((startTime, endTime) => {
 		}, 1000)
 	}
 });
+*/

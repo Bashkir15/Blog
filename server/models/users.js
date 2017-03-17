@@ -18,13 +18,6 @@ var userSchema = new mongoose.Schema({
 		get: escapeProperty
 	},
 
-	username: {
-		type: String,
-		required: true,
-		unique: true,
-		get: escapeProperty
-	},
-
 	email: {
 		type: String,
 		required: true,

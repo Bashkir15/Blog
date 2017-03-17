@@ -1,12 +1,12 @@
-const formWrapper = document.querySelectorAll('.form-wrappers');
-const submitButton = document.querySelectorAll('.form-submit');
+const formWrapper = document.querySelectorAll('.form-wrapper');
+const submitButton = document.querySelector('.form-submit');
 
 export function onBlur(nodes) {
 	let i;
 	let len = nodes.length;
 
 	for (i = 0; i < len; i++) {
-		nodes[i].addEventListener('blur'. inputBlur);
+		nodes[i].addEventListener('blur', inputBlur);
 	}
 }
 
@@ -35,13 +35,18 @@ function validateEmail(node) {
 }
 
 function validatePassword() {
-	if (nodes[0].value != nodes[1].value) {
-		nodes[0].parentNode.classList.add('password-invalid');
-	} else if (nodes[1].value != nodes[0].value) {
-		nodes[1].parentNode.classList.add('password-invalid');
+	const password = document.querySelector('.form-password');
+	const confirm = document.querySelector('.password-confirm');
+
+	if (password.value != confirm.value) {
+		confirm.parentNode.classList.add('password-invalid');
 	} else {
-		nodes[0].parentNode.classList.add('password-valid');
-		nodes[1].parentNode.classList.add('password-valid');
+		if (confirm.parentNode.classList.contains('password-invalid')) {
+			confirm.parentNode.classList.remove('password-invalid');
+		}
+
+		confirm.parentNode.classList.add('password-valid');
+		password.parentNode.classList.add('password-valid');
 	}
 }
 
@@ -60,7 +65,7 @@ function inputBlur() {
 	}
 
 	if (this.parentNode.classList.contains('form-confirm')) {
-		validatePasswords();
+		validatePassword();
 	}
 
 	if (formContent != '' && !this.parentNode.classList.contains('form-email') && !this.parentNode.classList.contains('form-password') && !this.parentNode.classList.contains('form-confirm')) {
@@ -75,15 +80,17 @@ function inputBlur() {
 }
 
 function checkValidForm() {
-	let length = formWrapper.length;
+	const length = formWrapper.length;
 	let i = 0;
 	let valid = 0;
+
 
 	for (i = 0; i < length; i++) {
 		let wrapper = formWrapper[i];
 
 		if (wrapper.classList.contains('valid') || wrapper.classList.contains('email-valid') || wrapper.classList.contains('password-valid')) {
 			valid++;
+
 		}
 	}
 
