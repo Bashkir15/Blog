@@ -4,6 +4,49 @@ import { convertToFormat, convertInput } from './libs/events'
 import { renderJs } from '../../libs/js-parser'
 
 export function editor() {
+	const pad = document.getElementById('pad');
+	const convertedSection = document.getElementById('converted-section');
+	const postTitle = document.getElementById('post-title');
+	const postCategory = document.getElementById('post-category');
+	const postTags = document.getElementById('post-tags');
+
+	function handleKeyPress(e) {
+		let results;
+
+		if (e.which == 9) {
+			e.preventDefault();
+
+			results = convertInput(e, pad);
+			pad.selectionEnd = results.end;
+			pad.value = results.value;
+		}
+	}
+
+	function convertPad() {
+		convertedSection.innerHTML = convertToFormat(pad, convertedSection);
+	}
+
+	function submit() {
+		axios.post('http://localhost:8000/posts', {
+			title: postTitle.value,
+			category: postCategory.value,
+			content: pad.value.split("\t").join('#').split('\n').join('~'),
+
+			headers: {
+				'Content-Type': 'Application/Json'
+			}
+		})
+		.then((response) => {
+			window.location.href = `/${data.title}`;
+		})
+	}
+
+	pad.addEventListener('input', convertPad);
+	pad.addEventListener('keydown', handleKeyPress);
+	submitButton.addEventListener('click', submit);
+}
+
+/*	
 	let converter = new showdown.Converter();
 	let pad = document.getElementById('pad');
 	let markdownSection = document.getElementById('markdown-section');
@@ -56,4 +99,4 @@ export function editor() {
 	pad.addEventListener('input', convertPad);
 	pad.addEventListener('keydown', handleKeyPress);
 	submitButton.addEventListener('click', submit);
-}
+} */

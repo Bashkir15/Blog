@@ -11,15 +11,21 @@
 		<% include ../../shared/nav %>
 
 		<div class='editor-container'>
-			<div class='editor-submit'>
-				<button type='button' id='submit-post'>
-					<span>Submit</span>
-				</button>
-			</div>
+			<div class='editor-details'>
+				<div class='editor-wrapper'>
+					<input type='text' name='title' id='post-title'>		
+					<label for='post-title'>Title</label>
+				</div>
 
-			<div class='edit-wrapper'>
-				<label>Title</label>
-				<input type='text' name='title' id='post-title'>
+				<div class='editor-wrapper'>
+					<input type='text' name='category' id='post-category'>
+					<label for='post-category'>Category Id</label>
+				</div>
+
+				<div class='editor-wrapper'>
+					<input type='text' name='tags' id='post-tags'>
+					<label for='post-tags'>Tags</label>					
+				</div>
 			</div>
 
 
@@ -29,9 +35,13 @@
 				</div>
 
 				<div class='editor-output'>
-					<div id='markdown-section'></div>
+					<div id='converted-section'></div>
 				</div>
 			</div>
+
+			<div class='editor-submit'>
+				<button type='button' aria-label='submit post button'>Submit</button>
+			</div>			
 		</div>
 			
 		<script src='./scripts/main.min.js'></script>

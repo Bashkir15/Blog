@@ -10,9 +10,10 @@ export function convertInput(e, el) {
 
 	if (e.which == 9) {
 		e.preventDefault();
+
  		let s = el.selectionStart;
-		var end = el.selectionEnd;
-		var value = el.value;
+		let end = el.selectionEnd;
+		let value = el.value;
 
 
 		value = value.substring(0, s) + `\t` + value.substring(end);
