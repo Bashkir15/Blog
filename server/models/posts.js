@@ -1,19 +1,30 @@
 import mongoose from 'mongoose'
 import escape from 'lodash.escape'
 
-const escapeProperty = (value) => escape(value);
+let escapeProperty = (value) => {
+	escape(value);
+};
 
 const postSchema = new mongoose.Schema({
+	created: {
+		type: Date,
+		default: Date.now
+	},
+
+	lastUpdated: {
+		type: Date,
+		default: Date.now
+	},
+
 	title: {
 		type: String,
 		required: true,
-		get: escapeProperty
+		unique: true,
 	},
 
 	description: {
 		type: String,
-		required: false,
-		get: escapeProperty
+		required: false
 	},
 
 	image: {

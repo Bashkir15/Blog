@@ -1,3 +1,6 @@
+export function fixTitle(node) {
+	node.textContent = node.textContent.split("-").join(" ");
+}
 
 export function convertToFormat(fromEl, toEl) {
 	let markdownText = fromEl.value;

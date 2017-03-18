@@ -48,7 +48,17 @@
 
 	var _router = __webpack_require__(1);
 
+	var _events = __webpack_require__(36);
+
 	function init() {
+		var titles = document.querySelectorAll('.post-title');
+
+		if (titles.length) {
+			for (var i = 0; i < titles.length; i++) {
+				(0, _events.fixTitle)(titles[i]);
+			}
+		}
+
 		(0, _router.startRouter)();
 	}
 
@@ -2396,6 +2406,7 @@
 		var postTitle = document.getElementById('post-title');
 		var postCategory = document.getElementById('post-category');
 		var postTags = document.getElementById('post-tags');
+		var postDescription = document.getElementById('post-description');
 		var submitButton = document.querySelector('.editor-submit button');
 
 		function handleKeyPress(e) {
@@ -2420,6 +2431,7 @@
 				category: postCategory.value,
 				content: pad.value.split("\t").join('#').split('\n').join('~'),
 				tags: postTags.value.split(" "),
+				description: postDescription.value,
 
 				headers: {
 					'Content-Type': 'Application/Json'
@@ -2433,61 +2445,6 @@
 		pad.addEventListener('keydown', handleKeyPress);
 		submitButton.addEventListener('click', submit);
 	}
-
-	/*	
-		let converter = new showdown.Converter();
-		let pad = document.getElementById('pad');
-		let markdownSection = document.getElementById('markdown-section');
-		let submitButton = document.getElementById('submit-post');
-		let postTitle = document.getElementById('post-title');
-		let sectionTitle = document.getElementById('post-section-title');
-		let topicTitle = document.getElementById('post-topic-title');
-		let section = document.getElementById('post-section');
-		let codeElement = document.querySelectorAll('.js-markup');
-
-
-
-		function submit() {
-			let data = {};
-			data.title = postTitle.value;
-			data.sectionTitle = sectionTitle.value;
-			data.topicTitle = topicTitle.value;
-			data.section = section.value;
-			data.content = pad.value.split("\t").join("#").split('\n').join("~");
-			axios.post('http://localhost:3000/posts',  {
-				title: data.title,
-				section: data.section,
-				sectionTitle: data.sectionTitle,
-				content: data.content,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
-			.then((response) => {
-				window.location.href = `/${data.topicTitle}`;
-			});
-		}
-
-		function handleKeyPress(e) {
-			var results;
-
-			if (e.which == 9) {
-				e.preventDefault();
-
-				results = convertInput(e, pad);
-				pad.selectionEnd = results.end;
-				pad.value = results.value;
-			}
-		}
-
-		function convertPad() {
-			markdownSection.innerHTML = convertToFormat(pad, markdownSection);
-		}
-
-		pad.addEventListener('input', convertPad);
-		pad.addEventListener('keydown', handleKeyPress);
-		submitButton.addEventListener('click', submit);
-	} */
 
 /***/ },
 /* 35 */
@@ -4955,8 +4912,13 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.fixTitle = fixTitle;
 	exports.convertToFormat = convertToFormat;
 	exports.convertInput = convertInput;
+	function fixTitle(node) {
+		node.textContent = node.textContent.split("-").join(" ");
+	}
+
 	function convertToFormat(fromEl, toEl) {
 		var markdownText = fromEl.value;
 		var newlineText = markdownText.split("\n").join("<br />");

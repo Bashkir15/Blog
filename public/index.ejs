@@ -19,35 +19,67 @@
 			<section class='landing-blog-container'>
 				<div class='landing-blog-content'>
 					<div class='landing-blog-left'>
-						<div class='landing-blog-item'>
-							<img src='./static/images/post1.png'>
+						<% if (posts.length) { %>
+							<% posts.map((post) => { %>
+								<div class='landing-blog-item'>
+									<img src='./static/images/post1.png'>
 
+									<div class='post-details'>
+										<div class='post-left'>
+											<div>
+												<span class='icon-stop-watch'></span>
+											</div>
 
-							<div class='post-details'>
-								<div class='post-left'>
-									<div>
-										<span class='icon-stop-watch'></span>
+											<div>
+												<p><%= post.created %></p>
+											</div>
+										</div>
+
+										<div class='post-right'>
+											<div>
+												<span clas='icon-chat_bubble_outline'></span>
+											</div>
+
+											<span>17</span>
+										</div>
 									</div>
 
-									<div>
-										<p>January 01, 2017</p>
+									<h4 class='post-title'><%= post.title %></h4>
+									<p><%= post.description %></p>
+									<a href='<%= post.title %>'>Read More</a>
+								</div>
+							<% }); %>
+						<% } else { %>
+							<div class='landing-blog-item'>
+								<img src='./static/images/post1.png'>
+
+
+								<div class='post-details'>
+									<div class='post-left'>
+										<div>
+											<span class='icon-stop-watch'></span>
+										</div>
+
+										<div>
+											<p>January 01, 2017</p>
+										</div>
+									</div>
+
+									<div class='post-right'>
+										<div>
+											<span class='icon-chat_bubble_outline'></span>
+										</div>
+
+										<span>17</span>
 									</div>
 								</div>
 
-								<div class='post-right'>
-									<div>
-										<span class='icon-chat_bubble_outline'></span>
-									</div>
+								<h4>Hosting a Node App on AWS</h4>
+								<p>In the first post of this series we will take a basic Node application, setup an Amazon EC2 instance, clone our application into this instance, setup a mongoDB connection, and then proxy our request and cache static assets with Nginx</p>
+								<a href='/'>Read More</a>
 
-									<span>17</span>
-								</div>
 							</div>
-
-							<h4>Hosting a Node App on AWS</h4>
-							<p>In the first post of this series we will take a basic Node application, setup an Amazon EC2 instance, clone our application into this instance, setup a mongoDB connection, and then proxy our request and cache static assets with Nginx</p>
-							<a href='/'>Read More</a>
-
-						</div>
+						<% } %>
 					</div>
 
 					<div class='landing-blog-right'>
@@ -62,15 +94,10 @@
 									<% categories.map((category) => { %>
 										<li><%= category.name %><span class='icon-keyboard_arrow_right'></span></li>
 									<% }); %>
-								<% } else { %>
-									<li>General JS<span class='icon-keyboard_arrow_right'></span></li>
-									<li>Node<span class='icon-keyboard_arrow_right'></span></li>
-									<li>Devops<span class='icon-keyboard_arrow_right'></span></li>
-									<li>React<span class='icon-keyboard_arrow_right'></span>
-									<li>Angular<span class='icon-keyboard_arrow_right'></span></li>
 								<% } %>
 							</ul>
 						</div>
+
 
 						<div class='blog-right-section'>
 							<div class='blog-right-header'>
@@ -152,5 +179,6 @@
 			</section>
 		</main>
 
+		<script src='./scripts/main.min.js'></script>
 	</body>
 </html>

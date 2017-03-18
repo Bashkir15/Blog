@@ -1,7 +1,17 @@
 import { startRouter } from './scripts/libs/router'
+import { fixTitle } from './scripts/pages/posts/libs/events'
 
 
 function init() {
+	const titles = document.querySelectorAll('.post-title');
+
+	if (titles.length) {
+		for (let i = 0; i < titles.length; i++) {
+			fixTitle(titles[i]);
+		}
+	}
+
+
 	startRouter();
 }
 

@@ -11,15 +11,12 @@ module.exports = () => {
 		const post = new Post(req.body);
 		post.category = req.body.category;
 
-		console.log(post);
-
 		post.save((err) => {
 			Category.findOne({_id: post.category}, (err, category) => {
 				if (err) {
 					return json.bad(err, res);
 				}
 
-				console.log(post);
 
 				category.posts.push(post);
 				category.save((err) => {

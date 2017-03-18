@@ -37,6 +37,7 @@
 	> a
 		display: inline-block
 		background: rgb(17, 17, 17)
+		border: 1px solid rgb(17, 17, 17)
 		color: rgb(236, 236, 236)
 		@include mont()
 		font-weight: 400
@@ -46,6 +47,11 @@
 		line-height: 18.9px
 		font-size: 10.5px
 		text-transform: uppercase
+		transition: all .4s ease
+
+		&:hover
+			background: #fff
+			color: rgb(17, 17, 17)
 
 .post-details
 	display: flex
