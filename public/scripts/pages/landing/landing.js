@@ -1,5 +1,7 @@
+import moment from 'moment'
+
 import navAppend from './nav'
-import { fixTitle } from '../posts/libs/events'
+import { fixTitle, fixDate } from '../posts/libs/events'
 
 export default function landing() {
 	const titles = document.querySelectorAll('.post-title');
@@ -20,7 +22,7 @@ export default function landing() {
 
 		if (createdCount) {
 			for (let i = 0; i < createdCount; i++) {
-				console.log(created[i]);
+				fixDate(created[i]);
 			}
 		}
 	}

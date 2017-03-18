@@ -1,5 +1,12 @@
+import moment from 'moment'
+
 export function fixTitle(node) {
 	node.textContent = node.textContent.split("-").join(" ");
+}
+
+export function fixDate(node) {
+	let momentDate = moment(node.textContent);
+	node.textContent = momentDate.format('MMMM Do YYYY, h:mm');
 }
 
 export function convertToFormat(fromEl, toEl) {
