@@ -1,12 +1,7 @@
 import { renderJs } from '../../libs/js-parser'
-import { cacheId, cacheQuery } from '../../libs/utils'
 
-export function single() {
-
-	var cache = {};
-
-	let postContent = cacheId(cache, 'post-content');
-	let ImageSrc = '../../../static/me.jpg';
+export default function single() {
+	const postContent = document.getElementById('post-content');
 
 	function renderPost() {
 		document.body.addClass = 'is-loading';
@@ -14,25 +9,22 @@ export function single() {
 		let newPostContent = postContent.innerText;
 		postContent.innerHTML = newPostContent;
 
-		let codeContent = cacheQuery(cache, '.js-markup');
+		let codeContent = document.querySelectorAll('.markup-js');
 
 		Array.prototype.forEach.call(codeContent, function(content) {
-		 	content.innerHTML = renderJs(content);
-		}); 
+			content.innerHTML = renderJs(content);
+		});
+
+
+
+		/*for (let i = 0; i < jsLength; i++) {
+			let content = jsContent[i];
+
+			content.innerHTML = renderJs(content);
+		} */
 
 		postContent.innerHTML = postContent.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>");
 	}
 
-	function changeImage() {
-		let sidenavImage = document.querySelectorAll('.sidenav-image');
-
-		for (var i = 0; i < sidenavImage.length; i++) {
-			let image = sidenavImage[i];
-
-			image.src = "./../../static/me.jpg";
-		}
-	}
-
 	renderPost();
-	changeImage();
 }

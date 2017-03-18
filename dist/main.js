@@ -144,6 +144,10 @@
 
 	var _editor = __webpack_require__(34);
 
+	var _single = __webpack_require__(151);
+
+	var _single2 = _interopRequireDefault(_single);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function startRouter() {
@@ -153,6 +157,8 @@
 			(0, _login.login)();
 		} else if (window.location.href.indexOf('create-post') != -1) {
 			(0, _auth.checkAdminPriv)(_editor.editor);
+		} else if (window.location.href.indexOf('posts') != -1) {
+			(0, _single2.default)();
 		} else {
 			(0, _landing2.default)();
 		}
@@ -4966,7 +4972,7 @@
 	var htmlTagReg = /($lt;[^\&]*&gt;)/g;
 
 	function renderJs(item) {
-		var string = item.innerHTML || item.value;
+		var string = item.innerHTML || value;
 		var parsed = string.replace(strReg1, '<span class="string">"$1"</span>');
 		parsed = parsed.replace(strReg2, "<span class=\"string\">'$1'</span>");
 		parsed = parsed.replace(strReg3, '<span class="string">`$1`</span>');
@@ -20002,6 +20008,45 @@
 
 	})));
 
+
+/***/ },
+/* 151 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = single;
+
+	var _jsParser = __webpack_require__(37);
+
+	function single() {
+		var postContent = document.getElementById('post-content');
+
+		function renderPost() {
+			document.body.addClass = 'is-loading';
+
+			var newPostContent = postContent.innerText;
+			postContent.innerHTML = newPostContent;
+
+			var codeContent = document.querySelectorAll('.markup-js');
+
+			Array.prototype.forEach.call(codeContent, function (content) {
+				content.innerHTML = (0, _jsParser.renderJs)(content);
+			});
+
+			/*for (let i = 0; i < jsLength; i++) {
+	  	let content = jsContent[i];
+	  		content.innerHTML = renderJs(content);
+	  } */
+
+			postContent.innerHTML = postContent.innerHTML.split("~").join("<br />").split("#").join("<span class='indent'></span>");
+		}
+
+		renderPost();
+	}
 
 /***/ }
 /******/ ]);

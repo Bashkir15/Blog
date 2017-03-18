@@ -14,7 +14,7 @@ let inlineCommentReg = /(\/\/.*)/g;
 let htmlTagReg = /($lt;[^\&]*&gt;)/g;
 
 export function renderJs(item) {
-	let string = item.innerHTML || item.value;
+	let string = item.innerHTML || value;
 	let parsed = string.replace(strReg1, '<span class="string">"$1"</span>');
 	parsed = parsed.replace(strReg2, "<span class=\"string\">'$1'</span>");
 	parsed = parsed.replace(strReg3, '<span class="string">`$1`</span>');

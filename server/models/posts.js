@@ -32,6 +32,11 @@ const postSchema = new mongoose.Schema({
 		required: false
 	},
 
+	content: {
+		type: String,
+		required: true
+	},
+
 	isSeries: {
 		type: Boolean,
 		default: false
