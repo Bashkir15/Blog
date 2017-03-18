@@ -55,7 +55,7 @@ module.exports = () => {
 			if (err) {
 				return json.bad(err, res);
 			} else {
-				let morePage = global.config.perPage < posts.length;
+				let morePages = global.config.perPage < posts.length;
 
 				if (morePages) {
 					posts.pop();

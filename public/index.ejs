@@ -106,17 +106,23 @@
 							</div>
 
 							<ul class='blog-right-tags'>
-								<li>Javascript</li>
-								<li>Animation</li>
-								<li>Performance</li>
-								<li>Tutorial</li>
-								<li>Build</li>
-								<li>Ui/Ux</li>
-								<li>React</li>
-								<li>Vue</li>
-								<li>Angular</li>
-								<li>Node</li>
-								<li>Mongo</li>
+								<% if (tags.length) { %>
+									<% tags.map((tag) => { %>
+										<a href='posts/tags/<%= tag %>'><li><%= tag %></li></a>
+									<% }); %>
+								<% } else { %>
+									<li>Javascript</li>
+									<li>Animation</li>
+									<li>Performance</li>
+									<li>Tutorial</li>
+									<li>Build</li>
+									<li>Ui/Ux</li>
+									<li>React</li>
+									<li>Vue</li>
+									<li>Angular</li>
+									<li>Node</li>
+									<li>Mongo</li>
+								<% } %>
 							</ul>
 						</div>
 

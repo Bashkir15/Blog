@@ -34,11 +34,11 @@ module.exports = () => {
 					let uniqueTags = [...new Set(postTags)];
 
 					let render = function() {
-						console.log(uniqueTags);
 
 						res.render('index', {
 							categories: data.categories,
-							posts: data.posts
+							posts: data.posts,
+							tags: uniqueTags
 						});
 					};
 

@@ -1,1 +1,7 @@
 <p><%= posts.length %></p>
+
+<ul>
+	<% posts.map((post) => { %>
+		<li><%= post.title %></li>
+	<% }); %>
+</ul>
