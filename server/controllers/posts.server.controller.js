@@ -46,6 +46,34 @@ module.exports = () => {
 		});
 	};
 
+	obj.tag = (req, res) => {
+		Post.find({tags: req.params.tag})
+		.skip(parseInt(req.query.page) * global.config.perPage)
+		.limit(global.config.perPage + 1)
+		.populate('category')
+		.exec((err, posts) => {
+			if (err) {
+				return json.bad(err, res);
+			} else {
+				let morePage = global.config.perPage < posts.length;
+
+				if (morePages) {
+					posts.pop();
+				}
+
+				if (req.user) {
+					posts.map((e) => {
+						e = e.afterSave(req.user);
+					});
+				}
+
+				res.render('./templates/posts/tags/tags', {
+					posts: posts
+				});
+			}
+		});
+	};
+
 
 	obj.latest = (req, res) => {
 		const criteria = {};

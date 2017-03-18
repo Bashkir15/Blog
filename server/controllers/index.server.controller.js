@@ -22,18 +22,28 @@ module.exports = () => {
 			.exec((err, posts) => {
 				if (err) {
 					return json.bad(err, res);
+				} else {
+					let postTags = [];
+
+					data.posts = posts;
+
+					for (let i = 0; i < posts.length; i++) {
+						postTags = postTags.concat(posts[i].tags);
+					}
+
+					let uniqueTags = [...new Set(postTags)];
+
+					let render = function() {
+						console.log(uniqueTags);
+
+						res.render('index', {
+							categories: data.categories,
+							posts: data.posts
+						});
+					};
+
+					render();
 				}
-
-				data.posts = posts;
-
-				let render = function() {
-					res.render('index', {
-						categories: data.categories,
-						posts: data.posts
-					});
-				};
-
-				render();
 			});
 		});
 	};
