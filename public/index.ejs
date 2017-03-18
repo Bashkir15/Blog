@@ -9,6 +9,8 @@
 	</head>
 
 	<body>
+		<% include ./templates/shared/nav %>
+		
 		<main class='landing-page-container'>
 			<% include ./templates/index/nav %>
 
@@ -31,7 +33,7 @@
 											</div>
 
 											<div>
-												<p><%= post.created %></p>
+												<p class='post-created'><%= post.created %></p>
 											</div>
 										</div>
 

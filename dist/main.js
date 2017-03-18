@@ -134,11 +134,17 @@
 
 	var _auth = __webpack_require__(33);
 
+	var _landing = __webpack_require__(38);
+
+	var _landing2 = _interopRequireDefault(_landing);
+
 	var _signup = __webpack_require__(2);
 
 	var _login = __webpack_require__(30);
 
 	var _editor = __webpack_require__(34);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function startRouter() {
 		if (window.location.href.indexOf('signup') != -1) {
@@ -147,6 +153,8 @@
 			(0, _login.login)();
 		} else if (window.location.href.indexOf('create-post') != -1) {
 			(0, _auth.checkAdminPriv)(_editor.editor);
+		} else {
+			(0, _landing2.default)();
 		}
 	}
 
@@ -2176,9 +2184,7 @@
 		value: true
 	});
 	exports.mergeObj = mergeObj;
-	exports.cacheQuery = cacheQuery;
-	exports.cacheId = cacheId;
-	exports.cacheSingle = cacheSingle;
+	exports.scrollTimeout = scrollTimeout;
 	function mergeObj() {
 		var obj = {};
 
@@ -2195,34 +2201,10 @@
 		return obj;
 	}
 
-	function cacheQuery(cache, query) {
-		cache = cache || {};
-
-		if (!cache[query]) {
-			cache[query] = document.querySelectorAll(query);
-		}
-
-		return cache[query];
-	}
-
-	function cacheId(cache, query) {
-		cache = cache || {};
-
-		if (!cache[query]) {
-			cache[query] = document.getElementById(query);
-		}
-
-		return cache[query];
-	}
-
-	function cacheSingle(cache, query) {
-		cache = cache || {};
-
-		if (!cache[query]) {
-			cache[query] = document.querySelector(query);
-		}
-
-		return cache[query];
+	function scrollTimeout(callback, duration) {
+		setTimeout(function () {
+			callback();
+		}, duration);
 	}
 
 /***/ },
@@ -4988,6 +4970,121 @@
 	// enum
 	// number /\b-?(0x[\dA-Fa-f]+|0b[01]+|0o[0-7]+|\d*\.?\d+([Ee][+-]?\d+)?|NaN|Infinity)\b/,
 	//regex /(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\\\r\n])+\/[gimyu]{0,5}(?=\s*($|[\r\n,.;})]))/
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = landing;
+
+	var _nav = __webpack_require__(39);
+
+	var _nav2 = _interopRequireDefault(_nav);
+
+	var _events = __webpack_require__(36);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function landing() {
+		var titles = document.querySelectorAll('.post-title');
+		var created = document.querySelectorAll('.post-created');
+
+		init();
+		(0, _nav2.default)();
+
+		function init() {
+			var titleCount = titles.length;
+			var createdCount = created.length;
+
+			if (titleCount) {
+				for (var i = 0; i < titleCount; i++) {
+					(0, _events.fixTitle)(titles[i]);
+				}
+			}
+
+			if (createdCount) {
+				for (var _i = 0; _i < createdCount; _i++) {
+					console.log(created[_i]);
+				}
+			}
+		}
+	}
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = navAppend;
+
+	var _utils = __webpack_require__(31);
+
+	function navAppend() {
+		var nav = document.getElementById('nav');
+		var header = document.querySelector('.landing-header');
+
+		var lastKnownScrollY = 0;
+		var timeout = false;
+
+		init();
+
+		function init() {
+			window.addEventListener('scroll', handleScroll);
+		}
+
+		function handleScroll() {
+
+			if (!timeout) {
+				timeout = setTimeout(function () {
+					checkPin();
+					timeout = false;
+				}, 150);
+			}
+
+			timeout = true;
+		}
+
+		function getScrollY() {
+			return window.pageYOffset || window.scrollTop;
+		}
+
+		function checkPin() {
+			var currentScrollY = getScrollY();
+
+			if (currentScrollY >= header.scrollHeight) {
+				pin();
+			} else {
+				unpin();
+			}
+
+			lastKnownScrollY = getScrollY();
+		}
+
+		function pin() {
+			nav.style.willChange = 'transform';
+			nav.classList.add('nav-pinned');
+			nav.style.willChange = 'auto';
+		}
+
+		function unpin() {
+			nav.style.willChange = 'transform';
+
+			if (nav.classList.contains('nav-pinned')) {
+				nav.classList.remove('nav-pinned');
+			}
+
+			nav.style.willChange = 'auto';
+		}
+	}
 
 /***/ }
 /******/ ]);

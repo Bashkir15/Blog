@@ -1,4 +1,7 @@
 import { checkAuthRoute, checkAdminPriv } from './validators/auth'
+
+import landing from '../pages/landing/landing'
+
 import { signup } from '../pages/auth/signup'
 import { login } from '../pages/auth/login'
 
@@ -11,6 +14,8 @@ export function startRouter() {
 		login();
 	} else if (window.location.href.indexOf('create-post') != -1) {
 		checkAdminPriv(editor);
+	} else {
+		landing();
 	}
 }
 
