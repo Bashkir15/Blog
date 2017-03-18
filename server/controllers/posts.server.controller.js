@@ -32,5 +32,50 @@ module.exports = () => {
 		});
 	};
 
+	obj.single = (req, res) => {
+		Post.findOne({title: req.params.title})
+		.populate('category')
+		.exec((err, post) => {
+			if (err) {
+				return json.bad(err, res);
+			}
+
+			res.render('./templates/posts/single/single', {
+				post: post
+			});
+		});
+	};
+
+
+	obj.latest = (req, res) => {
+		const criteria = {};
+
+		Post.find({})
+		.skip(parseInt(req.query.page) * global.config.perPage)
+		.populate('category')
+		.exec((err, posts) => {
+			if (err) {
+				return json.bad(err, res);
+			} else {
+				let morePages = global.config.morePages < posts.length;
+
+				if (morePages) {
+					posts.pop();
+				}
+
+				if (req.user) {
+					posts.map((e) => {
+						e = e.afterSave(req.user);
+					});
+				}
+
+				json.good({
+					records: posts,
+					morePages: morePages
+				}, res);
+			}
+		});
+	};
+
 	return obj;
 };

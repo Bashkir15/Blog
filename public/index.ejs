@@ -46,7 +46,7 @@
 
 									<h4 class='post-title'><%= post.title %></h4>
 									<p><%= post.description %></p>
-									<a href='<%= post.title %>'>Read More</a>
+									<a href='posts/<%= post.title %>'>Read More</a>
 								</div>
 							<% }); %>
 						<% } else { %>
@@ -92,7 +92,7 @@
 							<ul class='blog-right-list'>
 								<% if (categories.length) { %>
 									<% categories.map((category) => { %>
-										<li><%= category.name %><span class='icon-keyboard_arrow_right'></span></li>
+										<a href='categories/<%= category.name %>'><li><%= category.name %><span class='icon-keyboard_arrow_right'></span></li></a>
 									<% }); %>
 								<% } %>
 							</ul>
@@ -127,11 +127,18 @@
 							</div>
 
 							<ul class='blog-right-list'>
-								<li>Hosting a Node app on AWS<span class='icon-keyboard_arrow_right'></span></li>
-								<li>Building a modern JS stack<span class='icon-keyboard_arrow_right'></span></li>
-								<li>Building an Observable Framework<span class='icon-keyboard_arrow_right'></span></li>
-								<li>Getting start with microservices<span class='icon-keyboard_arrow_right'></span></li>
-								<li>Optimizing ES next for the web<span class='icon-keyboard_arrow_right'></span></li>
+								<% if (posts.length) { %>
+									<% posts.map((post) => { %>
+										<a href='posts/<%= post.title %>'><li><%= post.title %><span class='icon-keyboard_arrow_right'></span></li></a>
+									<% }); %>
+								<% } else { %>
+
+									<li>Hosting a Node app on AWS<span class='icon-keyboard_arrow_right'></span></li>
+									<li>Building a modern JS stack<span class='icon-keyboard_arrow_right'></span></li>
+									<li>Building an Observable Framework<span class='icon-keyboard_arrow_right'></span></li>
+									<li>Getting start with microservices<span class='icon-keyboard_arrow_right'></span></li>
+									<li>Optimizing ES next for the web<span class='icon-keyboard_arrow_right'></span></li>	
+								<% } %>
 							</ul>
 						</div>
 

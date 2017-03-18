@@ -88,5 +88,28 @@ const postSchema = new mongoose.Schema({
 	}] */
 });
 
+postSchema.methods = {
+	toJSON: function() {
+		var obj = this.toObject();
+
+		if (obj.creator) {
+			obj.creator.password = '';
+		}
+
+		if (obj.likes || obj.dislikes) {
+			obj.score = obj.likes.length - obj.dislikes.length;
+		}
+
+		return obj;
+	},
+
+	afterSave(user) {
+		this.liked = !this.likes.includes(user._id);
+		this.disliked = !this.dislikes.includes(user._id);
+		this.saved = !this.saves.includes(user._id);
+
+		return this;
+	}
+}
 
 mongoose.model('Post', postSchema);

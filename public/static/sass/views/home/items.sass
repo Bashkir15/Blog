@@ -160,6 +160,7 @@
 		letter-spacing: 2px
 		line-height: 25.2px
 		color: #777
+		transition: all .4s ease
 
 		&:last-child
 			border-bottom: none
@@ -168,6 +169,14 @@
 			display: inline-block
 			margin-top: 10px
 			float: right
+			transition: all .4s ease
+
+		&:hover
+			color: #66d9ef
+			border-bottom-color: #66d9ef
+
+			span
+				color: #66d9ef
 
 .blog-right-tags
 		padding-top: 20px
@@ -184,7 +193,13 @@
 			color: #999
 			border: 1px solid #ccc
 			text-transform: uppercase
+			transition: all .4s ease
 
+			&:hover
+				border-color: rgb(17, 17, 17)
+				background: rgb(17, 17, 17)
+				color: #fff
+				
 .blog-right-popular
 	padding-top: 20px
 
