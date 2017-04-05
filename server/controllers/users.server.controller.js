@@ -66,6 +66,8 @@ module.exports = () => {
 					if (!user.loginAttempts && !user.lockUntil && !user.secureLock) {
 						let token = generateToken(user);
 
+						user.password = '';
+
 						json.good({
 							record: user,
 							token: token
@@ -90,6 +92,8 @@ module.exports = () => {
 
 							let token = generateToken(user);
 
+							user.token = '';
+							
 							json.good({
 								record: user,
 								token: token
