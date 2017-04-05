@@ -37,22 +37,17 @@ const postSchema = new mongoose.Schema({
 		required: true
 	},
 
-	isSeries: {
-		type: Boolean,
-		default: false
-	},
-
 	category: {
 		type: mongoose.Schema.ObjectId,
 		required: false,
 		ref: 'Category'
 	},
 
-	/* series: {
+	 series: {
 		type: mongoose.Schema.ObjectId,
 		required: false,
 		ref: 'Series'
-	}, */
+	}, 
 
 	tags: {
 		type: Array,
@@ -109,9 +104,9 @@ postSchema.methods = {
 	},
 
 	afterSave(user) {
-		this.liked = !this.likes.includes(user._id);
-		this.disliked = !this.dislikes.includes(user._id);
-		this.saved = !this.saves.includes(user._id);
+		this.liked = this.likes.includes(user._id);
+		this.disliked = this.dislikes.includes(user._id);
+		this.saved = this.saves.includes(user._id);
 
 		return this;
 	}

@@ -20,12 +20,12 @@ export function checkAuthRoute(callback) {
 	}
 }
 
-export function checkAdminPriv() {
+export function checkAdminPriv(callback) {
 	let user = JSON.parse(window.localStorage.getItem('user'));
 
 	if (user) {
 		if (user.roles.indexOf('admin') != -1) {
-			postAdmin();
+			postAdmin(callback);
 		} else {
 			window.location.href = '/';
 		}
@@ -34,7 +34,7 @@ export function checkAdminPriv() {
 	}
 }
 
-function postAdmin() {
+function postAdmin(callback) {
 
 	axios.post('/checkAdmin', {
 		token: `Bearer ${window.localStorage.getItem('blog-token')}`,
@@ -47,7 +47,7 @@ function postAdmin() {
 		if (response.status == '403') {
 			window.location.href = '/';
 		} else if (response.status == '200') {
-			return;
+			return callback();
 		}
 	})
 }

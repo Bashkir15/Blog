@@ -12,13 +12,11 @@ const seriesSchema = new mongoose.Schema({
 	},
 
 	description: {
-		type: String,
-		required: true
+		type: String
 	},
 
 	posts: [{
 		type: mongoose.Schema.ObjectId,
-		required: true,
 		ref: 'Post'
 	}],
 

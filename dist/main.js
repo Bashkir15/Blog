@@ -203,12 +203,12 @@
 		}
 	}
 
-	function checkAdminPriv() {
+	function checkAdminPriv(callback) {
 		var user = JSON.parse(window.localStorage.getItem('user'));
 
 		if (user) {
 			if (user.roles.indexOf('admin') != -1) {
-				postAdmin();
+				postAdmin(callback);
 			} else {
 				window.location.href = '/';
 			}
@@ -217,7 +217,7 @@
 		}
 	}
 
-	function postAdmin() {
+	function postAdmin(callback) {
 
 		_axios2.default.post('/checkAdmin', {
 			token: 'Bearer ' + window.localStorage.getItem('blog-token'),
@@ -229,7 +229,7 @@
 			if (response.status == '403') {
 				window.location.href = '/';
 			} else if (response.status == '200') {
-				return;
+				return callback();
 			}
 		});
 	}
@@ -17486,7 +17486,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function editor() {
-		(0, _auth.checkAdmin)();
 
 		var pad = document.getElementById('pad');
 		var convertedSection = document.getElementById('converted-section');
@@ -17494,6 +17493,7 @@
 		var postCategory = document.getElementById('post-category');
 		var postTags = document.getElementById('post-tags');
 		var postDescription = document.getElementById('post-description');
+		var postSeries = document.getElementById('post-series');
 		var submitButton = document.querySelector('.editor-submit button');
 
 		function handleKeyPress(e) {
@@ -17513,11 +17513,12 @@
 		}
 
 		function submit() {
-			_axios2.default.post('http://localhost:8000/posts', {
+			_axios2.default.post('/posts', {
 				title: postTitle.value,
 				category: postCategory.value,
 				content: pad.value.split("\t").join('#').split('\n').join('~'),
 				tags: postTags.value.split(" "),
+				series: postSeries.value,
 				description: postDescription.value,
 
 				headers: {

@@ -5,7 +5,6 @@ import { renderJs } from '../../libs/js-parser'
 import { checkAdmin } from '../../libs/auth'
 
 export function editor() {
-	checkAdmin();
 	
 	const pad = document.getElementById('pad');
 	const convertedSection = document.getElementById('converted-section');
@@ -13,6 +12,7 @@ export function editor() {
 	const postCategory = document.getElementById('post-category');
 	const postTags = document.getElementById('post-tags');
 	const postDescription = document.getElementById('post-description');
+	const postSeries = document.getElementById('post-series');
 	const submitButton = document.querySelector('.editor-submit button');
 
 	function handleKeyPress(e) {
@@ -32,11 +32,12 @@ export function editor() {
 	}
 
 	function submit() {
-		axios.post('http://localhost:8000/posts', {
+		axios.post('/posts', {
 			title: postTitle.value,
 			category: postCategory.value,
 			content: pad.value.split("\t").join('#').split('\n').join('~'),
 			tags: postTags.value.split(" "),
+			series: postSeries.value,
 			description: postDescription.value,
 
 			headers: {

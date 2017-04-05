@@ -3,33 +3,99 @@ import json from '../helpers/json'
 
 const Post = mongoose.model('Post');
 const Category = mongoose.model('Category');
+const Series = mongoose.model('Series');
 
 module.exports = () => {
 	const obj = {};
 
-	obj.create = (req, res) => {
-		const post = new Post(req.body);
-		post.category = req.body.category;
+	obj.create = (req, res, next) => {
+		let post = new Post();
+		post.title = req.body.title;
+		post.description = req.body.description;
+		post.tags = req.body.tags;
+		post.content = req.body.content;
 
-		post.save((err) => {
-			Category.findOne({_id: post.category}, (err, category) => {
+		console.log(req.body);
+
+		return new Promise((resolve, reject) => {
+			console.log('eh');
+
+			Category.findOne({name: req.body.category}, (err, category) => {
 				if (err) {
 					return json.bad(err, res);
 				}
 
+				if (category) {
+					console.log(category);
+					post.category = category._id;
 
-				category.posts.push(post);
-				category.save((err) => {
+					category.posts.push(post);
+					category.save((err) => {
+						if (err) {
+							return json.bad(err);
+						}
+
+						resolve();
+					})
+				}
+			})
+		})
+		.then(() => {
+			console.log('maybe');
+			if (req.body.series) {
+				console.log(req.body.series)
+				Series.findOne({name: req.body.series}, (err, series) => {
 					if (err) {
-						return json.bad(err, res);
+						console.log(err);
 					}
 
-					json.good({
-						post: post
-					}, res);
+					if (series) {
+						series.posts.push(post);
+
+						series.save((err) => {
+							if (err) {
+								return json.bad(err, res);
+							}
+
+							post.series = series;
+							post.save((err) => {
+								if (err) {
+									return json.bad(err, res)
+								}
+							});
+						});
+					}
+
+					if (!series) {
+						let newSeries = new Series();
+						newSeries.name = req.body.series;
+						newSeries.posts.push(post);
+
+						newSeries.save((err) => {
+							if (err) {
+								return json.bad(err, res);
+							}
+
+							post.series = newSeries;
+							post.save((err) => {
+								if (err) {
+									return json.bad(err, res);
+								}
+							});
+						});
+					}
+					
 				});
-			});
-		});
+			}
+		})
+		.then(() => {
+			json.good({
+				post: post
+			}, res);
+		})
+		.catch((err) => {
+			return json.bad(err, res)
+		})
 	};
 
 	obj.single = (req, res) => {

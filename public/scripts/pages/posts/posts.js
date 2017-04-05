@@ -6,7 +6,6 @@ import { checkAuthRoute } from '../../libs/auth'
 export function posts() {
 	let matches = window.location.pathname.split('/');
 	if (window.location.href.indexOf('create-post') != -1) {
-		checkAuthRoute();
 		editor();
 	} else if (window.location.href.indexOf('latest') != -1) {
 		latest();

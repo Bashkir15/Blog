@@ -48,6 +48,8 @@ function ensureAdmin (req, res, next) {
 	let bearerToken;
 	let bearerHeader = req.body.token;
 
+	console.log(bearerHeader);
+
 	if (typeof bearerHeader !== 'undefined') {
 		let bearer = bearerHeader.split(" ");
 		bearerToken = bearer[1];
@@ -56,6 +58,7 @@ function ensureAdmin (req, res, next) {
 			let decoded = jwt.verify(bearerToken, global.config.secret);
 			let requestedUser = decoded.user._id;
 
+			console.log(requestedUser);
 			User.findOne({_id: requestedUser}, (err, user) => {
 				if (err || !user) {
 					return res.sendStatus(403);
