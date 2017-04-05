@@ -15,10 +15,7 @@ module.exports = () => {
 		post.tags = req.body.tags;
 		post.content = req.body.content;
 
-		console.log(req.body);
-
 		return new Promise((resolve, reject) => {
-			console.log('eh');
 
 			Category.findOne({name: req.body.category}, (err, category) => {
 				if (err) {
@@ -26,8 +23,7 @@ module.exports = () => {
 				}
 
 				if (category) {
-					console.log(category);
-					post.category = category._id;
+					post.category = category;
 
 					category.posts.push(post);
 					category.save((err) => {
@@ -38,15 +34,29 @@ module.exports = () => {
 						resolve();
 					})
 				}
+
+				if (!category) {
+					let category = new Category();
+					category.name = req.body.category;
+					category.posts.push(post);
+
+					post.category = category;
+
+					category.save((err) => {
+						if (err) {
+							return json.bad(err);
+						}
+
+						resolve();
+					});
+				}
 			})
 		})
 		.then(() => {
-			console.log('maybe');
 			if (req.body.series) {
-				console.log(req.body.series)
 				Series.findOne({name: req.body.series}, (err, series) => {
 					if (err) {
-						console.log(err);
+						return json.bad(err, res);
 					}
 
 					if (series) {
@@ -79,7 +89,7 @@ module.exports = () => {
 							post.series = newSeries;
 							post.save((err) => {
 								if (err) {
-									return json.bad(err, res);
+									console.log(err);
 								}
 							});
 						});
