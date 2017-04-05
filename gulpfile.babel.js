@@ -4,6 +4,7 @@ import sourceMaps from 'gulp-sourcemaps'
 import notify from 'gulp-notify'
 import rename from 'gulp-rename'
 import browserSync from 'browser-sync'
+import concat from 'gulp-concat'
 
 import sass from 'gulp-sass'
 import cmq from 'gulp-combine-media-queries'
@@ -72,7 +73,7 @@ gulp.task('scripts', () => {
 		.pipe(plumber({
 			errorHandler: function(err) {
 				console.log(err);
-				this.emit(end);
+				this.emit('end');
 			}
 		}))
 		.pipe(sourceMaps.init())
@@ -84,6 +85,7 @@ gulp.task('scripts', () => {
 		.pipe(gulp.dest(paths.prod.js))
 		.pipe(browserSync.reload({stream: true}))
 });
+
 
 gulp.task('ejs', () => {
 	gulp.src(paths.dev.ejs)

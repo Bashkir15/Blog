@@ -2,8 +2,11 @@ import showdown from 'showdown'
 import axios from 'axios'
 import { convertToFormat, convertInput } from './libs/events'
 import { renderJs } from '../../libs/js-parser'
+import { checkAdmin } from '../../libs/auth'
 
 export function editor() {
+	checkAdmin();
+	
 	const pad = document.getElementById('pad');
 	const convertedSection = document.getElementById('converted-section');
 	const postTitle = document.getElementById('post-title');

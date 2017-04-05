@@ -22,5 +22,6 @@ router.get('/login', (req, res) => {
 	res.render('./templates/auth/login');
 });
 
+router.post('/checkAdmin', auth.ensureAdmin);
 
 module.exports = router

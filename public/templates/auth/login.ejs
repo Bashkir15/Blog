@@ -16,18 +16,18 @@
 				<form name='loginForm'>
 					<h5>Login to your account</h5>
 
-					<div class='auth-form-wrapper'>
-						<input type='email' name='email' id='login-email'>
+					<div class='auth-form-wrapper form-wrapper form-email'>
+						<input type='email' name='email' id='login-email' class='form-input'>
 						<label for='login-email'>Email</label>
 					</div>
 
-					<div class='auth-form-wrapper'>
-						<input type='password' name='password' id='login-password'>
+					<div class='auth-form-wrapper form-wrapper'>
+						<input type='password' name='password' id='login-password' class='form-input'>
 						<label for='login-password'>Password</label>
 					</div>
 
 					<div class='auth-form-submit'>
-						<button type='button' aria-label='submit login form'>
+						<button type='button' aria-label='submit login form' class='form-submit'>
 							<span>Login</span>
 						</button>
 					</div>
@@ -36,5 +36,7 @@
 				</form>
 			</section>
 		</main>
+
+		<script src='./scripts/main.min.js'></script>
 	</body>
 </html>

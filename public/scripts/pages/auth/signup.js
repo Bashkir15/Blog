@@ -37,6 +37,8 @@ export function signup() {
 					window.localStorage.setItem('blog-token', response.data.res.token);
 
 					window.dispatchEvent(success);
+
+					window.location.href = '/';
 				} else {
 					submitButton.classList.add('form-failure');
 

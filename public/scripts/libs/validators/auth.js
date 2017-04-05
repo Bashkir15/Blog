@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 function checkToken() {
 	let token = window.localStorage.getItem('blog-token');
 
@@ -18,14 +20,36 @@ export function checkAuthRoute(callback) {
 	}
 }
 
-export function checkAdminPriv(callback) {
+export function checkAdminPriv() {
 	let user = JSON.parse(window.localStorage.getItem('user'));
 
-	if (user.roles.indexOf('admin') != -1) {
-		callback();
+	if (user) {
+		if (user.roles.indexOf('admin') != -1) {
+			postAdmin();
+		} else {
+			window.location.href = '/';
+		}
 	} else {
 		window.location.href = '/';
 	}
+}
+
+function postAdmin() {
+
+	axios.post('/checkAdmin', {
+		token: `Bearer ${window.localStorage.getItem('blog-token')}`,
+
+		headers: {
+			'Content-Type': 'Application/JSON'
+		}
+	})
+	.then((response) => {
+		if (response.status == '403') {
+			window.location.href = '/';
+		} else if (response.status == '200') {
+			return;
+		}
+	})
 }
 
 export const isLoggedIn = checkToken();

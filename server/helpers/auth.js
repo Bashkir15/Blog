@@ -46,26 +46,24 @@ function ensureAuthorized (req, res, next) {
 function ensureAdmin (req, res, next) {
 	let User = mongoose.model('User');
 	let bearerToken;
-	let bearerHeader = req.headers['authorization'];
+	let bearerHeader = req.body.token;
 
 	if (typeof bearerHeader !== 'undefined') {
 		let bearer = bearerHeader.split(" ");
 		bearerToken = bearer[1];
 
 		try {
-			let decoed = jwt.verify(bearerToken, global.config.secret);
+			let decoded = jwt.verify(bearerToken, global.config.secret);
 			let requestedUser = decoded.user._id;
 
 			User.findOne({_id: requestedUser}, (err, user) => {
 				if (err || !user) {
 					return res.sendStatus(403);
 				}
-
+				
 				if (user) {
-					console.log(user);
 					if (user.roles.indexOf('admin') != -1) {
-						req.user = user;
-						next();
+						res.sendStatus(200);
 					} else {
 						res.sendStatus(403);
 					}

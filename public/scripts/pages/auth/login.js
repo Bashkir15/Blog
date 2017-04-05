@@ -1,13 +1,16 @@
 import axios from 'axios'
 import notify from '../../components/notifications'
-import { cacheId } from '../../libs/utils'
+import { onBlur } from '../../libs/validators/forms' 
 
 export function login() {
 	const loginEmail = document.getElementById('login-email');
 	const loginPassword = document.getElementById('login-password');
-	const loginButton = document.getElementById('login-submit');
+	const submitButton = document.querySelector('.form-submit');
+	const inputs = document.querySelectorAll('.form-input');
+
 	const successContent = document.getElementById('success-content');
 	const failureContent = document.getElementById('failure-content');
+	const errorContent = document.getElementById('error-content');
 
 	const successNotify = new notify({
 		content: successNotify,
@@ -21,79 +24,64 @@ export function login() {
 		timeout: 1500
 	});
 
+	const errorNotify = new notify({
+		content: errorNotify,
+		type: 'warning',
+		timeout: 1500
+	});
 
-	function validateEmail() {
-		let input = loginEmail.value;
-		let atpos = input.indexOf('@');
-		let dotpos = input.lastIndexOf('.')
-
-		if (atpos < 1 || (dotpos - atpos) < 2) {
-			if (loginEmail.parentNode.classList.contains('email-valid')) {
-				loginEmail.parentNode.classList.remove('email-valid');
-			}
-
-			loginEmail.parentNode.classList.add('email-invalid');
-		} else {
-			if (loginEmail.parentNode.classList.contains('email-invalid')) {
-				loginEmail.parentNode.classList.remove('email-invalid');
-			}
-
-			loginEmail.parentNode.classList.add('email-valid');
-		}
-	}
 
 
 	function submit() {
-		let data = {};
-		data.email = loginEmail;
-		data.password = loginPassword;
+		if (submitButton.classList.contains('form-valid')) {
+			submitButton.classList.add('form-loading');
 
-		loginButton.classList.add('show-loading');
+			axios.post('/users/authenticate', {
+				email: loginEmail.value,
+				password: loginPassword.value,
 
-		axios.post('http://localhost:3000/users/authenticate', {
-			email: data.email.value,
-			password: data.password.value,
+				headers: {
+					'Content-TYpe': 'Application/JSON'
+				}
+			})
+			.then((response) => {
+				submitButton.classList.remove('form-loading');
 
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-		.then((response) => {
-			loginButton.classList.remove('show-loading');
+				if (response.data.success) {
+					submitButton.classList.add('form-success');
 
-			if (response.data.success) {
-				loginButton.classList.add('loading-success');
+					handleLogin(response);
+				} else {
+					submitButton.classList.add('form-failure');
 
-				let success = new Event('login-success');
-				let user = JSON.stringify(response.data.res.record);
+					let failure = new Event('signup-failure');
 
+					window.dispatchEvent(failure);
+				}
+			})
+		} else {
+			let error = new Event('login-error');
 
-				window.dispatchEvent(success); 
-				window.localStorage.setItem('user', user);
-				window.localStorage.setItem('blog-token', response.data.res.token);
-
-				removeEvents();
-				
-				window.location.href = '/admin';
-
-			} else {
-				loginButton.classList.add('loading-failed');
-				
-				let failure = new Event('login-failure');
-				window.dispatchEvent(failure);
-			}
-		}); 
+			window.dispatchEvent(error);
+		}
 	}
 
-	function removeEvents() {
-		loginButton.removeEventListener('click', submit);
-		loginEmail.removeEventListener('blur', validateEmail);
-		window.removeEventListener('login-failure', failureNotify.open);
-		window.removeEventListener('login-success', successNotify.open);
+	function handleLogin(response) {
+		let user = JSON.stringify(response.data.res.record);
+		let success = new Event('login-success');
+
+		window.localStorage.setItem('user', user);
+		window.localStorage.setItem('blog-token', response.data.res.token);
+
+		window.dispatchEvent(success);
+
+		window.location.href = '/';
 	}
 
-	loginButton.addEventListener('click', submit);
-	loginEmail.addEventListener('blur', validateEmail);
+	onBlur(inputs)
+
+	submitButton.addEventListener('click', submit);
 	window.addEventListener('login-failure', failureNotify);
 	window.addEventListener('login-success', successNotify);
+	window.addEventListener('login-error', errorNotify);
 }

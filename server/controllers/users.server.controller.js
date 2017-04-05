@@ -38,7 +38,6 @@ module.exports = () => {
 	};
 
 	obj.authenticate = (req, res) => {
-		console.log(req.body);
 		User.findOne({email: req.body.email}, (err, user) => {
 			if (err) {
 				return json.bad(err, res);
@@ -73,7 +72,7 @@ module.exports = () => {
 						}, res);
 					} else {
 
-						var updates = {
+						let updates = {
 							$set: {
 								loginAttempts: 0,
 								limitReached: 0
@@ -89,7 +88,7 @@ module.exports = () => {
 								return json.bad(err, res);
 							}
 
-							var token = generateToken(user);
+							let token = generateToken(user);
 
 							json.good({
 								record: user,
